@@ -7,8 +7,9 @@ namespace Cringebot
         public App()
         {
             InitializeComponent();
+            var bootstrapper = new Bootstrapper();
 
-            MainPage = new MainPage();
+            MainPage = bootstrapper.GetStartingPage();
         }
 
         protected override void OnStart()

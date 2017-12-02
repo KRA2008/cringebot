@@ -1,8 +1,8 @@
-﻿using Xamarin.Forms;
+﻿using FreshMvvm;
 
-namespace Cringebot
+namespace Cringebot.Page
 {
-    public partial class MainPage : ContentPage
+    public partial class MainPage : FreshBaseContentPage
     {
         public MainPage()
         {

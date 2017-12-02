@@ -1,6 +1,4 @@
-The MIT License (MIT)
-
-Copyright (c) 2008-2017 Tom Preston-Werner and Jekyll contributors
+Copyright (c) 2017 KRA2008
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
