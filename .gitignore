@@ -313,3 +313,8 @@ OpenCover/
 
 # Azure Stream Analytics local run output 
 ASALocalRun/
+
+#NCrunch
+_NCrunch_Cringebot/
+*.ncrunchsolution
+*.ncrunchproject
