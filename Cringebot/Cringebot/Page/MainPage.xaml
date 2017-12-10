@@ -29,7 +29,7 @@
                          HorizontalOptions="CenterAndExpand">
                 <Label Text="Show List"
                        VerticalTextAlignment="Center"/>
-                <Switch/>
+                <Switch IsToggled="{Binding ShowList}"/>
             </StackLayout>
             <StackLayout Orientation="Horizontal"
                          HorizontalOptions="CenterAndExpand">

@@ -28,6 +28,13 @@ namespace Cringebot.Tests
             }
 
             [Test]
+            public void ShouldStartWithShowListOn()
+            {
+                //assert
+                _viewModel.ShowList.Should().Be.True();
+            }
+
+            [Test]
             public void ShouldInitializeMemories()
             {
                 //assert
@@ -82,6 +89,30 @@ namespace Cringebot.Tests
 
                 //act
                 _viewModel.MemoryInput = "something!";
+
+                //assert
+                eventRaised.Should().Be.True();
+            }
+        }
+
+        public class ShowListProperty : MainViewModelTests
+        {
+            [Test, Theory]
+            public void ShouldRaisePropertyChangedForMemories(bool showList)
+            {
+                //arrange
+                _viewModel.ShowList = showList;
+                var eventRaised = false;
+                _viewModel.PropertyChanged += (sender, args) =>
+                {
+                    if (args.PropertyName == nameof(_viewModel.DisplayMemories))
+                    {
+                        eventRaised = true;
+                    }
+                };
+
+                //act
+                _viewModel.ShowList = !showList;
 
                 //assert
                 eventRaised.Should().Be.True();
@@ -146,6 +177,26 @@ namespace Cringebot.Tests
 
                 //assert
                 _viewModel.DisplayMemories.Should().Have.SameSequenceAs(new[] { mem1, mem2, mem3 });
+            }
+
+            [Test]
+            public void ShouldDisplayNothingIfShowListIsOff()
+            {
+                //arrange
+                _viewModel.FullListMemories = new List<Memory>()
+                {
+                    new Memory
+                    {
+                        Description = "whatever"
+                    }
+                };
+                _viewModel.MemoryInput = null;
+
+                //act
+                _viewModel.ShowList = false;
+
+                //assert
+                _viewModel.DisplayMemories.Should().Be.Empty();
             }
         }
     }
