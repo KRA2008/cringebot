@@ -1,6 +1,8 @@
-﻿using Cringebot.ViewModel;
+﻿using Cringebot.Model;
+using Cringebot.ViewModel;
 using NUnit.Framework;
 using SharpTestsEx;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Cringebot.Tests
@@ -29,14 +31,14 @@ namespace Cringebot.Tests
             public void ShouldInitializeMemories()
             {
                 //assert
-                _viewModel.Memories.Should().Not.Be.Null();
+                _viewModel.DisplayMemories.Should().Not.Be.Null();
             }
         }
 
         public class AddMemoryCommand : MainViewModelTests
         {
             [Test]
-            public void ShouldAddMemoryInInputToMemories()
+            public void ShouldAddMemoryInInputToFullListMemories()
             {
                 //arrange
                 const string TEST_DESCRIPTION = "that time with that thing";
@@ -46,7 +48,7 @@ namespace Cringebot.Tests
                 _viewModel.AddMemoryCommand.Execute(null);
 
                 //assert
-                _viewModel.Memories.Single(m => m.Description == TEST_DESCRIPTION);
+                _viewModel.FullListMemories.Single(m => m.Description == TEST_DESCRIPTION);
             }
 
             [Test]
@@ -60,6 +62,90 @@ namespace Cringebot.Tests
 
                 //assert
                 _viewModel.MemoryInput.Should().Be.Null();
+            }
+        }
+
+        public class MemoryInputProperty : MainViewModelTests
+        {
+            [Test]
+            public void ShouldRaisePropertyChangedForMemories()
+            {
+                //arrange
+                var eventRaised = false;
+                _viewModel.PropertyChanged += (sender, args) =>
+                {
+                    if(args.PropertyName == nameof(_viewModel.DisplayMemories))
+                    {
+                        eventRaised = true;
+                    }
+                };
+
+                //act
+                _viewModel.MemoryInput = "something!";
+
+                //assert
+                eventRaised.Should().Be.True();
+            }
+        }
+
+        public class DisplayMemoriesProperty : MainViewModelTests
+        {
+            [Test]
+            public void ShouldFilterByMemoryInput()
+            {
+                //arrange
+                const string KEYWORD = "LFKJOWOID";
+                var mem1 = new Memory
+                {
+                    Description = "something " + KEYWORD + " what"
+                };
+                var mem2 = new Memory
+                {
+                    Description = "lalala"
+                };
+                var mem3 = new Memory
+                {
+                    Description = KEYWORD
+                };
+                _viewModel.FullListMemories = new List<Memory>()
+                {
+                    mem1,
+                    mem2,
+                    mem3
+                };
+
+                //act
+                _viewModel.MemoryInput = KEYWORD;
+
+                //assert
+                _viewModel.DisplayMemories.Should().Have.SameSequenceAs(new[] { mem1, mem3 });
+            }
+
+            [TestCase(null)]
+            [TestCase("")]
+            [TestCase(" ")]
+            public void ShouldDisplayFullListWhenNoMemoryInput(string input)
+            {
+                //arrange
+                var mem1 = new Memory
+                {
+                    Description = "a"
+                };
+                var mem2 = new Memory
+                {
+                    Description = "b"
+                };
+                var mem3 = new Memory
+                {
+                    Description = "c"
+                };
+                _viewModel.FullListMemories = new List<Memory> { mem1, mem2, mem3 };
+
+                //act
+                _viewModel.MemoryInput = input;
+
+                //assert
+                _viewModel.DisplayMemories.Should().Have.SameSequenceAs(new[] { mem1, mem2, mem3 });
             }
         }
     }

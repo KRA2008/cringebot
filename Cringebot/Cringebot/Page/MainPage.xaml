@@ -18,7 +18,7 @@
                 </corcav:Interaction.Behaviors>
             </Entry>
             <ListView VerticalOptions="FillAndExpand"
-                      ItemsSource="{Binding Memories}">
+                      ItemsSource="{Binding DisplayMemories}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <TextCell Text="{Binding Description}"/>
