@@ -19,6 +19,9 @@ namespace Cringebot.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             Xamarin.Forms.Forms.Init();
+
+            Corcav.Behaviors.Infrastructure.Init();
+
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

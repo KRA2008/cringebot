@@ -3,11 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:fresh="clr-namespace:FreshMvvm;assembly=FreshMvvm"
              xmlns:local="clr-namespace:Cringebot"
+             xmlns:corcav="clr-namespace:Corcav.Behaviors;assembly=Corcav.Behaviors"
              x:Class="Cringebot.Page.MainPage">
     <ContentPage.Content>
         <StackLayout Padding="15" 
                      Spacing="15">
-            <Entry Placeholder="Search/Add Memory..."/>
+            <Entry Placeholder="Search/Add Memory..."
+                   Text="{Binding MemoryInput}">
+                <corcav:Interaction.Behaviors>
+                    <corcav:BehaviorCollection>
+                        <corcav:EventToCommand EventName="Completed" 
+                                               Command="{Binding AddMemoryCommand}"/>
+                    </corcav:BehaviorCollection>
+                </corcav:Interaction.Behaviors>
+            </Entry>
             <ListView VerticalOptions="FillAndExpand"
                       ItemsSource="{Binding Memories}">
                 <ListView.ItemTemplate>
@@ -26,7 +35,7 @@
                          HorizontalOptions="CenterAndExpand">
                 <Label Text="Simulate Intrusive Memory"
                        VerticalTextAlignment="Center"/>
-                <Switch/>
+                <Switch IsToggled="{Binding Simulate}"/>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

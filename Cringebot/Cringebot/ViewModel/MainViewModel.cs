@@ -1,27 +1,31 @@
 ﻿using Cringebot.Model;
 using FreshMvvm;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Xamarin.Forms;
 
 namespace Cringebot.ViewModel
 {
     public class MainViewModel : FreshBasePageModel
     {
         public ObservableCollection<Memory> Memories { get; set; }
+        public bool Simulate { get; set; }
+        public Command AddMemoryCommand { get; set; }
+        public string MemoryInput { get; set; }
 
         public MainViewModel()
         {
-            var tempMemories = new List<Memory>();
+            Memories = new ObservableCollection<Memory>();
 
-            for(var i = 0; i<100; i++)
+            Simulate = true;
+
+            AddMemoryCommand = new Command(() =>
             {
-                tempMemories.Add(new Memory
+                Memories.Add(new Memory
                 {
-                    Description = "Memory" + i
+                    Description = MemoryInput
                 });
-            }
-
-            Memories = new ObservableCollection<Memory>(tempMemories);
+                MemoryInput = null;
+            });
         }
     }
 }

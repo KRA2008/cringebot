@@ -117,6 +117,9 @@
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Corcav.Behaviors, Version=2.3.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Corcav.Behaviors.2.3.7\lib\dotnet\Corcav.Behaviors.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />

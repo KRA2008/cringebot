@@ -318,3 +318,6 @@ ASALocalRun/
 _NCrunch_Cringebot/
 *.ncrunchsolution
 *.ncrunchproject
+
+#Xamarin
+*.bak
