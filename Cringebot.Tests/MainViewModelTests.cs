@@ -1,5 +1,7 @@
 ﻿using Cringebot.Model;
 using Cringebot.ViewModel;
+using Cringebot.Wrappers;
+using Moq;
 using NUnit.Framework;
 using SharpTestsEx;
 using System.Collections.Generic;
@@ -11,22 +13,20 @@ namespace Cringebot.Tests
     public class MainViewModelTests
     {
         private MainViewModel _viewModel;
+        private Mock<IAppDataStore> _dataStore;
+        private const string SIMULATE_STORE_KEY = "simulate";
+        private const string SHOW_LIST_STORE_KEY = "showList";
 
         [SetUp]
         public void InstantiateMainViewModel()
         {
-            _viewModel = new MainViewModel();
+            _dataStore = new Mock<IAppDataStore>();
+            _viewModel = new MainViewModel(_dataStore.Object);
+            _viewModel.Init(null);
         }
 
         public class Ctor : MainViewModelTests
         {
-            [Test]
-            public void ShouldStartWithSimulateOn()
-            {
-                //assert
-                _viewModel.Simulate.Should().Be.True();
-            }
-
             [Test]
             public void ShouldStartWithShowListOn()
             {
@@ -39,6 +39,65 @@ namespace Cringebot.Tests
             {
                 //assert
                 _viewModel.DisplayMemories.Should().Not.Be.Null();
+            }
+        }
+
+        public class InitMethod : MainViewModelTests
+        {
+            [Test, Theory]
+            public void ShouldLoadSavedStateOfSimulateSetting(bool expectedStoredSetting)
+            {
+                //arrange
+                bool fakeStoredSetting = expectedStoredSetting;
+                _dataStore.Setup(w => w.TryLoad(SIMULATE_STORE_KEY, out fakeStoredSetting)).Returns(true);
+
+                //act
+                _viewModel.Init(null);
+
+                //assert
+                _viewModel.Simulate.Should().Be.EqualTo(expectedStoredSetting);
+            }
+
+            [Test]
+            public void ShouldTurnOnSimulateSettingIfNotStored()
+            {
+                //arrange
+                bool dummyObject;
+                _dataStore.Setup(w => w.TryLoad(SIMULATE_STORE_KEY, out dummyObject)).Returns(false);
+
+                //act
+                _viewModel.Init(null);
+
+                //assert
+                _viewModel.Simulate.Should().Be.True();
+            }
+
+            [Test, Theory]
+            public void ShouldLoadSavedStateOfShowListSetting(bool expectedStoredSetting)
+            {
+                //arrange
+                bool fakeStoredSetting = expectedStoredSetting;
+                _dataStore.Setup(w => w.TryLoad(SHOW_LIST_STORE_KEY, out fakeStoredSetting)).Returns(true);
+
+                //act
+                _viewModel.Init(null);
+
+                //assert
+                _viewModel.ShowList.Should().Be.EqualTo(expectedStoredSetting);
+            }
+
+            [Test]
+            public void ShouldTurnOnShowListSettingIfNotStored()
+            {
+                //arrange
+                bool dummyObject;
+                _dataStore.Setup(w => w.TryLoad(SHOW_LIST_STORE_KEY, out dummyObject)).Returns(false);
+
+                //act
+                _viewModel.Init(null);
+
+                //assert
+                _viewModel.ShowList.Should().Be.True();
             }
         }
 

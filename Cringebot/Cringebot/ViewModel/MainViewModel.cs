@@ -1,4 +1,5 @@
 ﻿using Cringebot.Model;
+using Cringebot.Wrappers;
 using FreshMvvm;
 using PropertyChanged;
 using System.Collections.Generic;
@@ -31,12 +32,15 @@ namespace Cringebot.ViewModel
         public Command AddMemoryCommand { get; set; }
         public string MemoryInput { get; set; }
 
-        public MainViewModel()
-        {
-            FullListMemories = new List<Memory>();
+        private const string SIMULATE_STORE_KEY = "simulate";
+        private const string SHOW_LIST_STORE_KEY = "showList";
 
-            Simulate = true;
-            ShowList = true;
+        private IAppDataStore _dataStore;
+
+        public MainViewModel(IAppDataStore dataStore)
+        {
+            _dataStore = dataStore;
+            FullListMemories = new List<Memory>();
 
             AddMemoryCommand = new Command(() =>
             {
@@ -46,6 +50,29 @@ namespace Cringebot.ViewModel
                 });
                 MemoryInput = null;
             });
+        }
+
+        public override void Init(object initData)
+        {
+            base.Init(initData);
+
+            if (_dataStore.TryLoad(SIMULATE_STORE_KEY, out bool storedSimulate))
+            {
+                Simulate = storedSimulate;
+            }
+            else
+            {
+                Simulate = true;
+            }
+
+            if (_dataStore.TryLoad(SHOW_LIST_STORE_KEY, out bool storedShowList))
+            {
+                ShowList = storedShowList;
+            }
+            else
+            {
+                ShowList = true;
+            }
         }
     }
 }
