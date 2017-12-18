@@ -16,6 +16,7 @@ namespace Cringebot.Tests
         private Mock<IAppDataStore> _dataStore;
         private const string SIMULATE_STORE_KEY = "simulate";
         private const string SHOW_LIST_STORE_KEY = "showList";
+        private const string MEMORY_LIST_STORE_KEY = "memoryList";
 
         [SetUp]
         public void InstantiateMainViewModel()
@@ -99,6 +100,30 @@ namespace Cringebot.Tests
                 //assert
                 _viewModel.ShowList.Should().Be.True();
             }
+
+            [Test]
+            public void ShouldLoadSavedStateOfList()
+            {
+                //arrange
+                var expectedList = new List<Memory>
+                {
+                    new Memory
+                    {
+                        Description = "whatever"
+                    },
+                    new Memory
+                    {
+                        Description = "more stuff"
+                    }
+                };
+                _dataStore.Setup(w => w.TryLoad(MEMORY_LIST_STORE_KEY, out expectedList)).Returns(true);
+
+                //act
+                _viewModel.Init(null);
+
+                //assert
+                _viewModel.FullListMemories.Should().Have.SameSequenceAs(expectedList);
+            }
         }
 
         public class AddMemoryCommand : MainViewModelTests
@@ -118,6 +143,29 @@ namespace Cringebot.Tests
             }
 
             [Test]
+            public void ShouldSaveListToStore()
+            {
+                //arrange
+                var MEMORY_1 = "blahblah";
+                _viewModel.MemoryInput = MEMORY_1;
+
+                //act
+                _viewModel.AddMemoryCommand.Execute(null);
+
+                //arrange
+                var MEMORY_2 = "more stuff";
+                _viewModel.MemoryInput = MEMORY_2;
+
+                //act
+                _viewModel.AddMemoryCommand.Execute(null);
+                
+                //assert
+                _dataStore.Verify(d => d.Save(MEMORY_LIST_STORE_KEY, It.Is<List<Memory>>(l => 
+                    l.ElementAt(0).Description == MEMORY_1 &&
+                    l.ElementAt(1).Description == MEMORY_2)));
+            }
+
+            [Test]
             public void ShouldClearOutInputField()
             {
                 //arrange
@@ -128,6 +176,22 @@ namespace Cringebot.Tests
 
                 //assert
                 _viewModel.MemoryInput.Should().Be.Null();
+            }
+
+            [TestCase(null)]
+            [TestCase("")]
+            [TestCase(" ")]
+            public void ShouldNotAddMemoryIfInputIsEmpty(string input)
+            {
+                //arrange
+                _viewModel.MemoryInput = input;
+                _viewModel.FullListMemories.Add(new Memory());
+
+                //act
+                _viewModel.AddMemoryCommand.Execute(null);
+
+                //assert
+                _viewModel.FullListMemories.Count.Should().Be.EqualTo(1);
             }
         }
 
@@ -175,6 +239,29 @@ namespace Cringebot.Tests
 
                 //assert
                 eventRaised.Should().Be.True();
+            }
+
+            [Test, Theory]
+            public void ShouldSaveStateToStoreWhenSet(bool expectedShowList)
+            {
+                //act
+                _viewModel.ShowList = expectedShowList;
+
+                //assert
+                _dataStore.Verify(d => d.Save(SHOW_LIST_STORE_KEY, expectedShowList));
+            }
+        }
+
+        public class SimulateProperty : MainViewModelTests
+        {
+            [Test, Theory]
+            public void ShouldSaveStateToStoreWhenSet(bool expectedSimulate)
+            {
+                //act
+                _viewModel.Simulate = expectedSimulate;
+
+                //assert
+                _dataStore.Verify(d => d.Save(SIMULATE_STORE_KEY, expectedSimulate));
             }
         }
 
