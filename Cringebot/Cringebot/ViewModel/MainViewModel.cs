@@ -11,18 +11,14 @@ namespace Cringebot.ViewModel
     public class MainViewModel : FreshBasePageModel
     {
         public List<Memory> FullListMemories { get; set; }
-        [DependsOn(nameof(MemoryInput), nameof(ShowList))]
+        [DependsOn(nameof(MemoryInput))]
         public IEnumerable<Memory> DisplayMemories
         {
             get
             {
-                if(!ShowList)
-                {
-                    return Enumerable.Empty<Memory>();
-                }
                 if(!string.IsNullOrWhiteSpace(MemoryInput))
                 {
-                    return FullListMemories.Where(m => m.Description.Contains(MemoryInput));
+                    return FullListMemories.Where(m => m.Description.ToLower().Contains(MemoryInput.ToLower()));
                 }
                 return FullListMemories;
             }

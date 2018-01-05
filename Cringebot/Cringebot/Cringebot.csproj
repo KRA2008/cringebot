@@ -39,6 +39,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\Memory.cs" />
+    <Compile Include="Page\NotConverter.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Page\MainPage.xaml.cs">

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:fresh="clr-namespace:FreshMvvm;assembly=FreshMvvm"
              xmlns:local="clr-namespace:Cringebot"
+             xmlns:vc="clr-namespace:Cringebot.Page"
              xmlns:corcav="clr-namespace:Corcav.Behaviors;assembly=Corcav.Behaviors"
              x:Class="Cringebot.Page.MainPage">
     <ContentPage.Content>
@@ -17,11 +18,39 @@
                     </corcav:BehaviorCollection>
                 </corcav:Interaction.Behaviors>
             </Entry>
-            <ListView VerticalOptions="FillAndExpand"
-                      ItemsSource="{Binding DisplayMemories}">
+            <Label Text="List hidden for your comfort."
+                   IsVisible="{Binding ShowList, Converter={vc:NotConverter}}"
+                   VerticalTextAlignment="Center"
+                   HorizontalTextAlignment="Center"
+                   VerticalOptions="FillAndExpand"/>
+            <ListView ItemsSource="{Binding DisplayMemories}"
+                      IsVisible="{Binding ShowList}"
+                      VerticalOptions="FillAndExpand">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextCell Text="{Binding Description}"/>
+                        <ViewCell>
+                            <ViewCell.View>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding Description}"
+                                           HorizontalOptions="StartAndExpand"
+                                           VerticalTextAlignment="Center"/>
+                                    <Label Text="{Binding Occurrences.Count}"
+                                           VerticalTextAlignment="Center"/>
+                                    <Image Source="add">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer>
+                                                <corcav:Interaction.Behaviors>
+                                                    <corcav:BehaviorCollection>
+                                                        <corcav:EventToCommand EventName="Tapped"
+                                                                               Command="{Binding AddOccurrenceCommand}"/>
+                                                    </corcav:BehaviorCollection>
+                                                </corcav:Interaction.Behaviors>
+                                            </TapGestureRecognizer>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </StackLayout>
+                            </ViewCell.View>
+                        </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
