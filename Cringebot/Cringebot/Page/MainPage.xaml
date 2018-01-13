@@ -25,7 +25,8 @@
                    VerticalOptions="FillAndExpand"/>
             <ListView ItemsSource="{Binding DisplayMemories}"
                       IsVisible="{Binding ShowList}"
-                      VerticalOptions="FillAndExpand">
+                      VerticalOptions="FillAndExpand"
+                      x:Name="MemoryList">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -42,7 +43,8 @@
                                                 <corcav:Interaction.Behaviors>
                                                     <corcav:BehaviorCollection>
                                                         <corcav:EventToCommand EventName="Tapped"
-                                                                               Command="{Binding AddOccurrenceCommand}"/>
+                                                                               Command="{Binding Source={x:Reference MemoryList}, Path=BindingContext.AddOccurrenceCommand}"
+                                                                               CommandParameter="{Binding}"/>
                                                     </corcav:BehaviorCollection>
                                                 </corcav:Interaction.Behaviors>
                                             </TapGestureRecognizer>

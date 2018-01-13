@@ -195,6 +195,34 @@ namespace Cringebot.Tests
             }
         }
 
+        public class AddOccurrenceCommand : MainViewModelTests
+        {
+            [Test]
+            public void ShouldAddOccurrenceOfMemory()
+            {
+                //arrange
+                var memory = new Memory();
+
+                //act
+                _viewModel.AddOccurrenceCommand.Execute(memory);
+                _viewModel.AddOccurrenceCommand.Execute(memory);
+                _viewModel.AddOccurrenceCommand.Execute(memory);
+
+                //assert
+                memory.Occurrences.Count.Should().Be.EqualTo(3);
+            }
+
+            [Test]
+            public void ShouldSaveMemoryList()
+            {
+                //act
+                _viewModel.AddOccurrenceCommand.Execute(new Memory());
+
+                //assert
+                _dataStore.Verify(d => d.Save(MEMORY_LIST_STORE_KEY, _viewModel.FullListMemories));
+            }
+        }
+
         public class MemoryInputProperty : MainViewModelTests
         {
             [Test]

@@ -24,18 +24,5 @@ namespace Cringebot.Tests
                 _memory.Occurrences.Should().Not.Be.Null();
             }
         }
-
-        public class AddOccurrenceCommandProperty : MemoryTests
-        {
-            [Test]
-            public void ShouldAddNewOccurrence()
-            {
-                //act
-                _memory.AddOccurrenceCommand.Execute(null);
-
-                //assert
-                _memory.Occurrences.First().Should().Be.LessThan(DateTime.Now);
-            }
-        }
     }
 }

@@ -2,6 +2,7 @@
 using Cringebot.Wrappers;
 using FreshMvvm;
 using PropertyChanged;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms;
@@ -53,6 +54,7 @@ namespace Cringebot.ViewModel
         }
 
         public Command AddMemoryCommand { get; set; }
+        public Command AddOccurrenceCommand { get; set; }
         public string MemoryInput { get; set; }
 
         private const string SIMULATE_STORE_KEY = "simulate";
@@ -79,6 +81,26 @@ namespace Cringebot.ViewModel
                     _dataStore.Save(MEMORY_LIST_STORE_KEY, FullListMemories);
                 }
             });
+
+            AddOccurrenceCommand = new Command((arg) => {
+                var memory = (Memory)arg;
+                memory.Occurrences.Add(DateTime.Now);
+                
+                _dataStore.Save(MEMORY_LIST_STORE_KEY, FullListMemories);
+            });
+
+            PropertyChanged += (sender, args) =>
+            {
+                switch (args.PropertyName)
+                {
+                    case (nameof(Simulate)):
+                        _dataStore.Save(SIMULATE_STORE_KEY, Simulate);
+                        break;
+                    case (nameof(ShowList)):
+                        _dataStore.Save(SHOW_LIST_STORE_KEY, ShowList);
+                        break;
+                }
+            };
         }
 
         public override void Init(object initData)
