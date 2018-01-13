@@ -41,7 +41,6 @@ namespace Cringebot.ViewModel
         public MainViewModel(IAppDataStore dataStore)
         {
             _dataStore = dataStore;
-            FullListMemories = new List<Memory>();
 
             AddMemoryCommand = new Command(() =>
             {
@@ -82,28 +81,9 @@ namespace Cringebot.ViewModel
         {
             base.Init(initData);
 
-            if (_dataStore.TryLoad(SIMULATE_STORE_KEY, out bool storedSimulate))
-            {
-                Simulate = storedSimulate;
-            }
-            else
-            {
-                Simulate = true;
-            }
-
-            if (_dataStore.TryLoad(SHOW_LIST_STORE_KEY, out bool storedShowList))
-            {
-                ShowList = storedShowList;
-            }
-            else
-            {
-                ShowList = true;
-            }
-
-            if(_dataStore.TryLoad(MEMORY_LIST_STORE_KEY, out List<Memory> storedList))
-            {
-                FullListMemories = storedList;
-            }
+            Simulate = _dataStore.LoadOrDefault(SIMULATE_STORE_KEY, true);
+            ShowList = _dataStore.LoadOrDefault(SHOW_LIST_STORE_KEY, true);
+            FullListMemories = _dataStore.LoadOrDefault(MEMORY_LIST_STORE_KEY, new List<Memory>());
         }
     }
 }

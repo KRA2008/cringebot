@@ -5,22 +5,23 @@ namespace Cringebot.Wrappers
 {
     public interface IAppDataStore
     {
-        bool TryLoad<T>(string key, out T data);
+        T LoadOrDefault<T>(string key, T defaultValue);
         void Save(string key, object data);
     }
     
     // unit test not possible - wrapper to enable unit testing of things for which storage is a dependency
     public class StorageWrapper : IAppDataStore
     {
-        public bool TryLoad<T>(string key, out T data)
+        public T LoadOrDefault<T>(string key, T defaultValue)
         {
             if (Application.Current.Properties.ContainsKey(key))
             {
-                data = JsonConvert.DeserializeObject<T>(Application.Current.Properties[key] as string);
-                return true;
+                return JsonConvert.DeserializeObject<T>(Application.Current.Properties[key] as string);
             }
-            data = default(T);
-            return false;
+            else
+            {
+                return defaultValue;
+            }
         }
 
         public void Save(string key, object data)

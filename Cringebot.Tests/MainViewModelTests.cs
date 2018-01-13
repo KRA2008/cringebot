@@ -19,38 +19,24 @@ namespace Cringebot.Tests
         private const string MEMORY_LIST_STORE_KEY = "memoryList";
 
         [SetUp]
-        public void InstantiateMainViewModel()
+        public void SetupViewModel()
         {
             _dataStore = new Mock<IAppDataStore>();
+            _dataStore.Setup(d => d.LoadOrDefault(SIMULATE_STORE_KEY, It.IsAny<bool>())).Returns(true);
+            _dataStore.Setup(d => d.LoadOrDefault(SHOW_LIST_STORE_KEY, It.IsAny<bool>())).Returns(true);
+            _dataStore.Setup(d => d.LoadOrDefault(MEMORY_LIST_STORE_KEY, It.IsAny<List<Memory>>())).Returns(new List<Memory>());
             _viewModel = new MainViewModel(_dataStore.Object);
             _viewModel.Init(null);
-        }
-
-        public class Ctor : MainViewModelTests
-        {
-            [Test]
-            public void ShouldStartWithShowListOn()
-            {
-                //assert
-                _viewModel.ShowList.Should().Be.True();
-            }
-
-            [Test]
-            public void ShouldInitializeMemories()
-            {
-                //assert
-                _viewModel.DisplayMemories.Should().Not.Be.Null();
-            }
         }
 
         public class InitMethod : MainViewModelTests
         {
             [Test, Theory]
-            public void ShouldLoadSavedStateOfSimulateSetting(bool expectedStoredSetting)
+            public void ShouldLoadSavedStateOfSimulateSettingOrDefault(bool expectedStoredSetting)
             {
                 //arrange
                 bool fakeStoredSetting = expectedStoredSetting;
-                _dataStore.Setup(w => w.TryLoad(SIMULATE_STORE_KEY, out fakeStoredSetting)).Returns(true);
+                _dataStore.Setup(w => w.LoadOrDefault(SIMULATE_STORE_KEY, true)).Returns(expectedStoredSetting);
 
                 //act
                 _viewModel.Init(null);
@@ -59,26 +45,12 @@ namespace Cringebot.Tests
                 _viewModel.Simulate.Should().Be.EqualTo(expectedStoredSetting);
             }
 
-            [Test]
-            public void ShouldTurnOnSimulateSettingIfNotStored()
-            {
-                //arrange
-                bool dummyObject;
-                _dataStore.Setup(w => w.TryLoad(SIMULATE_STORE_KEY, out dummyObject)).Returns(false);
-
-                //act
-                _viewModel.Init(null);
-
-                //assert
-                _viewModel.Simulate.Should().Be.True();
-            }
-
             [Test, Theory]
-            public void ShouldLoadSavedStateOfShowListSetting(bool expectedStoredSetting)
+            public void ShouldLoadSavedStateOfShowListSettingOrDefault(bool expectedStoredSetting)
             {
                 //arrange
                 bool fakeStoredSetting = expectedStoredSetting;
-                _dataStore.Setup(w => w.TryLoad(SHOW_LIST_STORE_KEY, out fakeStoredSetting)).Returns(true);
+                _dataStore.Setup(w => w.LoadOrDefault(SHOW_LIST_STORE_KEY, true)).Returns(expectedStoredSetting);
 
                 //act
                 _viewModel.Init(null);
@@ -88,21 +60,7 @@ namespace Cringebot.Tests
             }
 
             [Test]
-            public void ShouldTurnOnShowListSettingIfNotStored()
-            {
-                //arrange
-                bool dummyObject;
-                _dataStore.Setup(w => w.TryLoad(SHOW_LIST_STORE_KEY, out dummyObject)).Returns(false);
-
-                //act
-                _viewModel.Init(null);
-
-                //assert
-                _viewModel.ShowList.Should().Be.True();
-            }
-
-            [Test]
-            public void ShouldLoadSavedStateOfList()
+            public void ShouldLoadSavedStateOfListOrDefault()
             {
                 //arrange
                 var expectedList = new List<Memory>
@@ -116,7 +74,7 @@ namespace Cringebot.Tests
                         Description = "more stuff"
                     }
                 };
-                _dataStore.Setup(w => w.TryLoad(MEMORY_LIST_STORE_KEY, out expectedList)).Returns(true);
+                _dataStore.Setup(w => w.LoadOrDefault(MEMORY_LIST_STORE_KEY, new List<Memory>())).Returns(expectedList);
 
                 //act
                 _viewModel.Init(null);
