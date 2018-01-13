@@ -1,8 +1,6 @@
 ﻿using Cringebot.Model;
 using NUnit.Framework;
 using SharpTestsEx;
-using System;
-using System.Linq;
 
 namespace Cringebot.Tests
 {

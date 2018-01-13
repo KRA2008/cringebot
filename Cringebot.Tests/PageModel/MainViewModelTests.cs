@@ -1,18 +1,19 @@
 ﻿using Cringebot.Model;
-using Cringebot.ViewModel;
 using Cringebot.Wrappers;
+using FreshMvvm;
 using Moq;
 using NUnit.Framework;
 using SharpTestsEx;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
-namespace Cringebot.Tests
+namespace Cringebot.PageModel.Tests
 {
     [TestFixture]
     public class MainViewModelTests
     {
-        private MainViewModel _viewModel;
+        private MainPageModel _viewModel;
         private Mock<IAppDataStore> _dataStore;
         private const string SIMULATE_STORE_KEY = "simulate";
         private const string SHOW_LIST_STORE_KEY = "showList";
@@ -25,7 +26,7 @@ namespace Cringebot.Tests
             _dataStore.Setup(d => d.LoadOrDefault(SIMULATE_STORE_KEY, It.IsAny<bool>())).Returns(true);
             _dataStore.Setup(d => d.LoadOrDefault(SHOW_LIST_STORE_KEY, It.IsAny<bool>())).Returns(true);
             _dataStore.Setup(d => d.LoadOrDefault(MEMORY_LIST_STORE_KEY, It.IsAny<List<Memory>>())).Returns(new List<Memory>());
-            _viewModel = new MainViewModel(_dataStore.Object);
+            _viewModel = new MainPageModel(_dataStore.Object);
             _viewModel.Init(null);
         }
 
@@ -288,6 +289,24 @@ namespace Cringebot.Tests
 
                 //assert
                 _viewModel.DisplayMemories.Should().Have.SameSequenceAs(new[] { mem1, mem2, mem3 });
+            }
+        }
+
+        public class ViewDetailsCommand : MainViewModelTests
+        {
+            [Test]
+            public async Task ShouldNavigateToDetailsPage()
+            {
+                //arrange
+                var coreMethods = new Mock<IPageModelCoreMethods>();
+                _viewModel.CoreMethods = coreMethods.Object;
+                var memory = new Memory();
+
+                //act
+                await _viewModel.ViewDetails(memory);
+
+                //assert
+                coreMethods.Verify(c => c.PushPageModel<DetailsPageModel>(memory, false, true));
             }
         }
     }

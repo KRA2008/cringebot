@@ -1,5 +1,6 @@
-﻿using Cringebot.ViewModel;
+﻿using Cringebot.PageModel;
 using Cringebot.Wrappers;
+using FreshMvvm;
 
 namespace Cringebot
 {
@@ -7,12 +8,12 @@ namespace Cringebot
     {
         public Bootstrapper()
         {
-            FreshMvvm.FreshIOC.Container.Register<IAppDataStore, StorageWrapper>();
+            FreshIOC.Container.Register<IAppDataStore, StorageWrapper>();
         }
 
         public Xamarin.Forms.Page GetStartingPage()
         {
-            return FreshMvvm.FreshPageModelResolver.ResolvePageModel<MainViewModel>();
+            return new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<MainPageModel>());
         }
     }
 }

@@ -5,11 +5,13 @@ using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
 
-namespace Cringebot.ViewModel
+namespace Cringebot.PageModel
 {
-    public class MainViewModel : FreshBasePageModel
+    public class MainPageModel : FreshBasePageModel
     {
         public List<Memory> FullListMemories { get; set; }
         [DependsOn(nameof(MemoryInput))]
@@ -27,10 +29,11 @@ namespace Cringebot.ViewModel
 
         public bool Simulate { get; set; }
         public bool ShowList { get; set; }
-
-        public Command AddMemoryCommand { get; set; }
-        public Command AddOccurrenceCommand { get; set; }
         public string MemoryInput { get; set; }
+
+        public Command AddMemoryCommand { get; }
+        public Command AddOccurrenceCommand { get; }
+        public Command ViewDetailsCommand { get; }
 
         private const string SIMULATE_STORE_KEY = "simulate";
         private const string SHOW_LIST_STORE_KEY = "showList";
@@ -38,7 +41,7 @@ namespace Cringebot.ViewModel
 
         private IAppDataStore _dataStore;
 
-        public MainViewModel(IAppDataStore dataStore)
+        public MainPageModel(IAppDataStore dataStore)
         {
             _dataStore = dataStore;
 
@@ -56,11 +59,18 @@ namespace Cringebot.ViewModel
                 }
             });
 
-            AddOccurrenceCommand = new Command((arg) => {
+            AddOccurrenceCommand = new Command((arg) => 
+            {
                 var memory = (Memory)arg;
                 memory.Occurrences.Add(DateTime.Now);
                 
                 _dataStore.Save(MEMORY_LIST_STORE_KEY, FullListMemories);
+            });
+
+            ViewDetailsCommand = new Command(async(args) => 
+            {
+                var memory = (Memory)((ItemTappedEventArgs)args).Item;
+                await ViewDetails(memory);
             });
 
             PropertyChanged += (sender, args) =>
@@ -75,6 +85,11 @@ namespace Cringebot.ViewModel
                         break;
                 }
             };
+        }
+
+        public async Task ViewDetails(Memory memory) //grrrrr, switch to AsyncCommand
+        {
+            await CoreMethods.PushPageModel<DetailsPageModel>(memory);
         }
 
         public override void Init(object initData)
