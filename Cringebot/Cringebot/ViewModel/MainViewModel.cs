@@ -25,33 +25,8 @@ namespace Cringebot.ViewModel
             }
         }
 
-        private bool _simulate;
-        public bool Simulate
-        {
-            get
-            {
-                return _simulate;
-            }
-            set
-            {
-                _simulate = value;
-                _dataStore.Save(SIMULATE_STORE_KEY, value);
-            }
-        }
-
-        private bool _showList;
-        public bool ShowList
-        {
-            get
-            {
-                return _showList;
-            }
-            set
-            {
-                _showList = value;
-                _dataStore.Save(SHOW_LIST_STORE_KEY, value);
-            }
-        }
+        public bool Simulate { get; set; }
+        public bool ShowList { get; set; }
 
         public Command AddMemoryCommand { get; set; }
         public Command AddOccurrenceCommand { get; set; }
