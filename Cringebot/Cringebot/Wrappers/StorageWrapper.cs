@@ -9,9 +9,12 @@ namespace Cringebot.Wrappers
         void Save(string key, object data);
     }
     
-    // unit test not possible - wrapper to enable unit testing of things for which storage is a dependency
     public class StorageWrapper : IAppDataStore
     {
+        public const string SIMULATE_STORE_KEY = "simulate";
+        public const string SHOW_LIST_STORE_KEY = "showList";
+        public const string MEMORY_LIST_STORE_KEY = "memoryList";
+
         public T LoadOrDefault<T>(string key, T defaultValue)
         {
             if (Application.Current.Properties.ContainsKey(key))

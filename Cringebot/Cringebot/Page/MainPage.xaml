@@ -29,7 +29,7 @@
                    VerticalTextAlignment="Center"
                    HorizontalTextAlignment="Center"
                    VerticalOptions="FillAndExpand"/>
-            <ce:DeselectListView ItemsSource="{Binding DisplayMemories}"
+            <ce:DeselectListView ItemsSource="{Binding Memories}"
                       IsVisible="{Binding ShowList}"
                       VerticalOptions="FillAndExpand"
                       x:Name="MemoryList">

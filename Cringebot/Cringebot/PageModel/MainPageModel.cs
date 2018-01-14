@@ -2,28 +2,26 @@
 using Cringebot.Wrappers;
 using FreshMvvm;
 using PropertyChanged;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace Cringebot.PageModel
 {
     public class MainPageModel : FreshBasePageModel
     {
-        public List<Memory> FullListMemories { get; set; }
-        [DependsOn(nameof(MemoryInput))]
-        public IEnumerable<Memory> DisplayMemories
+        private List<Memory> _fullListMemories;
+        [DependsOn(nameof(MemoryInput),nameof(_fullListMemories))]
+        public IEnumerable<Memory> Memories
         {
             get
             {
                 if(!string.IsNullOrWhiteSpace(MemoryInput))
                 {
-                    return FullListMemories.Where(m => m.Description.ToLower().Contains(MemoryInput.ToLower()));
+                    return _fullListMemories.Where(m => m.Description.ToLower().Contains(MemoryInput.ToLower()));
                 }
-                return FullListMemories;
+                return _fullListMemories;
             }
         }
 
@@ -35,10 +33,6 @@ namespace Cringebot.PageModel
         public Command AddOccurrenceCommand { get; }
         public Command ViewDetailsCommand { get; }
 
-        private const string SIMULATE_STORE_KEY = "simulate";
-        private const string SHOW_LIST_STORE_KEY = "showList";
-        private const string MEMORY_LIST_STORE_KEY = "memoryList";
-
         private IAppDataStore _dataStore;
 
         public MainPageModel(IAppDataStore dataStore)
@@ -49,22 +43,27 @@ namespace Cringebot.PageModel
             {
                 if(!string.IsNullOrWhiteSpace(MemoryInput))
                 {
-                    FullListMemories.Add(new Memory
+                    var newMemory = new Memory
                     {
                         Description = MemoryInput
-                    });
+                    };
+                    newMemory.Occurrences.Add(SystemTime.Now());
+                    _fullListMemories.Add(newMemory);
+
+                    _fullListMemories = _fullListMemories.OrderBy(m => m.Description).ToList();
+
                     MemoryInput = null;
 
-                    _dataStore.Save(MEMORY_LIST_STORE_KEY, FullListMemories);
+                    _dataStore.Save(StorageWrapper.MEMORY_LIST_STORE_KEY, _fullListMemories);
                 }
             });
 
             AddOccurrenceCommand = new Command((arg) => 
             {
                 var memory = (Memory)arg;
-                memory.Occurrences.Add(DateTime.Now);
+                memory.Occurrences.Add(SystemTime.Now());
                 
-                _dataStore.Save(MEMORY_LIST_STORE_KEY, FullListMemories);
+                _dataStore.Save(StorageWrapper.MEMORY_LIST_STORE_KEY, _fullListMemories);
             });
 
             ViewDetailsCommand = new Command(async(args) => 
@@ -78,10 +77,10 @@ namespace Cringebot.PageModel
                 switch (args.PropertyName)
                 {
                     case (nameof(Simulate)):
-                        _dataStore.Save(SIMULATE_STORE_KEY, Simulate);
+                        _dataStore.Save(StorageWrapper.SIMULATE_STORE_KEY, Simulate);
                         break;
                     case (nameof(ShowList)):
-                        _dataStore.Save(SHOW_LIST_STORE_KEY, ShowList);
+                        _dataStore.Save(StorageWrapper.SHOW_LIST_STORE_KEY, ShowList);
                         break;
                 }
             };
@@ -96,9 +95,9 @@ namespace Cringebot.PageModel
         {
             base.Init(initData);
 
-            Simulate = _dataStore.LoadOrDefault(SIMULATE_STORE_KEY, true);
-            ShowList = _dataStore.LoadOrDefault(SHOW_LIST_STORE_KEY, true);
-            FullListMemories = _dataStore.LoadOrDefault(MEMORY_LIST_STORE_KEY, new List<Memory>());
+            Simulate = _dataStore.LoadOrDefault(StorageWrapper.SIMULATE_STORE_KEY, true);
+            ShowList = _dataStore.LoadOrDefault(StorageWrapper.SHOW_LIST_STORE_KEY, true);
+            _fullListMemories = _dataStore.LoadOrDefault(StorageWrapper.MEMORY_LIST_STORE_KEY, new List<Memory>());
         }
     }
 }

@@ -7,19 +7,38 @@
              xmlns:fresh="clr-namespace:FreshMvvm;assembly=FreshMvvm"
              xmlns:model="clr-namespace:Cringebot.Model"
              xmlns:ce="clr-namespace:Cringebot.Page.CustomElements"
+             xmlns:corcav="clr-namespace:Corcav.Behaviors;assembly=Corcav.Behaviors"
              d:DataContext="{d:DesignInstance Type=model:Memory, IsDesignTimeCreatable=False}"
              x:Class="Cringebot.Page.DetailsPage"
-             Title="Memory Occurrences">
+             Title="Memory Details">
     <ContentPage.Content>
         <StackLayout Padding="15"
                      Spacing="15">
-            <ce:DeselectListView ItemsSource="{Binding Memory.Occurrences}">
+            <Entry Text="{Binding Memory.Description}"/>
+            <ce:DeselectListView ItemsSource="{Binding Memory.Occurrences}"
+                                 x:Name="OccurrenceList">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <ViewCell.View>
-                                <Label Text="{Binding ., StringFormat='{0:MMMM dd, yyyy H:mm:ss}'}"
-                                       VerticalTextAlignment="Center"/>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding ., StringFormat='{0:MMMM dd, yyyy H:mm:ss}'}"
+                                       VerticalTextAlignment="Center"
+                                       HorizontalOptions="StartAndExpand"/>
+                                    <Image Source="clear">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer>
+                                                <corcav:Interaction.Behaviors>
+                                                    <corcav:BehaviorCollection>
+                                                        <corcav:EventToCommand EventName="Tapped"
+                                                                               Command="{Binding Source={x:Reference OccurrenceList}, Path=BindingContext.DeleteOccurrenceCommand}"
+                                                                               CommandParameter="{Binding}"/>
+                                                    </corcav:BehaviorCollection>
+                                                </corcav:Interaction.Behaviors>
+                                            </TapGestureRecognizer>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </StackLayout>
                             </ViewCell.View>
                         </ViewCell>
                     </DataTemplate>

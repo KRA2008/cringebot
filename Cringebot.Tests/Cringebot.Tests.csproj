@@ -72,9 +72,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PageModel\MainViewModelTests.cs" />
+    <Compile Include="PageModel\DetailsPageModelTests.cs" />
+    <Compile Include="PageModel\MainPageModelTests.cs" />
     <Compile Include="Model\MemoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\InStorageMemoryUpdaterTests.cs" />
+    <Compile Include="Wrappers\StorageWrapperTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -88,6 +91,7 @@
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
