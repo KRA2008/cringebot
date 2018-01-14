@@ -39,6 +39,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\Memory.cs" />
+    <Compile Include="Page\CustomElements\DeselectListView.cs" />
     <Compile Include="Page\DetailsPage.xaml.cs">
       <DependentUpon>DetailsPage.xaml</DependentUpon>
     </Compile>

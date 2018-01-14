@@ -6,10 +6,12 @@
              mc:Ignorable="d"
              xmlns:fresh="clr-namespace:FreshMvvm;assembly=FreshMvvm"
              xmlns:local="clr-namespace:Cringebot"
+             xmlns:ce="clr-namespace:Cringebot.Page.CustomElements"
              xmlns:vc="clr-namespace:Cringebot.Page"
              xmlns:corcav="clr-namespace:Corcav.Behaviors;assembly=Corcav.Behaviors"
              d:DataContext="{d:DesignInstance Type=local:MainPageModel, IsDesignTimeCreatable=False}"
-             x:Class="Cringebot.Page.MainPage">
+             x:Class="Cringebot.Page.MainPage"
+             Title="Cringebot">
     <ContentPage.Content>
         <StackLayout Padding="15" 
                      Spacing="15">
@@ -27,7 +29,7 @@
                    VerticalTextAlignment="Center"
                    HorizontalTextAlignment="Center"
                    VerticalOptions="FillAndExpand"/>
-            <ListView ItemsSource="{Binding DisplayMemories}"
+            <ce:DeselectListView ItemsSource="{Binding DisplayMemories}"
                       IsVisible="{Binding ShowList}"
                       VerticalOptions="FillAndExpand"
                       x:Name="MemoryList">
@@ -66,7 +68,7 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-            </ListView>
+            </ce:DeselectListView>
             <StackLayout Orientation="Horizontal"
                          HorizontalOptions="CenterAndExpand">
                 <Label Text="Show List"

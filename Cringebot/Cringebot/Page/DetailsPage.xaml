@@ -6,22 +6,25 @@
              mc:Ignorable="d"
              xmlns:fresh="clr-namespace:FreshMvvm;assembly=FreshMvvm"
              xmlns:model="clr-namespace:Cringebot.Model"
+             xmlns:ce="clr-namespace:Cringebot.Page.CustomElements"
              d:DataContext="{d:DesignInstance Type=model:Memory, IsDesignTimeCreatable=False}"
-             x:Class="Cringebot.Page.DetailsPage">
+             x:Class="Cringebot.Page.DetailsPage"
+             Title="Memory Occurrences">
     <ContentPage.Content>
         <StackLayout Padding="15"
                      Spacing="15">
-            <ListView ItemsSource="{Binding Memory.Occurrences}">
+            <ce:DeselectListView ItemsSource="{Binding Memory.Occurrences}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <ViewCell.View>
-                                <Label Text="{Binding}"/>
+                                <Label Text="{Binding ., StringFormat='{0:MMMM dd, yyyy H:mm:ss}'}"
+                                       VerticalTextAlignment="Center"/>
                             </ViewCell.View>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-            </ListView>
+            </ce:DeselectListView>
         </StackLayout>
     </ContentPage.Content>
 </fresh:FreshBaseContentPage>
