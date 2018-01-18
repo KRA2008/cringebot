@@ -76,7 +76,6 @@
     <Compile Include="PageModel\MainPageModelTests.cs" />
     <Compile Include="Model\MemoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utilities\InStorageMemoryUpdaterTests.cs" />
     <Compile Include="Wrappers\StorageWrapperTests.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -102,29 +102,6 @@ namespace Cringebot.PageModel.Tests
             }
 
             [Test]
-            public void ShouldSaveListToStore()
-            {
-                //arrange
-                var MEMORY_1 = "blahblah";
-                _viewModel.MemoryInput = MEMORY_1;
-
-                //act
-                _viewModel.AddMemoryCommand.Execute(null);
-
-                //arrange
-                var MEMORY_2 = "more stuff";
-                _viewModel.MemoryInput = MEMORY_2;
-
-                //act
-                _viewModel.AddMemoryCommand.Execute(null);
-                
-                //assert
-                _dataStore.Verify(d => d.Save(StorageWrapper.MEMORY_LIST_STORE_KEY, It.Is<List<Memory>>(l => 
-                    l.ElementAt(0).Description == MEMORY_1 &&
-                    l.ElementAt(1).Description == MEMORY_2)));
-            }
-
-            [Test]
             public void ShouldClearOutInputField()
             {
                 //arrange
@@ -172,16 +149,6 @@ namespace Cringebot.PageModel.Tests
                 //assert
                 memory.Occurrences.Count.Should().Be.EqualTo(3);
             }
-
-            [Test]
-            public void ShouldSaveMemoryList()
-            {
-                //act
-                _viewModel.AddOccurrenceCommand.Execute(new Memory());
-
-                //assert
-                _dataStore.Verify(d => d.Save(StorageWrapper.MEMORY_LIST_STORE_KEY, _viewModel.Memories));
-            }
         }
 
         public class MemoryInputProperty : MainViewModelTests
@@ -204,32 +171,6 @@ namespace Cringebot.PageModel.Tests
 
                 //assert
                 eventRaised.Should().Be.True();
-            }
-        }
-
-        public class ShowListProperty : MainViewModelTests
-        {
-            [Test, Theory]
-            public void ShouldSaveStateToStoreWhenSet(bool expectedShowList)
-            {
-                //act
-                _viewModel.ShowList = expectedShowList;
-
-                //assert
-                _dataStore.Verify(d => d.Save(StorageWrapper.SHOW_LIST_STORE_KEY, expectedShowList));
-            }
-        }
-
-        public class SimulateProperty : MainViewModelTests
-        {
-            [Test, Theory]
-            public void ShouldSaveStateToStoreWhenSet(bool expectedSimulate)
-            {
-                //act
-                _viewModel.Simulate = expectedSimulate;
-
-                //assert
-                _dataStore.Verify(d => d.Save(StorageWrapper.SIMULATE_STORE_KEY, expectedSimulate));
             }
         }
 

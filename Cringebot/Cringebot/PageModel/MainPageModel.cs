@@ -12,7 +12,7 @@ namespace Cringebot.PageModel
     public class MainPageModel : FreshBasePageModel
     {
         private List<Memory> _fullListMemories;
-        [DependsOn(nameof(MemoryInput),nameof(_fullListMemories))]
+        [DependsOn(nameof(MemoryInput), nameof(_fullListMemories))]
         public IEnumerable<Memory> Memories
         {
             get
@@ -53,8 +53,6 @@ namespace Cringebot.PageModel
                     _fullListMemories = _fullListMemories.OrderBy(m => m.Description).ToList();
 
                     MemoryInput = null;
-
-                    _dataStore.Save(StorageWrapper.MEMORY_LIST_STORE_KEY, _fullListMemories);
                 }
             });
 
@@ -62,8 +60,6 @@ namespace Cringebot.PageModel
             {
                 var memory = (Memory)arg;
                 memory.Occurrences.Add(SystemTime.Now());
-                
-                _dataStore.Save(StorageWrapper.MEMORY_LIST_STORE_KEY, _fullListMemories);
             });
 
             ViewDetailsCommand = new Command(async(args) => 
@@ -71,19 +67,6 @@ namespace Cringebot.PageModel
                 var memory = (Memory)((ItemTappedEventArgs)args).Item;
                 await ViewDetails(memory);
             });
-
-            PropertyChanged += (sender, args) =>
-            {
-                switch (args.PropertyName)
-                {
-                    case (nameof(Simulate)):
-                        _dataStore.Save(StorageWrapper.SIMULATE_STORE_KEY, Simulate);
-                        break;
-                    case (nameof(ShowList)):
-                        _dataStore.Save(StorageWrapper.SHOW_LIST_STORE_KEY, ShowList);
-                        break;
-                }
-            };
         }
 
         public async Task ViewDetails(Memory memory) //grrrrr, switch to AsyncCommand
@@ -98,6 +81,13 @@ namespace Cringebot.PageModel
             Simulate = _dataStore.LoadOrDefault(StorageWrapper.SIMULATE_STORE_KEY, true);
             ShowList = _dataStore.LoadOrDefault(StorageWrapper.SHOW_LIST_STORE_KEY, true);
             _fullListMemories = _dataStore.LoadOrDefault(StorageWrapper.MEMORY_LIST_STORE_KEY, new List<Memory>());
+        }
+
+        public void Save()
+        {
+            _dataStore.Save(StorageWrapper.SHOW_LIST_STORE_KEY, ShowList);
+            _dataStore.Save(StorageWrapper.SIMULATE_STORE_KEY, Simulate);
+            _dataStore.Save(StorageWrapper.MEMORY_LIST_STORE_KEY, _fullListMemories);
         }
     }
 }

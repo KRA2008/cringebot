@@ -1,30 +1,36 @@
-﻿using Xamarin.Forms;
+﻿using Cringebot.PageModel;
+using FreshMvvm;
+using Xamarin.Forms;
 
 namespace Cringebot
 {
     public partial class App : Application
     {
+        private MainPageModel _mainPageModel;
+
         public App()
         {
             InitializeComponent();
             var bootstrapper = new Bootstrapper();
 
-            MainPage = bootstrapper.GetStartingPage();
+            var startingPage = bootstrapper.GetStartingPage();
+
+            _mainPageModel = (MainPageModel)(((FreshBaseContentPage)(((FreshNavigationContainer)startingPage).CurrentPage)).BindingContext);
+
+            MainPage = startingPage;
         }
 
         protected override void OnStart()
         {
-            // Handle when your app starts
         }
 
         protected override void OnSleep()
         {
-            // Handle when your app sleeps
+            _mainPageModel.Save();
         }
 
         protected override void OnResume()
         {
-            // Handle when your app resumes
         }
     }
 }
