@@ -61,16 +61,18 @@ namespace Cringebot.PageModel.Tests
             public void ShouldLoadSavedStateOfListOrDefault()
             {
                 //arrange
+                var targetMemory1 = new Memory
+                {
+                    Description = "whatever"
+                };
+                var targetMemory2 = new Memory
+                {
+                    Description = "whatever"
+                };
                 var expectedList = new List<Memory>
                 {
-                    new Memory
-                    {
-                        Description = "whatever"
-                    },
-                    new Memory
-                    {
-                        Description = "more stuff"
-                    }
+                    targetMemory1,
+                    targetMemory2
                 };
                 _dataStore.Setup(w => w.LoadOrDefault(StorageWrapper.MEMORY_LIST_STORE_KEY, new List<Memory>())).Returns(expectedList);
 
@@ -78,7 +80,7 @@ namespace Cringebot.PageModel.Tests
                 _viewModel.Init(null);
 
                 //assert
-                _viewModel.Memories.Should().Have.SameSequenceAs(expectedList);
+                _viewModel.Memories.Should().Have.SameSequenceAs(new[] { targetMemory1, targetMemory2 });
             }
         }
 
@@ -263,6 +265,67 @@ namespace Cringebot.PageModel.Tests
 
                 //assert
                 coreMethods.Verify(c => c.PushPageModel<DetailsPageModel>(memory, false, true));
+            }
+        }
+
+        public class SaveMethod : MainViewModelTests
+        {
+            [Theory]
+            public void ShouldSaveStateOfSimulate(bool simulate)
+            {
+                //arrange
+                _viewModel.Simulate = simulate;
+
+                //act
+                _viewModel.Save();
+
+                //assert
+                _dataStore.Verify(d => d.Save(StorageWrapper.SIMULATE_STORE_KEY, simulate));
+            }
+
+            [Theory]
+            public void ShouldSaveStateOfShowList(bool showList)
+            {
+                //arrange
+                _viewModel.ShowList = showList;
+
+                //act
+                _viewModel.Save();
+
+                //assert
+                _dataStore.Verify(d => d.Save(StorageWrapper.SHOW_LIST_STORE_KEY, showList));
+            }
+
+            [Test]
+            public void ShouldSaveStateOfList()
+            {
+                //arrange
+                const string IN_MEMORY_DESCRIPTION = "a";
+                const string OUT_MEMORY_DESCRIPTION = "b";
+
+                _viewModel.MemoryInput = IN_MEMORY_DESCRIPTION;
+                _viewModel.AddMemoryCommand.Execute(null);
+
+                _viewModel.MemoryInput = OUT_MEMORY_DESCRIPTION;
+                _viewModel.AddMemoryCommand.Execute(null);
+
+                _viewModel.MemoryInput = IN_MEMORY_DESCRIPTION;
+
+                var whatever = _viewModel.Memories; // trigger filtering
+
+                IEnumerable<Memory> actualSavedList = null;
+                _dataStore.Setup(d => d.Save(StorageWrapper.MEMORY_LIST_STORE_KEY, It.IsAny<object>())).Callback<string, object>((s, l) =>
+                {
+                    actualSavedList = (IEnumerable<Memory>)l;
+                });
+
+                //act
+                _viewModel.Save();
+
+                //assert
+                actualSavedList.Single(m => m.Description == IN_MEMORY_DESCRIPTION).Should().Not.Be.Null();
+                actualSavedList.Single(m => m.Description == OUT_MEMORY_DESCRIPTION).Should().Not.Be.Null();
+                actualSavedList.Count().Should().Be.EqualTo(2);
             }
         }
     }

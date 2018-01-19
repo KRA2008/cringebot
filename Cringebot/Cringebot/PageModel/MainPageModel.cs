@@ -3,25 +3,36 @@ using Cringebot.Wrappers;
 using FreshMvvm;
 using PropertyChanged;
 using System.Collections.Generic;
-using System.Linq;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Cringebot.Page.CustomElements;
+using System;
+using System.Linq;
 
 namespace Cringebot.PageModel
 {
     public class MainPageModel : FreshBasePageModel
     {
-        private List<Memory> _fullListMemories;
-        [DependsOn(nameof(MemoryInput), nameof(_fullListMemories))]
-        public IList<Memory> Memories
+        private List<Memory> _filteredOutMemories;
+        [DependsOn(nameof(MemoryInput), nameof(_filteredOutMemories))]
+        private ObservableCollection<Memory> _memories;
+        public ObservableCollection<Memory> Memories
         {
             get
             {
+                Predicate<Memory> filterPredicate = delegate (Memory a) { return true; };
                 if(!string.IsNullOrWhiteSpace(MemoryInput))
                 {
-                    return _fullListMemories.Where(m => m.Description.ToLower().Contains(MemoryInput.ToLower())).ToList();
+                    filterPredicate = delegate (Memory a) { return a.Description.ToLower().Contains(MemoryInput.ToLower()); };
                 }
-                return _fullListMemories;
+                _memories.FilterButPreserve(_filteredOutMemories, filterPredicate);
+                _memories.Sort((a, b) => { return a.Description.CompareTo(b.Description); });
+                return _memories;
+            }
+            set
+            {
+                _memories = value;
             }
         }
 
@@ -38,6 +49,8 @@ namespace Cringebot.PageModel
         public MainPageModel(IAppDataStore dataStore)
         {
             _dataStore = dataStore;
+            _filteredOutMemories = new List<Memory>();
+            _memories = new ObservableCollection<Memory>();
 
             AddMemoryCommand = new Command(() =>
             {
@@ -48,9 +61,7 @@ namespace Cringebot.PageModel
                         Description = MemoryInput
                     };
                     newMemory.Occurrences.Add(SystemTime.Now());
-                    _fullListMemories.Add(newMemory);
-
-                    _fullListMemories = _fullListMemories.OrderBy(m => m.Description).ToList();
+                    _filteredOutMemories.Add(newMemory);
 
                     MemoryInput = null;
                 }
@@ -79,7 +90,8 @@ namespace Cringebot.PageModel
             base.ReverseInit(returnedData);
 
             var memoryToRemove = (Memory)returnedData;
-            _fullListMemories.Remove(memoryToRemove);
+            _filteredOutMemories.Remove(memoryToRemove);
+            _memories.Remove(memoryToRemove);
         }
 
         public override void Init(object initData)
@@ -88,14 +100,14 @@ namespace Cringebot.PageModel
 
             Simulate = _dataStore.LoadOrDefault(StorageWrapper.SIMULATE_STORE_KEY, true);
             ShowList = _dataStore.LoadOrDefault(StorageWrapper.SHOW_LIST_STORE_KEY, true);
-            _fullListMemories = _dataStore.LoadOrDefault(StorageWrapper.MEMORY_LIST_STORE_KEY, new List<Memory>());
+            _filteredOutMemories = _dataStore.LoadOrDefault(StorageWrapper.MEMORY_LIST_STORE_KEY, new List<Memory>());
         }
 
         public void Save()
         {
             _dataStore.Save(StorageWrapper.SHOW_LIST_STORE_KEY, ShowList);
             _dataStore.Save(StorageWrapper.SIMULATE_STORE_KEY, Simulate);
-            _dataStore.Save(StorageWrapper.MEMORY_LIST_STORE_KEY, _fullListMemories);
+            _dataStore.Save(StorageWrapper.MEMORY_LIST_STORE_KEY, _filteredOutMemories.Union(_memories));
         }
     }
 }
