@@ -13,13 +13,13 @@ namespace Cringebot.PageModel
     {
         private List<Memory> _fullListMemories;
         [DependsOn(nameof(MemoryInput), nameof(_fullListMemories))]
-        public IEnumerable<Memory> Memories
+        public IList<Memory> Memories
         {
             get
             {
                 if(!string.IsNullOrWhiteSpace(MemoryInput))
                 {
-                    return _fullListMemories.Where(m => m.Description.ToLower().Contains(MemoryInput.ToLower()));
+                    return _fullListMemories.Where(m => m.Description.ToLower().Contains(MemoryInput.ToLower())).ToList();
                 }
                 return _fullListMemories;
             }
@@ -72,6 +72,14 @@ namespace Cringebot.PageModel
         public async Task ViewDetails(Memory memory) //grrrrr, switch to AsyncCommand
         {
             await CoreMethods.PushPageModel<DetailsPageModel>(memory);
+        }
+
+        public override void ReverseInit(object returnedData)
+        {
+            base.ReverseInit(returnedData);
+
+            var memoryToRemove = (Memory)returnedData;
+            _fullListMemories.Remove(memoryToRemove);
         }
 
         public override void Init(object initData)

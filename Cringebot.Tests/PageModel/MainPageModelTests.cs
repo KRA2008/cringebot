@@ -82,6 +82,32 @@ namespace Cringebot.PageModel.Tests
             }
         }
 
+        public class ReverseInitMethod : MainViewModelTests
+        {
+            [Test]
+            public void ShouldRemovePassedMemoryFromList()
+            {
+                //arrange
+                const string TARGET_MEMORY_DESCRIPTION = "something to delete";
+
+                _viewModel.MemoryInput = "blah blah keep me";
+                _viewModel.AddMemoryCommand.Execute(null);
+                _viewModel.MemoryInput = TARGET_MEMORY_DESCRIPTION;
+                _viewModel.AddMemoryCommand.Execute(null);
+                _viewModel.MemoryInput = "blah blah keep me too";
+                _viewModel.AddMemoryCommand.Execute(null);
+
+                var targetMemory = _viewModel.Memories.Single(m => m.Description == TARGET_MEMORY_DESCRIPTION);
+
+                //act
+                _viewModel.ReverseInit(targetMemory);
+
+                //assert
+                _viewModel.Memories.Should().Not.Contain(targetMemory);
+                _viewModel.Memories.Count().Should().Be.EqualTo(2);
+            }
+        }
+
         public class AddMemoryCommand : MainViewModelTests
         {
             [Test]

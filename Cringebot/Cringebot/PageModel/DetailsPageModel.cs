@@ -2,6 +2,7 @@
 using Cringebot.Wrappers;
 using FreshMvvm;
 using System;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace Cringebot.PageModel
@@ -11,6 +12,7 @@ namespace Cringebot.PageModel
         public Memory Memory { get; set; }
 
         public Command DeleteOccurrenceCommand { get; }
+        public Command DeleteMemoryCommand { get; }
 
         private IAppDataStore _dataStore;
 
@@ -22,6 +24,16 @@ namespace Cringebot.PageModel
             {
                 Memory.Occurrences.Remove((DateTime)dateTime);
             });
+
+            DeleteMemoryCommand = new Command(async () => //argh! get a decent async commmand
+            {
+                await DeleteMemory(Memory);
+            });
+        }
+
+        public async Task DeleteMemory(Memory memory)
+        {
+            await CoreMethods.PopPageModel(memory);
         }
 
         public override void Init(object initData)
