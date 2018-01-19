@@ -17,15 +17,28 @@
             <Entry Text="{Binding Memory.Description}"/>
             <ce:DeselectListView ItemsSource="{Binding Memory.Occurrences}"
                                  x:Name="OccurrenceList">
+                <x:Arguments>
+                    <ListViewCachingStrategy>RecycleElement</ListViewCachingStrategy>
+                </x:Arguments>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <ViewCell.View>
-                                <StackLayout Orientation="Horizontal">
+                                <Grid VerticalOptions="CenterAndExpand">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
                                     <Label Text="{Binding ., StringFormat='{0:MMMM dd, yyyy H:mm:ss}'}"
-                                       VerticalTextAlignment="Center"
-                                       HorizontalOptions="StartAndExpand"/>
-                                    <Image Source="clear">
+                                           VerticalOptions="CenterAndExpand"
+                                           Grid.Column="0"/>
+                                    <Image Source="clear"
+                                           Grid.Column="1"
+                                           HorizontalOptions="EndAndExpand"
+                                           VerticalOptions="CenterAndExpand">
                                         <Image.GestureRecognizers>
                                             <TapGestureRecognizer>
                                                 <corcav:Interaction.Behaviors>
@@ -38,7 +51,7 @@
                                             </TapGestureRecognizer>
                                         </Image.GestureRecognizers>
                                     </Image>
-                                </StackLayout>
+                                </Grid>
                             </ViewCell.View>
                         </ViewCell>
                     </DataTemplate>

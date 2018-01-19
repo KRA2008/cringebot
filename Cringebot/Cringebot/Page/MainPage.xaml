@@ -13,10 +13,11 @@
              x:Class="Cringebot.Page.MainPage"
              Title="Cringebot">
     <ContentPage.Content>
-        <StackLayout Padding="15" 
+        <StackLayout Padding="0" 
                      Spacing="15">
             <Entry Placeholder="Search/Add Memory..."
-                   Text="{Binding MemoryInput}">
+                   Text="{Binding MemoryInput}"
+                   Margin="15,15,15,0">
                 <corcav:Interaction.Behaviors>
                     <corcav:BehaviorCollection>
                         <corcav:EventToCommand EventName="Completed" 
@@ -30,9 +31,13 @@
                    HorizontalTextAlignment="Center"
                    VerticalOptions="FillAndExpand"/>
             <ce:DeselectListView ItemsSource="{Binding Memories}"
-                      IsVisible="{Binding ShowList}"
-                      VerticalOptions="FillAndExpand"
-                      x:Name="MemoryList">
+                                 IsVisible="{Binding ShowList}"
+                                 VerticalOptions="FillAndExpand"
+                                 Margin="0,0,0,0"
+                                 x:Name="MemoryList">
+                <x:Arguments>
+                    <ListViewCachingStrategy>RecycleElement</ListViewCachingStrategy>
+                </x:Arguments>
                 <corcav:Interaction.Behaviors>
                     <corcav:BehaviorCollection>
                         <corcav:EventToCommand EventName="ItemTapped"
@@ -44,14 +49,26 @@
                     <DataTemplate>
                         <ViewCell>
                             <ViewCell.View>
-                                <StackLayout Orientation="Horizontal">
+                                <Grid HorizontalOptions="FillAndExpand"
+                                      VerticalOptions="FillAndExpand"
+                                      Margin="15,0,0,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
                                     <Label Text="{Binding Description}"
-                                           HorizontalOptions="StartAndExpand"
-                                           VerticalTextAlignment="Center"/>
-                                    <Label Text="{Binding Occurrences.Count}"
-                                           VerticalTextAlignment="Center"/>
-                                    <Image Source="add">
-                                        <Image.GestureRecognizers>
+                                           VerticalOptions="CenterAndExpand"
+                                           Grid.Row="0"
+                                           Grid.Column="0"/>
+                                    <StackLayout Orientation="Horizontal"
+                                                 Grid.Row="0"
+                                                 Grid.Column="1"
+                                                 VerticalOptions="Fill"
+                                                 Padding="15,0,15,0">
+                                        <StackLayout.GestureRecognizers>
                                             <TapGestureRecognizer>
                                                 <corcav:Interaction.Behaviors>
                                                     <corcav:BehaviorCollection>
@@ -61,22 +78,29 @@
                                                     </corcav:BehaviorCollection>
                                                 </corcav:Interaction.Behaviors>
                                             </TapGestureRecognizer>
-                                        </Image.GestureRecognizers>
-                                    </Image>
-                                </StackLayout>
+                                        </StackLayout.GestureRecognizers>
+                                        <Label Text="{Binding Occurrences.Count}"
+                                               VerticalOptions="CenterAndExpand">
+                                        </Label>
+                                        <Image Source="add"
+                                               VerticalOptions="CenterAndExpand"/>
+                                    </StackLayout>
+                                </Grid>
                             </ViewCell.View>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ce:DeselectListView>
             <StackLayout Orientation="Horizontal"
-                         HorizontalOptions="CenterAndExpand">
+                         HorizontalOptions="CenterAndExpand"
+                         Padding="15,0,15,0">
                 <Label Text="Show List"
                        VerticalTextAlignment="Center"/>
                 <Switch IsToggled="{Binding ShowList}"/>
             </StackLayout>
             <StackLayout Orientation="Horizontal"
-                         HorizontalOptions="CenterAndExpand">
+                         HorizontalOptions="CenterAndExpand"
+                         Padding="15,0,15,15">
                 <Label Text="Simulate Intrusive Memory"
                        VerticalTextAlignment="Center"/>
                 <Switch IsToggled="{Binding Simulate}"/>

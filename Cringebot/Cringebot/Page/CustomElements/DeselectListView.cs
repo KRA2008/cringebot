@@ -4,7 +4,7 @@ namespace Cringebot.Page.CustomElements
 {
     public class DeselectListView : ListView
     {
-        public DeselectListView()
+        public DeselectListView(ListViewCachingStrategy strategy) : base(strategy)
         {
             ItemTapped += (args, sender) =>
             {
