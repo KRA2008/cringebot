@@ -25,13 +25,7 @@
                     </corcav:BehaviorCollection>
                 </corcav:Interaction.Behaviors>
             </Entry>
-            <Label Text="List hidden for your comfort."
-                   IsVisible="{Binding ShowList, Converter={vc:NotConverter}}"
-                   VerticalTextAlignment="Center"
-                   HorizontalTextAlignment="Center"
-                   VerticalOptions="FillAndExpand"/>
             <ce:DeselectListView ItemsSource="{Binding Memories}"
-                                 IsVisible="{Binding ShowList}"
                                  VerticalOptions="FillAndExpand"
                                  Margin="0,0,0,0"
                                  x:Name="MemoryList">
@@ -94,9 +88,9 @@
             <StackLayout Orientation="Horizontal"
                          HorizontalOptions="CenterAndExpand"
                          Padding="15,0,15,0">
-                <Label Text="Show List"
+                <Label Text="Limit List Visibility"
                        VerticalTextAlignment="Center"/>
-                <Switch IsToggled="{Binding ShowList}"/>
+                <Switch IsToggled="{Binding LimitListVisibility}"/>
             </StackLayout>
             <StackLayout Orientation="Horizontal"
                          HorizontalOptions="CenterAndExpand"

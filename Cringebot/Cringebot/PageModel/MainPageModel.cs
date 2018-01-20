@@ -27,6 +27,13 @@ namespace Cringebot.PageModel
                     filterPredicate = delegate (Memory a) { return a.Description.ToLower().Contains(MemoryInput.ToLower()); };
                 }
                 _memories.FilterButPreserve(_filteredOutMemories, filterPredicate);
+                if(LimitListVisibility)
+                {
+                    if(_memories.Count() != 1 || MemoryInput.Length < 3)
+                    {
+                        return new ObservableCollection<Memory>();
+                    }
+                }
                 _memories.Sort((a, b) => { return a.Description.CompareTo(b.Description); });
                 return _memories;
             }
@@ -37,7 +44,7 @@ namespace Cringebot.PageModel
         }
 
         public bool Simulate { get; set; }
-        public bool ShowList { get; set; }
+        public bool LimitListVisibility { get; set; }
         public string MemoryInput { get; set; }
 
         public Command AddMemoryCommand { get; }
@@ -99,13 +106,13 @@ namespace Cringebot.PageModel
             base.Init(initData);
 
             Simulate = _dataStore.LoadOrDefault(StorageWrapper.SIMULATE_STORE_KEY, true);
-            ShowList = _dataStore.LoadOrDefault(StorageWrapper.SHOW_LIST_STORE_KEY, true);
+            LimitListVisibility = _dataStore.LoadOrDefault(StorageWrapper.LIMIT_LIST_STORE_KEY, false);
             _filteredOutMemories = _dataStore.LoadOrDefault(StorageWrapper.MEMORY_LIST_STORE_KEY, new List<Memory>());
         }
 
         public void Save()
         {
-            _dataStore.Save(StorageWrapper.SHOW_LIST_STORE_KEY, ShowList);
+            _dataStore.Save(StorageWrapper.LIMIT_LIST_STORE_KEY, LimitListVisibility);
             _dataStore.Save(StorageWrapper.SIMULATE_STORE_KEY, Simulate);
             _dataStore.Save(StorageWrapper.MEMORY_LIST_STORE_KEY, _filteredOutMemories.Union(_memories));
         }

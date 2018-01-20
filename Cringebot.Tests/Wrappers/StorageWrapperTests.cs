@@ -10,7 +10,7 @@ namespace Cringebot.Tests.Wrappers
         public void ShouldExposeConstants()
         {
             StorageWrapper.MEMORY_LIST_STORE_KEY.Should().Be.EqualTo("memoryList");
-            StorageWrapper.SHOW_LIST_STORE_KEY.Should().Be.EqualTo("showList");
+            StorageWrapper.LIMIT_LIST_STORE_KEY.Should().Be.EqualTo("limitList");
             StorageWrapper.SIMULATE_STORE_KEY.Should().Be.EqualTo("simulate");
         }
     }

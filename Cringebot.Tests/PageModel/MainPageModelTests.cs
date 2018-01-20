@@ -21,7 +21,7 @@ namespace Cringebot.PageModel.Tests
         {
             _dataStore = new Mock<IAppDataStore>();
             _dataStore.Setup(d => d.LoadOrDefault(StorageWrapper.SIMULATE_STORE_KEY, It.IsAny<bool>())).Returns(true);
-            _dataStore.Setup(d => d.LoadOrDefault(StorageWrapper.SHOW_LIST_STORE_KEY, It.IsAny<bool>())).Returns(true);
+            _dataStore.Setup(d => d.LoadOrDefault(StorageWrapper.LIMIT_LIST_STORE_KEY, It.IsAny<bool>())).Returns(false);
             _dataStore.Setup(d => d.LoadOrDefault(StorageWrapper.MEMORY_LIST_STORE_KEY, It.IsAny<List<Memory>>())).Returns(new List<Memory>());
             _viewModel = new MainPageModel(_dataStore.Object);
             _viewModel.Init(null);
@@ -48,13 +48,13 @@ namespace Cringebot.PageModel.Tests
             {
                 //arrange
                 bool fakeStoredSetting = expectedStoredSetting;
-                _dataStore.Setup(w => w.LoadOrDefault(StorageWrapper.SHOW_LIST_STORE_KEY, true)).Returns(expectedStoredSetting);
+                _dataStore.Setup(w => w.LoadOrDefault(StorageWrapper.LIMIT_LIST_STORE_KEY, false)).Returns(expectedStoredSetting);
 
                 //act
                 _viewModel.Init(null);
 
                 //assert
-                _viewModel.ShowList.Should().Be.EqualTo(expectedStoredSetting);
+                _viewModel.LimitListVisibility.Should().Be.EqualTo(expectedStoredSetting);
             }
 
             [Test]
@@ -81,6 +81,61 @@ namespace Cringebot.PageModel.Tests
 
                 //assert
                 _viewModel.Memories.Should().Have.SameSequenceAs(new[] { targetMemory1, targetMemory2 });
+            }
+        }
+
+        public class LimitListVisibilityProperty : MainViewModelTests
+        {
+            [Test]
+            public void ShouldCauseMemoryListToShowNothingWhenMoreThanOneMemoryMatches()
+            {
+                //arrange
+                _viewModel.MemoryInput = "aaa1";
+                _viewModel.AddMemoryCommand.Execute(null);
+                _viewModel.MemoryInput = "aaa2";
+                _viewModel.AddMemoryCommand.Execute(null);
+
+                //act
+                _viewModel.LimitListVisibility = true;
+                _viewModel.MemoryInput = "aaa";
+
+                //assert
+                _viewModel.Memories.Count().Should().Be.EqualTo(0);
+            }
+
+            [Test]
+            public void ShouldCauseMemoryListToShowOneEntryWhenExactlyOneMemoryMatchesAndThreeLettersTyped()
+            {
+                //arrange
+                _viewModel.MemoryInput = "aaa1";
+                _viewModel.AddMemoryCommand.Execute(null);
+                _viewModel.MemoryInput = "bbb2";
+                _viewModel.AddMemoryCommand.Execute(null);
+
+                //act
+                _viewModel.LimitListVisibility = true;
+                _viewModel.MemoryInput = "aaa";
+
+                //assert
+                _viewModel.Memories.Count().Should().Be.EqualTo(1);
+            }
+
+            [TestCase("")]
+            [TestCase("a")]
+            [TestCase("aa")]
+            public void ShouldCauseMemoryListToShowNothingWhenOneMemoryMatchesButFewerThanThreeLettersTyped(string search)
+            {
+                //arrange
+                _viewModel.MemoryInput = "aaa1";
+                _viewModel.AddMemoryCommand.Execute(null);
+                _viewModel.AddMemoryCommand.Execute(null);
+
+                //act
+                _viewModel.LimitListVisibility = true;
+                _viewModel.MemoryInput = search;
+
+                //assert
+                _viewModel.Memories.Count().Should().Be.EqualTo(0);
             }
         }
 
@@ -287,13 +342,13 @@ namespace Cringebot.PageModel.Tests
             public void ShouldSaveStateOfShowList(bool showList)
             {
                 //arrange
-                _viewModel.ShowList = showList;
+                _viewModel.LimitListVisibility = showList;
 
                 //act
                 _viewModel.Save();
 
                 //assert
-                _dataStore.Verify(d => d.Save(StorageWrapper.SHOW_LIST_STORE_KEY, showList));
+                _dataStore.Verify(d => d.Save(StorageWrapper.LIMIT_LIST_STORE_KEY, showList));
             }
 
             [Test]

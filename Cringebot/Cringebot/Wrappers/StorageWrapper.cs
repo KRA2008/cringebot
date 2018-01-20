@@ -12,7 +12,7 @@ namespace Cringebot.Wrappers
     public class StorageWrapper : IAppDataStore
     {
         public const string SIMULATE_STORE_KEY = "simulate";
-        public const string SHOW_LIST_STORE_KEY = "showList";
+        public const string LIMIT_LIST_STORE_KEY = "limitList";
         public const string MEMORY_LIST_STORE_KEY = "memoryList";
 
         public T LoadOrDefault<T>(string key, T defaultValue)
