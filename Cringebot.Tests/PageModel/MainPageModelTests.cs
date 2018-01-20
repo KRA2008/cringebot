@@ -11,30 +11,32 @@ using System.Threading.Tasks;
 namespace Cringebot.PageModel.Tests
 {
     [TestFixture]
-    public class MainViewModelTests
+    public class MainPageModelTests
     {
         private MainPageModel _viewModel;
         private Mock<IAppDataStore> _dataStore;
+        private Mock<INotificationManager> _notificationManager;
 
         [SetUp]
         public void SetupViewModel()
         {
+            _notificationManager = new Mock<INotificationManager>();
             _dataStore = new Mock<IAppDataStore>();
-            _dataStore.Setup(d => d.LoadOrDefault(StorageWrapper.SIMULATE_STORE_KEY, It.IsAny<bool>())).Returns(true);
+            _dataStore.Setup(d => d.LoadOrDefault(StorageWrapper.SIMULATE_STORE_KEY, It.IsAny<bool>())).Returns(false);
             _dataStore.Setup(d => d.LoadOrDefault(StorageWrapper.LIMIT_LIST_STORE_KEY, It.IsAny<bool>())).Returns(false);
             _dataStore.Setup(d => d.LoadOrDefault(StorageWrapper.MEMORY_LIST_STORE_KEY, It.IsAny<List<Memory>>())).Returns(new List<Memory>());
-            _viewModel = new MainPageModel(_dataStore.Object);
+            _viewModel = new MainPageModel(_dataStore.Object, _notificationManager.Object);
             _viewModel.Init(null);
         }
 
-        public class InitMethod : MainViewModelTests
+        public class InitMethod : MainPageModelTests
         {
             [Test, Theory]
             public void ShouldLoadSavedStateOfSimulateSettingOrDefault(bool expectedStoredSetting)
             {
                 //arrange
                 bool fakeStoredSetting = expectedStoredSetting;
-                _dataStore.Setup(w => w.LoadOrDefault(StorageWrapper.SIMULATE_STORE_KEY, true)).Returns(expectedStoredSetting);
+                _dataStore.Setup(w => w.LoadOrDefault(StorageWrapper.SIMULATE_STORE_KEY, false)).Returns(expectedStoredSetting);
 
                 //act
                 _viewModel.Init(null);
@@ -82,9 +84,36 @@ namespace Cringebot.PageModel.Tests
                 //assert
                 _viewModel.Memories.Should().Have.SameSequenceAs(new[] { targetMemory1, targetMemory2 });
             }
+
+            [Theory]
+            public void ShouldUpdateNotificationMemoryList(bool limitListVisibility)
+            {
+                //arrange
+                const string mem1 = "blah";
+                const string mem2 = "gragh";
+                _viewModel.LimitListVisibility = limitListVisibility;
+
+                _viewModel.MemoryInput = mem1;
+                _viewModel.AddMemoryCommand.Execute(null);
+                _viewModel.MemoryInput = mem2;
+                _viewModel.AddMemoryCommand.Execute(null);
+
+                IEnumerable<Memory> actualList = null;
+                _notificationManager.Setup(m => m.SetMemories(It.IsAny<IEnumerable<Memory>>())).Callback<IEnumerable<Memory>>((list) =>
+                {
+                    actualList = list;
+                });
+
+                //act
+                _viewModel.Init(null);
+
+                //assert
+                actualList.SingleOrDefault(m => m.Description == mem1).Should().Not.Be.Null();
+                actualList.SingleOrDefault(m => m.Description == mem2).Should().Not.Be.Null();
+            }
         }
 
-        public class LimitListVisibilityProperty : MainViewModelTests
+        public class LimitListVisibilityProperty : MainPageModelTests
         {
             [Test]
             public void ShouldCauseMemoryListToShowNothingWhenMoreThanOneMemoryMatches()
@@ -120,6 +149,7 @@ namespace Cringebot.PageModel.Tests
                 _viewModel.Memories.Count().Should().Be.EqualTo(1);
             }
 
+            [TestCase(null)]
             [TestCase("")]
             [TestCase("a")]
             [TestCase("aa")]
@@ -139,7 +169,7 @@ namespace Cringebot.PageModel.Tests
             }
         }
 
-        public class ReverseInitMethod : MainViewModelTests
+        public class ReverseInitMethod : MainPageModelTests
         {
             [Test]
             public void ShouldRemovePassedMemoryFromList()
@@ -163,9 +193,36 @@ namespace Cringebot.PageModel.Tests
                 _viewModel.Memories.Should().Not.Contain(targetMemory);
                 _viewModel.Memories.Count().Should().Be.EqualTo(2);
             }
+
+            [Theory]
+            public void ShouldUpdateNotificationMemoryList(bool limitListVisibility)
+            {
+                //arrange
+                const string mem1 = "blah";
+                const string mem2 = "gragh";
+                _viewModel.LimitListVisibility = limitListVisibility;
+
+                _viewModel.MemoryInput = mem1;
+                _viewModel.AddMemoryCommand.Execute(null);
+                _viewModel.MemoryInput = mem2;
+                _viewModel.AddMemoryCommand.Execute(null);
+
+                IEnumerable<Memory> actualList = null;
+                _notificationManager.Setup(m => m.SetMemories(It.IsAny<IEnumerable<Memory>>())).Callback<IEnumerable<Memory>>((list) =>
+                {
+                    actualList = list;
+                });
+
+                //act
+                _viewModel.ReverseInit(new Memory());
+
+                //assert
+                actualList.SingleOrDefault(m => m.Description == mem1).Should().Not.Be.Null();
+                actualList.SingleOrDefault(m => m.Description == mem2).Should().Not.Be.Null();
+            }
         }
 
-        public class AddMemoryCommand : MainViewModelTests
+        public class AddMemoryCommand : MainPageModelTests
         {
             [Test]
             public void ShouldAddMemoryInInputToFullListMemories()
@@ -214,9 +271,34 @@ namespace Cringebot.PageModel.Tests
                 //assert
                 _viewModel.Memories.Count().Should().Be.EqualTo(1);
             }
+
+            [Theory]
+            public void ShouldUpdateNotificationMemoryList(bool limitListVisibility)
+            {
+                //arrange
+                const string mem1 = "blah";
+                const string mem2 = "gragh";
+                _viewModel.LimitListVisibility = limitListVisibility;
+
+                IEnumerable<Memory> actualList = null;
+                _notificationManager.Setup(m => m.SetMemories(It.IsAny<IEnumerable<Memory>>())).Callback<IEnumerable<Memory>>((list) => 
+                {
+                    actualList = list;
+                });
+
+                //act
+                _viewModel.MemoryInput = mem1;
+                _viewModel.AddMemoryCommand.Execute(null);
+                _viewModel.MemoryInput = mem2;
+                _viewModel.AddMemoryCommand.Execute(null);
+
+                //assert
+                actualList.SingleOrDefault(m => m.Description == mem1).Should().Not.Be.Null();
+                actualList.SingleOrDefault(m => m.Description == mem2).Should().Not.Be.Null();
+            }
         }
 
-        public class AddOccurrenceCommand : MainViewModelTests
+        public class AddOccurrenceCommand : MainPageModelTests
         {
             [Test]
             public void ShouldAddOccurrenceOfMemory()
@@ -234,7 +316,7 @@ namespace Cringebot.PageModel.Tests
             }
         }
 
-        public class MemoryInputProperty : MainViewModelTests
+        public class MemoryInputProperty : MainPageModelTests
         {
             [Test]
             public void ShouldRaisePropertyChangedForMemories()
@@ -257,7 +339,7 @@ namespace Cringebot.PageModel.Tests
             }
         }
 
-        public class DisplayMemoriesProperty : MainViewModelTests
+        public class DisplayMemoriesProperty : MainPageModelTests
         {
             [Test]
             public void ShouldFilterByMemoryInputAndDisplayAlphabetically()
@@ -305,7 +387,7 @@ namespace Cringebot.PageModel.Tests
             }
         }
 
-        public class ViewDetailsCommand : MainViewModelTests
+        public class ViewDetailsCommand : MainPageModelTests
         {
             [Test]
             public async Task ShouldNavigateToDetailsPage()
@@ -323,7 +405,7 @@ namespace Cringebot.PageModel.Tests
             }
         }
 
-        public class SaveMethod : MainViewModelTests
+        public class SaveMethod : MainPageModelTests
         {
             [Theory]
             public void ShouldSaveStateOfSimulate(bool simulate)
@@ -381,6 +463,32 @@ namespace Cringebot.PageModel.Tests
                 actualSavedList.Single(m => m.Description == IN_MEMORY_DESCRIPTION).Should().Not.Be.Null();
                 actualSavedList.Single(m => m.Description == OUT_MEMORY_DESCRIPTION).Should().Not.Be.Null();
                 actualSavedList.Count().Should().Be.EqualTo(2);
+            }
+        }
+
+        public class SimulateProperty : MainPageModelTests
+        {
+            [Test]
+            public void ShouldTurnOnNotificationsWhenSwitchedOn()
+            {
+                //act
+                _viewModel.Simulate = true;
+
+                //assert
+                _notificationManager.Verify(m => m.ActivateNotifications());
+            }
+
+            [Test]
+            public void ShouldTurnOffNotificationsWhenSwitchedOff()
+            {
+                //arrange
+                _viewModel.Simulate = true;
+
+                //act
+                _viewModel.Simulate = false;
+
+                //assert
+                _notificationManager.Verify(m => m.CancelNotifications());
             }
         }
     }

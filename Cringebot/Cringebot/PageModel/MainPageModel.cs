@@ -27,11 +27,11 @@ namespace Cringebot.PageModel
                     filterPredicate = delegate (Memory a) { return a.Description.ToLower().Contains(MemoryInput.ToLower()); };
                 }
                 _memories.FilterButPreserve(_filteredOutMemories, filterPredicate);
-                if(LimitListVisibility)
+                if (LimitListVisibility)
                 {
-                    if(_memories.Count() != 1 || MemoryInput.Length < 3)
+                    if(_memories.Count() > 1 || string.IsNullOrWhiteSpace(MemoryInput) || MemoryInput.Length < 3)
                     {
-                        return new ObservableCollection<Memory>();
+                        _memories.FilterButPreserve(_filteredOutMemories, delegate (Memory a) { return false; });
                     }
                 }
                 _memories.Sort((a, b) => { return a.Description.CompareTo(b.Description); });
@@ -52,10 +52,12 @@ namespace Cringebot.PageModel
         public Command ViewDetailsCommand { get; }
 
         private IAppDataStore _dataStore;
+        private INotificationManager _notificationManager;
 
-        public MainPageModel(IAppDataStore dataStore)
+        public MainPageModel(IAppDataStore dataStore, INotificationManager notificationManager)
         {
             _dataStore = dataStore;
+            _notificationManager = notificationManager;
             _filteredOutMemories = new List<Memory>();
             _memories = new ObservableCollection<Memory>();
 
@@ -71,6 +73,8 @@ namespace Cringebot.PageModel
                     _filteredOutMemories.Add(newMemory);
 
                     MemoryInput = null;
+
+                    notificationManager.SetMemories(_filteredOutMemories.Union(_memories));
                 }
             });
 
@@ -85,6 +89,21 @@ namespace Cringebot.PageModel
                 var memory = (Memory)((ItemTappedEventArgs)args).Item;
                 await ViewDetails(memory);
             });
+
+            PropertyChanged += (sender, args) =>
+            {
+                if(args.PropertyName == nameof(Simulate))
+                {
+                    if(Simulate)
+                    {
+                        notificationManager.ActivateNotifications();
+                    }
+                    else
+                    {
+                        notificationManager.CancelNotifications();
+                    }
+                }
+            };
         }
 
         public async Task ViewDetails(Memory memory) //grrrrr, switch to AsyncCommand
@@ -99,15 +118,19 @@ namespace Cringebot.PageModel
             var memoryToRemove = (Memory)returnedData;
             _filteredOutMemories.Remove(memoryToRemove);
             _memories.Remove(memoryToRemove);
+
+            _notificationManager.SetMemories(_filteredOutMemories.Union(_memories));
         }
 
         public override void Init(object initData)
         {
             base.Init(initData);
 
-            Simulate = _dataStore.LoadOrDefault(StorageWrapper.SIMULATE_STORE_KEY, true);
+            Simulate = _dataStore.LoadOrDefault(StorageWrapper.SIMULATE_STORE_KEY, false);
             LimitListVisibility = _dataStore.LoadOrDefault(StorageWrapper.LIMIT_LIST_STORE_KEY, false);
             _filteredOutMemories = _dataStore.LoadOrDefault(StorageWrapper.MEMORY_LIST_STORE_KEY, new List<Memory>());
+
+            _notificationManager.SetMemories(_filteredOutMemories.Union(_memories));
         }
 
         public void Save()

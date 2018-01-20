@@ -1,6 +1,7 @@
 ﻿using Cringebot.PageModel;
 using Cringebot.Wrappers;
 using FreshMvvm;
+using Xamarin.Forms;
 
 namespace Cringebot
 {
@@ -9,6 +10,7 @@ namespace Cringebot
         public Bootstrapper()
         {
             FreshIOC.Container.Register<IAppDataStore, StorageWrapper>();
+            FreshIOC.Container.Register(DependencyService.Get<INotificationManager>());
         }
 
         public Xamarin.Forms.Page GetStartingPage()
