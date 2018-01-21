@@ -50,7 +50,7 @@
                                                 <corcav:Interaction.Behaviors>
                                                     <corcav:BehaviorCollection>
                                                         <corcav:EventToCommand EventName="Tapped"
-                                                                               Command="{Binding Source={x:Reference OccurrenceList}, Path=BindingContext.DeleteOccurrenceCommand}"
+                                                                               Command="{Binding Source={x:Reference OccurrenceList}, Path=Bindingtext.DeleteOccurrenceCommand}"
                                                                                CommandParameter="{Binding}"/>
                                                     </corcav:BehaviorCollection>
                                                 </corcav:Interaction.Behaviors>

@@ -88,6 +88,11 @@
             <StackLayout Orientation="Horizontal"
                          HorizontalOptions="CenterAndExpand"
                          Padding="15,0,15,0">
+                <StackLayout.IsVisible>
+                    <OnPlatform x:TypeArguments="x:Boolean">
+                        <On Platform="iOS" Value="False"/>
+                    </OnPlatform>
+                </StackLayout.IsVisible>
                 <Label Text="Limit List Visibility"
                        VerticalTextAlignment="Center"/>
                 <Switch IsToggled="{Binding LimitListVisibility}"/>
