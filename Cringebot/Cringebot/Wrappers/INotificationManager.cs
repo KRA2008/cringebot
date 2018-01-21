@@ -5,8 +5,8 @@ namespace Cringebot.Wrappers
 {
     public interface INotificationManager
     {
-        void ActivateNotifications();
-        void CancelNotifications();
+        void StartNotifications();
+        void StopNotifications();
         void SetMemories(IEnumerable<Memory> memories);
     }
 }

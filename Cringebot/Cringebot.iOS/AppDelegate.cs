@@ -5,6 +5,7 @@ using Foundation;
 using UIKit;
 using Cringebot.iOS;
 using Cringebot.Services;
+using System.Linq;
 
 [assembly: Xamarin.Forms.Dependency(typeof(AppDelegate))]
 namespace Cringebot.iOS
@@ -16,6 +17,7 @@ namespace Cringebot.iOS
     public partial class AppDelegate : Xamarin.Forms.Platform.iOS.FormsApplicationDelegate, INotificationManager
     {
         private static IEnumerable<Memory> _memories;
+        private static bool _notificationsOn;
 
         //
         // This method is invoked when the application has loaded and is ready to run. In this 
@@ -32,39 +34,15 @@ namespace Cringebot.iOS
 
             LoadApplication(new App());
 
-            HandleLaunchNotification(options);
-
             return base.FinishedLaunching(app, options);
-        }
-
-        private void HandleLaunchNotification(NSDictionary launchOptions)
-        {
-            if (launchOptions != null)
-            {
-                if (launchOptions.ContainsKey(UIApplication.LaunchOptionsLocalNotificationKey))
-                {
-                    if (launchOptions[UIApplication.LaunchOptionsLocalNotificationKey] is UILocalNotification localNotification)
-                    {
-                        UIAlertController okayAlertController = UIAlertController.Create(localNotification.AlertAction, localNotification.AlertBody, UIAlertControllerStyle.Alert);
-                        okayAlertController.AddAction(UIAlertAction.Create("OK", UIAlertActionStyle.Default, null));
-
-                        Window.RootViewController.PresentViewController(okayAlertController, true, null);
-
-                        CreateNotification();
-                    }
-                }
-            }
         }
 
         public override void ReceivedLocalNotification(UIApplication application, UILocalNotification notification)
         {
-            var alert = new UIAlertView(notification.AlertTitle, notification.AlertBody, null, "OK");
-            alert.Show();
-
-            CreateNotification();
+            RestartNotificationQueue();
         }
 
-        public void ActivateNotifications()
+        public void StartNotifications()
         {
             if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0))
             {
@@ -74,31 +52,49 @@ namespace Cringebot.iOS
 
                 UIApplication.SharedApplication.RegisterUserNotificationSettings(notificationSettings);
             }
-            CreateNotification();
+            _notificationsOn = true;
+            RestartNotificationQueue();
         }
 
-        public void CancelNotifications()
+        public void StopNotifications()
         {
-            UIApplication.SharedApplication.CancelAllLocalNotifications();
+            _notificationsOn = false;
+            ClearExistingNotifications();
         }
 
         public void SetMemories(IEnumerable<Memory> memories)
         {
             _memories = memories;
+            if(_notificationsOn)
+            {
+                RestartNotificationQueue();
+            }
         }
 
-        private void CreateNotification()
+        private void ClearExistingNotifications()
         {
-            var fireDate = NSDate.FromTimeIntervalSinceNow(NotificationRandomnessService.GetNotificationInterval() / 1000);
-            var notification = new UILocalNotification
-            {
-                FireDate = fireDate,
-                AlertTitle = NotificationRandomnessService.GetNotificationTitle(),
-                AlertBody = NotificationRandomnessService.GetRandomMemory(_memories).Description,
-                SoundName = UILocalNotification.DefaultSoundName
-            };
+            UIApplication.SharedApplication.CancelAllLocalNotifications();
+        }
 
-            UIApplication.SharedApplication.ScheduleLocalNotification(notification);
+        private void RestartNotificationQueue()
+        {
+            if(_memories != null && _memories.Count() > 0)
+            {
+                ClearExistingNotifications();
+                for (var ii=1;ii<30;ii++)
+                {
+                    var fireDate = NSDate.FromTimeIntervalSinceNow((NotificationRandomnessService.GetNotificationInterval() / 1000) * ii);
+                    var notification = new UILocalNotification
+                    {
+                        FireDate = fireDate,
+                        AlertTitle = NotificationRandomnessService.GetNotificationTitle(),
+                        AlertBody = NotificationRandomnessService.GetRandomMemory(_memories).Description,
+                        SoundName = UILocalNotification.DefaultSoundName
+                    };
+
+                    UIApplication.SharedApplication.ScheduleLocalNotification(notification);
+                }
+            }
         }
     }
 }

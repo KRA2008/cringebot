@@ -96,11 +96,11 @@ namespace Cringebot.PageModel
                 {
                     if(Simulate)
                     {
-                        notificationManager.ActivateNotifications();
+                        notificationManager.StartNotifications();
                     }
                     else
                     {
-                        notificationManager.CancelNotifications();
+                        notificationManager.StopNotifications();
                     }
                 }
             };

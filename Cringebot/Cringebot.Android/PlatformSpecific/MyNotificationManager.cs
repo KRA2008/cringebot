@@ -6,6 +6,7 @@ using Android.OS;
 using Cringebot.Model;
 using System.Collections.Generic;
 using Cringebot.Services;
+using System.Linq;
 
 [assembly: Xamarin.Forms.Dependency(typeof(MyNotificationManager))]
 namespace Cringebot.Droid.PlatformSpecific
@@ -19,12 +20,12 @@ namespace Cringebot.Droid.PlatformSpecific
 
         private static IEnumerable<Memory> _memories;
 
-        public void CancelNotifications()
+        public void StopNotifications()
         {
             CancelNextNotification();
         }
 
-        public void ActivateNotifications()
+        public void StartNotifications()
         {
             SetNextNotification();
         }
@@ -36,10 +37,13 @@ namespace Cringebot.Droid.PlatformSpecific
 
         public override void OnReceive(Context context, Intent intent)
         {
-            Intent createNotificationIntent = new Intent(context, typeof(NotificationCreationService));
-            createNotificationIntent.PutExtra(NOTIFICATION_TITLE_EXTRA, NotificationRandomnessService.GetNotificationTitle());
-            createNotificationIntent.PutExtra(NOTIFICATION_TEXT_EXTRA, NotificationRandomnessService.GetRandomMemory(_memories).Description);
-            context.StartService(createNotificationIntent);
+            if(_memories != null && _memories.Count() > 0)
+            {
+                Intent createNotificationIntent = new Intent(context, typeof(NotificationCreationService));
+                createNotificationIntent.PutExtra(NOTIFICATION_TITLE_EXTRA, NotificationRandomnessService.GetNotificationTitle());
+                createNotificationIntent.PutExtra(NOTIFICATION_TEXT_EXTRA, NotificationRandomnessService.GetRandomMemory(_memories).Description);
+                context.StartService(createNotificationIntent);
+            }
             SetNextNotification();
         }
 

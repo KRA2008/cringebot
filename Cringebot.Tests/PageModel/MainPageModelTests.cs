@@ -475,7 +475,7 @@ namespace Cringebot.PageModel.Tests
                 _viewModel.Simulate = true;
 
                 //assert
-                _notificationManager.Verify(m => m.ActivateNotifications());
+                _notificationManager.Verify(m => m.StartNotifications());
             }
 
             [Test]
@@ -488,7 +488,7 @@ namespace Cringebot.PageModel.Tests
                 _viewModel.Simulate = false;
 
                 //assert
-                _notificationManager.Verify(m => m.CancelNotifications());
+                _notificationManager.Verify(m => m.StopNotifications());
             }
         }
     }
