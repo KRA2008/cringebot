@@ -10,9 +10,9 @@ namespace Cringebot.Droid.PlatformSpecific
         protected override void OnHandleIntent(Intent intent)
         {
             var builder = new NotificationCompat.Builder(Application.Context)
+                .SetDefaults(NotificationCompat.DefaultAll)
                 .SetContentTitle(intent.GetStringExtra(MyNotificationManager.NOTIFICATION_TITLE_EXTRA))
                 .SetContentText(intent.GetStringExtra(MyNotificationManager.NOTIFICATION_TEXT_EXTRA))
-                .SetVibrate(new[] { 0L, 1000L, 100L, 500L, 50L, 500L})
                 .SetSmallIcon(Resource.Drawable.icon);
             
             var notification = builder.Build();
