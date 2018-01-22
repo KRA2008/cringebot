@@ -61,7 +61,8 @@
                                                  Grid.Row="0"
                                                  Grid.Column="1"
                                                  VerticalOptions="Fill"
-                                                 Padding="15,0,15,0">
+                                                 Padding="15,0,15,0"
+                                                 IsVisible="{Binding Source={x:Reference MemoryList}, Path=BindingContext.Simulate, Converter={vc:NotConverter}}">
                                         <StackLayout.GestureRecognizers>
                                             <TapGestureRecognizer>
                                                 <corcav:Interaction.Behaviors>
@@ -91,6 +92,7 @@
                 <StackLayout.IsVisible>
                     <OnPlatform x:TypeArguments="x:Boolean">
                         <On Platform="iOS" Value="False"/>
+                        <On Platform="Android" Value="True"/>
                     </OnPlatform>
                 </StackLayout.IsVisible>
                 <Label Text="Limit List Visibility"
