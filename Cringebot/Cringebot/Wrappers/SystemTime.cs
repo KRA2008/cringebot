@@ -13,7 +13,7 @@ namespace Cringebot.Wrappers
             ResetToDefault();
         }
 
-        public static void ResetToDefault()
+        private static void ResetToDefault()
         {
             Now = () => DateTime.Now;
             UtcNow = () => DateTime.UtcNow;

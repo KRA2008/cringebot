@@ -13,6 +13,7 @@ namespace Cringebot
             FreshIOC.Container.Register(DependencyService.Get<INotificationManager>());
         }
 
+        // ReSharper disable once MemberCanBeMadeStatic.Global - if static, no instantiation, if no instantiation, no registrations!
         public Xamarin.Forms.Page GetStartingPage()
         {
             return new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<MainViewModel>());
