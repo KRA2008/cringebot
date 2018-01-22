@@ -1,8 +1,6 @@
-﻿using FreshMvvm;
-
-namespace Cringebot.Page
+﻿namespace Cringebot.Page
 {
-    public partial class DetailsPage : FreshBaseContentPage
+    public partial class DetailsPage
     {
         public DetailsPage()
         {

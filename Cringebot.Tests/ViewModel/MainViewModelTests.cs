@@ -1,19 +1,20 @@
-﻿using Cringebot.Model;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Cringebot.Model;
 using Cringebot.Wrappers;
+using Cringebot.ViewModel;
 using FreshMvvm;
 using Moq;
 using NUnit.Framework;
 using SharpTestsEx;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Cringebot.PageModel.Tests
+namespace Cringebot.Tests.ViewModel
 {
     [TestFixture]
-    public class MainPageModelTests
+    public class MainViewModelTests
     {
-        private MainPageModel _viewModel;
+        private MainViewModel _viewModel;
         private Mock<IAppDataStore> _dataStore;
         private Mock<INotificationManager> _notificationManager;
 
@@ -25,17 +26,16 @@ namespace Cringebot.PageModel.Tests
             _dataStore.Setup(d => d.LoadOrDefault(StorageWrapper.SIMULATE_STORE_KEY, It.IsAny<bool>())).Returns(false);
             _dataStore.Setup(d => d.LoadOrDefault(StorageWrapper.LIMIT_LIST_STORE_KEY, It.IsAny<bool>())).Returns(false);
             _dataStore.Setup(d => d.LoadOrDefault(StorageWrapper.MEMORY_LIST_STORE_KEY, It.IsAny<List<Memory>>())).Returns(new List<Memory>());
-            _viewModel = new MainPageModel(_dataStore.Object, _notificationManager.Object);
+            _viewModel = new MainViewModel(_dataStore.Object, _notificationManager.Object);
             _viewModel.Init(null);
         }
 
-        public class InitMethod : MainPageModelTests
+        public class InitMethod : MainViewModelTests
         {
             [Test, Theory]
             public void ShouldLoadSavedStateOfSimulateSettingOrDefault(bool expectedStoredSetting)
             {
                 //arrange
-                bool fakeStoredSetting = expectedStoredSetting;
                 _dataStore.Setup(w => w.LoadOrDefault(StorageWrapper.SIMULATE_STORE_KEY, false)).Returns(expectedStoredSetting);
 
                 //act
@@ -49,7 +49,6 @@ namespace Cringebot.PageModel.Tests
             public void ShouldLoadSavedStateOfShowListSettingOrDefault(bool expectedStoredSetting)
             {
                 //arrange
-                bool fakeStoredSetting = expectedStoredSetting;
                 _dataStore.Setup(w => w.LoadOrDefault(StorageWrapper.LIMIT_LIST_STORE_KEY, false)).Returns(expectedStoredSetting);
 
                 //act
@@ -89,13 +88,13 @@ namespace Cringebot.PageModel.Tests
             public void ShouldUpdateNotificationMemoryList(bool limitListVisibility)
             {
                 //arrange
-                const string mem1 = "blah";
-                const string mem2 = "gragh";
+                const string MEM1 = "blah";
+                const string MEM2 = "gragh";
                 _viewModel.LimitListVisibility = limitListVisibility;
 
-                _viewModel.MemoryInput = mem1;
+                _viewModel.MemoryInput = MEM1;
                 _viewModel.AddMemoryCommand.Execute(null);
-                _viewModel.MemoryInput = mem2;
+                _viewModel.MemoryInput = MEM2;
                 _viewModel.AddMemoryCommand.Execute(null);
 
                 IEnumerable<Memory> actualList = null;
@@ -108,12 +107,13 @@ namespace Cringebot.PageModel.Tests
                 _viewModel.Init(null);
 
                 //assert
-                actualList.SingleOrDefault(m => m.Description == mem1).Should().Not.Be.Null();
-                actualList.SingleOrDefault(m => m.Description == mem2).Should().Not.Be.Null();
+                var memoryArray = actualList as Memory[] ?? actualList.ToArray();
+                memoryArray.SingleOrDefault(m => m.Description == MEM1).Should().Not.Be.Null();
+                memoryArray.SingleOrDefault(m => m.Description == MEM2).Should().Not.Be.Null();
             }
         }
 
-        public class LimitListVisibilityProperty : MainPageModelTests
+        public class LimitListVisibilityProperty : MainViewModelTests
         {
             [Test]
             public void ShouldCauseMemoryListToShowNothingWhenMoreThanOneMemoryMatches()
@@ -129,7 +129,7 @@ namespace Cringebot.PageModel.Tests
                 _viewModel.MemoryInput = "aaa";
 
                 //assert
-                _viewModel.Memories.Count().Should().Be.EqualTo(0);
+                _viewModel.Memories.Count.Should().Be.EqualTo(0);
             }
 
             [Test]
@@ -146,7 +146,7 @@ namespace Cringebot.PageModel.Tests
                 _viewModel.MemoryInput = "aaa";
 
                 //assert
-                _viewModel.Memories.Count().Should().Be.EqualTo(1);
+                _viewModel.Memories.Count.Should().Be.EqualTo(1);
             }
 
             [TestCase(null)]
@@ -165,11 +165,11 @@ namespace Cringebot.PageModel.Tests
                 _viewModel.MemoryInput = search;
 
                 //assert
-                _viewModel.Memories.Count().Should().Be.EqualTo(0);
+                _viewModel.Memories.Count.Should().Be.EqualTo(0);
             }
         }
 
-        public class ReverseInitMethod : MainPageModelTests
+        public class ReverseInitMethod : MainViewModelTests
         {
             [Test]
             public void ShouldRemovePassedMemoryFromList()
@@ -191,20 +191,20 @@ namespace Cringebot.PageModel.Tests
 
                 //assert
                 _viewModel.Memories.Should().Not.Contain(targetMemory);
-                _viewModel.Memories.Count().Should().Be.EqualTo(2);
+                _viewModel.Memories.Count.Should().Be.EqualTo(2);
             }
 
             [Theory]
             public void ShouldUpdateNotificationMemoryList(bool limitListVisibility)
             {
                 //arrange
-                const string mem1 = "blah";
-                const string mem2 = "gragh";
+                const string MEM1 = "blah";
+                const string MEM2 = "gragh";
                 _viewModel.LimitListVisibility = limitListVisibility;
 
-                _viewModel.MemoryInput = mem1;
+                _viewModel.MemoryInput = MEM1;
                 _viewModel.AddMemoryCommand.Execute(null);
-                _viewModel.MemoryInput = mem2;
+                _viewModel.MemoryInput = MEM2;
                 _viewModel.AddMemoryCommand.Execute(null);
 
                 IEnumerable<Memory> actualList = null;
@@ -217,12 +217,13 @@ namespace Cringebot.PageModel.Tests
                 _viewModel.ReverseInit(new Memory());
 
                 //assert
-                actualList.SingleOrDefault(m => m.Description == mem1).Should().Not.Be.Null();
-                actualList.SingleOrDefault(m => m.Description == mem2).Should().Not.Be.Null();
+                var memoryArray = actualList as Memory[] ?? actualList.ToArray();
+                memoryArray.SingleOrDefault(m => m.Description == MEM1).Should().Not.Be.Null();
+                memoryArray.SingleOrDefault(m => m.Description == MEM2).Should().Not.Be.Null();
             }
         }
 
-        public class AddMemoryCommand : MainPageModelTests
+        public class AddMemoryCommand : MainViewModelTests
         {
             [Test]
             public void ShouldAddMemoryInInputToFullListMemories()
@@ -269,15 +270,15 @@ namespace Cringebot.PageModel.Tests
                 _viewModel.AddMemoryCommand.Execute(null);
 
                 //assert
-                _viewModel.Memories.Count().Should().Be.EqualTo(1);
+                _viewModel.Memories.Count.Should().Be.EqualTo(1);
             }
 
             [Theory]
             public void ShouldUpdateNotificationMemoryList(bool limitListVisibility)
             {
                 //arrange
-                const string mem1 = "blah";
-                const string mem2 = "gragh";
+                const string MEM1 = "blah";
+                const string MEM2 = "gragh";
                 _viewModel.LimitListVisibility = limitListVisibility;
 
                 IEnumerable<Memory> actualList = null;
@@ -287,18 +288,19 @@ namespace Cringebot.PageModel.Tests
                 });
 
                 //act
-                _viewModel.MemoryInput = mem1;
+                _viewModel.MemoryInput = MEM1;
                 _viewModel.AddMemoryCommand.Execute(null);
-                _viewModel.MemoryInput = mem2;
+                _viewModel.MemoryInput = MEM2;
                 _viewModel.AddMemoryCommand.Execute(null);
 
                 //assert
-                actualList.SingleOrDefault(m => m.Description == mem1).Should().Not.Be.Null();
-                actualList.SingleOrDefault(m => m.Description == mem2).Should().Not.Be.Null();
+                var memoryArray = actualList as Memory[] ?? actualList.ToArray();
+                memoryArray.SingleOrDefault(m => m.Description == MEM1).Should().Not.Be.Null();
+                memoryArray.SingleOrDefault(m => m.Description == MEM2).Should().Not.Be.Null();
             }
         }
 
-        public class AddOccurrenceCommand : MainPageModelTests
+        public class AddOccurrenceCommand : MainViewModelTests
         {
             [Test]
             public void ShouldAddOccurrenceOfMemory()
@@ -316,7 +318,7 @@ namespace Cringebot.PageModel.Tests
             }
         }
 
-        public class MemoryInputProperty : MainPageModelTests
+        public class MemoryInputProperty : MainViewModelTests
         {
             [Test]
             public void ShouldRaisePropertyChangedForMemories()
@@ -339,7 +341,7 @@ namespace Cringebot.PageModel.Tests
             }
         }
 
-        public class DisplayMemoriesProperty : MainPageModelTests
+        public class DisplayMemoriesProperty : MainViewModelTests
         {
             [Test]
             public void ShouldFilterByMemoryInputAndDisplayAlphabetically()
@@ -387,7 +389,7 @@ namespace Cringebot.PageModel.Tests
             }
         }
 
-        public class ViewDetailsCommand : MainPageModelTests
+        public class ViewDetailsCommand : MainViewModelTests
         {
             [Test]
             public async Task ShouldNavigateToDetailsPage()
@@ -401,11 +403,11 @@ namespace Cringebot.PageModel.Tests
                 await _viewModel.ViewDetails(memory);
 
                 //assert
-                coreMethods.Verify(c => c.PushPageModel<DetailsPageModel>(memory, false, true));
+                coreMethods.Verify(c => c.PushPageModel<DetailsViewModel>(memory, false, true));
             }
         }
 
-        public class SaveMethod : MainPageModelTests
+        public class SaveMethod : MainViewModelTests
         {
             [Theory]
             public void ShouldSaveStateOfSimulate(bool simulate)
@@ -448,6 +450,7 @@ namespace Cringebot.PageModel.Tests
 
                 _viewModel.MemoryInput = IN_MEMORY_DESCRIPTION;
 
+                // ReSharper disable once UnusedVariable
                 var whatever = _viewModel.Memories; // trigger filtering
 
                 IEnumerable<Memory> actualSavedList = null;
@@ -460,13 +463,14 @@ namespace Cringebot.PageModel.Tests
                 _viewModel.Save();
 
                 //assert
-                actualSavedList.Single(m => m.Description == IN_MEMORY_DESCRIPTION).Should().Not.Be.Null();
-                actualSavedList.Single(m => m.Description == OUT_MEMORY_DESCRIPTION).Should().Not.Be.Null();
-                actualSavedList.Count().Should().Be.EqualTo(2);
+                var memoryArray = actualSavedList as Memory[] ?? actualSavedList.ToArray();
+                memoryArray.Single(m => m.Description == IN_MEMORY_DESCRIPTION).Should().Not.Be.Null();
+                memoryArray.Single(m => m.Description == OUT_MEMORY_DESCRIPTION).Should().Not.Be.Null();
+                memoryArray.Length.Should().Be.EqualTo(2);
             }
         }
 
-        public class SimulateProperty : MainPageModelTests
+        public class SimulateProperty : MainViewModelTests
         {
             [Test]
             public void ShouldTurnOnNotificationsWhenSwitchedOn()

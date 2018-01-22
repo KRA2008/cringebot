@@ -1,26 +1,21 @@
 ﻿using Cringebot.Model;
-using Cringebot.Wrappers;
 using FreshMvvm;
 using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace Cringebot.PageModel
+namespace Cringebot.ViewModel
 {
-    public class DetailsPageModel : FreshBasePageModel
+    public class DetailsViewModel : FreshBasePageModel
     {
         public Memory Memory { get; set; }
 
         public Command DeleteOccurrenceCommand { get; }
         public Command DeleteMemoryCommand { get; }
 
-        private IAppDataStore _dataStore;
-
-        public DetailsPageModel(IAppDataStore dataStore)
+        public DetailsViewModel()
         {
-            _dataStore = dataStore;
-
-            DeleteOccurrenceCommand = new Command((dateTime) =>
+            DeleteOccurrenceCommand = new Command(dateTime =>
             {
                 Memory.Occurrences.Remove((DateTime)dateTime);
             });

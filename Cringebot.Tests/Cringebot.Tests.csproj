@@ -72,8 +72,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PageModel\DetailsPageModelTests.cs" />
-    <Compile Include="PageModel\MainPageModelTests.cs" />
+    <Compile Include="ViewModel\DetailsViewModelTests.cs" />
+    <Compile Include="ViewModel\MainViewModelTests.cs" />
     <Compile Include="Model\MemoryTests.cs" />
     <Compile Include="Page\CustomElements\ObservableCollectionExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

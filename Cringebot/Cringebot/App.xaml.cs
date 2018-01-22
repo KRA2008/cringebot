@@ -1,12 +1,11 @@
-﻿using Cringebot.PageModel;
+﻿using Cringebot.ViewModel;
 using FreshMvvm;
-using Xamarin.Forms;
 
 namespace Cringebot
 {
-    public partial class App : Application
+    public partial class App
     {
-        private MainPageModel _mainPageModel;
+        private readonly MainViewModel _mainViewModel;
 
         public App()
         {
@@ -15,7 +14,7 @@ namespace Cringebot
 
             var startingPage = bootstrapper.GetStartingPage();
 
-            _mainPageModel = (MainPageModel)(((FreshBaseContentPage)(((FreshNavigationContainer)startingPage).CurrentPage)).BindingContext);
+            _mainViewModel = (MainViewModel)((FreshBaseContentPage)((FreshNavigationContainer)startingPage).CurrentPage).BindingContext;
 
             MainPage = startingPage;
         }
@@ -26,7 +25,7 @@ namespace Cringebot
 
         protected override void OnSleep()
         {
-            _mainPageModel.Save();
+            _mainViewModel.Save();
         }
 
         protected override void OnResume()

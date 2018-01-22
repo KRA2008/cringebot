@@ -5,11 +5,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              xmlns:fresh="clr-namespace:FreshMvvm;assembly=FreshMvvm"
-             xmlns:local="clr-namespace:Cringebot"
-             xmlns:ce="clr-namespace:Cringebot.Page.CustomElements"
-             xmlns:vc="clr-namespace:Cringebot.Page"
              xmlns:corcav="clr-namespace:Corcav.Behaviors;assembly=Corcav.Behaviors"
-             d:DataContext="{d:DesignInstance Type=local:MainPageModel, IsDesignTimeCreatable=False}"
+             xmlns:viewModel="clr-namespace:Cringebot.ViewModel;assembly=Cringebot"
+             xmlns:page="clr-namespace:Cringebot.Page;assembly=Cringebot"
+             xmlns:customElements="clr-namespace:Cringebot.Page.CustomElements;assembly=Cringebot"
+             d:DataContext="{d:DesignInstance Type=viewModel:MainViewModel, IsDesignTimeCreatable=False}"
              x:Class="Cringebot.Page.MainPage"
              Title="Cringebot">
     <ContentPage.Content>
@@ -25,7 +25,7 @@
                     </corcav:BehaviorCollection>
                 </corcav:Interaction.Behaviors>
             </Entry>
-            <ce:DeselectListView ItemsSource="{Binding Memories}"
+            <customElements:DeselectListView ItemsSource="{Binding Memories}"
                                  VerticalOptions="FillAndExpand"
                                  Margin="0,0,0,0"
                                  x:Name="MemoryList">
@@ -35,8 +35,8 @@
                 <corcav:Interaction.Behaviors>
                     <corcav:BehaviorCollection>
                         <corcav:EventToCommand EventName="ItemTapped"
-                                           Command="{Binding ViewDetailsCommand}"
-                                           PassEventArgument="True"/>
+                                               Command="{Binding ViewDetailsCommand}"
+                                               PassEventArgument="True"/>
                     </corcav:BehaviorCollection>
                 </corcav:Interaction.Behaviors>
                 <ListView.ItemTemplate>
@@ -57,16 +57,21 @@
                                            VerticalOptions="CenterAndExpand"
                                            Grid.Row="0"
                                            Grid.Column="0"/>
+                                    <!-- ReSharper disable Xaml.InvalidType - the converter is real, don't know why it's complaining-->
+                                    <!-- ReSharper disable Xaml.BindingWithContextNotResolved - binding context logic is beyong ReSharper -->
                                     <StackLayout Orientation="Horizontal"
                                                  Grid.Row="0"
                                                  Grid.Column="1"
                                                  VerticalOptions="Fill"
                                                  Padding="15,0,15,0"
-                                                 IsVisible="{Binding Source={x:Reference MemoryList}, Path=BindingContext.Simulate, Converter={vc:NotConverter}}">
+                                                 IsVisible="{Binding Source={x:Reference MemoryList}, Path=BindingContext.Simulate, Converter={page:NotConverter}}">
+                                        <!-- ReSharper restore Xaml.BindingWithContextNotResolved -->
+                                        <!-- ReSharper restore Xaml.InvalidType -->
                                         <StackLayout.GestureRecognizers>
                                             <TapGestureRecognizer>
                                                 <corcav:Interaction.Behaviors>
                                                     <corcav:BehaviorCollection>
+                                                        <!-- ReSharper disable once Xaml.BindingWithContextNotResolved - binding context logic is beyong ReSharper-->
                                                         <corcav:EventToCommand EventName="Tapped"
                                                                                Command="{Binding Source={x:Reference MemoryList}, Path=BindingContext.AddOccurrenceCommand}"
                                                                                CommandParameter="{Binding}"/>
@@ -85,7 +90,7 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-            </ce:DeselectListView>
+            </customElements:DeselectListView>
             <StackLayout Orientation="Horizontal"
                          HorizontalOptions="CenterAndExpand"
                          Padding="15,0,15,0">

@@ -1,8 +1,7 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Cringebot.Page.CustomElements;
-using System.Collections.Generic;
-using System;
+using NUnit.Framework;
 using SharpTestsEx;
 
 namespace Cringebot.Tests.Page.CustomElements
@@ -16,24 +15,24 @@ namespace Cringebot.Tests.Page.CustomElements
             {
                 //arrange
                 var observableCollection = new ObservableCollection<int>();
-                var maxValue = 10;
+                const int MAX_VALUE = 10;
                 
-                for (int i = maxValue; i >= 0; i--)
+                for (var i = MAX_VALUE; i >= 0; i--)
                 {
                     observableCollection.Add(i);
                 }
 
                 // Assert the collection is in reverse mode
-                for (int i = maxValue; i >= 0; i--)
+                for (var i = MAX_VALUE; i >= 0; i--)
                 {
-                    Assert.AreEqual(i, observableCollection[maxValue - i]);
+                    Assert.AreEqual(i, observableCollection[MAX_VALUE - i]);
                 }
                 
                 //act
-                observableCollection.Sort((a, b) => { return a.CompareTo(b); });
+                observableCollection.Sort((a, b) => a.CompareTo(b));
 
                 //assert
-                for (int i = 0; i < maxValue; i++)
+                for (var i = 0; i < MAX_VALUE; i++)
                 {
                     Assert.AreEqual(i, observableCollection[i]);
                 }
@@ -58,10 +57,10 @@ namespace Cringebot.Tests.Page.CustomElements
                     5
                 };
 
-                Predicate<int> isOddPredicate = delegate (int a) { return a % 2 != 0; };
+                bool IsOddPredicate(int a) => a % 2 != 0;
 
                 //act
-                allNumbers.FilterButPreserve(evenNumbers, isOddPredicate);
+                allNumbers.FilterButPreserve(evenNumbers, IsOddPredicate);
 
                 //assert
                 allNumbers.Should().Contain(1);

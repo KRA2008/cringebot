@@ -1,5 +1,5 @@
-﻿using Cringebot.PageModel;
-using Cringebot.Wrappers;
+﻿using Cringebot.Wrappers;
+using Cringebot.ViewModel;
 using FreshMvvm;
 using Xamarin.Forms;
 
@@ -15,7 +15,7 @@ namespace Cringebot
 
         public Xamarin.Forms.Page GetStartingPage()
         {
-            return new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<MainPageModel>());
+            return new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<MainViewModel>());
         }
     }
 }

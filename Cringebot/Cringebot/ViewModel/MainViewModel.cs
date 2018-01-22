@@ -6,13 +6,13 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using Cringebot.Page.CustomElements;
 using System;
 using System.Linq;
+using Cringebot.Page.CustomElements;
 
-namespace Cringebot.PageModel
+namespace Cringebot.ViewModel
 {
-    public class MainPageModel : FreshBasePageModel
+    public class MainViewModel : FreshBasePageModel
     {
         private List<Memory> _filteredOutMemories;
         [DependsOn(nameof(MemoryInput), nameof(_filteredOutMemories))]
@@ -21,26 +21,23 @@ namespace Cringebot.PageModel
         {
             get
             {
-                Predicate<Memory> filterPredicate = delegate (Memory a) { return true; };
+                Predicate<Memory> filterPredicate = a => true;
                 if(!string.IsNullOrWhiteSpace(MemoryInput))
                 {
-                    filterPredicate = delegate (Memory a) { return a.Description.ToLower().Contains(MemoryInput.ToLower()); };
+                    filterPredicate = a => a.Description.ToLower().Contains(MemoryInput.ToLower());
                 }
                 _memories.FilterButPreserve(_filteredOutMemories, filterPredicate);
                 if (LimitListVisibility)
                 {
-                    if(_memories.Count() > 1 || string.IsNullOrWhiteSpace(MemoryInput) || MemoryInput.Length < 3)
+                    if(_memories.Count > 1 || string.IsNullOrWhiteSpace(MemoryInput) || MemoryInput.Length < 3)
                     {
-                        _memories.FilterButPreserve(_filteredOutMemories, delegate (Memory a) { return false; });
+                        _memories.FilterButPreserve(_filteredOutMemories, a => false);
                     }
                 }
-                _memories.Sort((a, b) => { return a.Description.CompareTo(b.Description); });
+                _memories.Sort((a, b) => string.Compare(a.Description, b.Description, StringComparison.Ordinal));
                 return _memories;
             }
-            set
-            {
-                _memories = value;
-            }
+            set => _memories = value;
         }
 
         public bool Simulate { get; set; }
@@ -51,10 +48,10 @@ namespace Cringebot.PageModel
         public Command AddOccurrenceCommand { get; }
         public Command ViewDetailsCommand { get; }
 
-        private IAppDataStore _dataStore;
-        private INotificationManager _notificationManager;
+        private readonly IAppDataStore _dataStore;
+        private readonly INotificationManager _notificationManager;
 
-        public MainPageModel(IAppDataStore dataStore, INotificationManager notificationManager)
+        public MainViewModel(IAppDataStore dataStore, INotificationManager notificationManager)
         {
             _dataStore = dataStore;
             _notificationManager = notificationManager;
@@ -63,28 +60,27 @@ namespace Cringebot.PageModel
 
             AddMemoryCommand = new Command(() =>
             {
-                if(!string.IsNullOrWhiteSpace(MemoryInput))
+                if (string.IsNullOrWhiteSpace(MemoryInput)) return;
+
+                var newMemory = new Memory
                 {
-                    var newMemory = new Memory
-                    {
-                        Description = MemoryInput
-                    };
-                    newMemory.Occurrences.Add(SystemTime.Now());
-                    _filteredOutMemories.Add(newMemory);
+                    Description = MemoryInput
+                };
+                newMemory.Occurrences.Add(SystemTime.Now());
+                _filteredOutMemories.Add(newMemory);
 
-                    MemoryInput = null;
+                MemoryInput = null;
 
-                    notificationManager.SetMemories(_filteredOutMemories.Union(_memories));
-                }
+                notificationManager.SetMemories(_filteredOutMemories.Union(_memories));
             });
 
-            AddOccurrenceCommand = new Command((arg) => 
+            AddOccurrenceCommand = new Command(arg => 
             {
                 var memory = (Memory)arg;
                 memory.Occurrences.Add(SystemTime.Now());
             });
 
-            ViewDetailsCommand = new Command(async(args) => 
+            ViewDetailsCommand = new Command(async args => 
             {
                 var memory = (Memory)((ItemTappedEventArgs)args).Item;
                 await ViewDetails(memory);
@@ -92,23 +88,22 @@ namespace Cringebot.PageModel
 
             PropertyChanged += (sender, args) =>
             {
-                if(args.PropertyName == nameof(Simulate))
+                if (args.PropertyName != nameof(Simulate)) return;
+
+                if(Simulate)
                 {
-                    if(Simulate)
-                    {
-                        notificationManager.StartNotifications();
-                    }
-                    else
-                    {
-                        notificationManager.StopNotifications();
-                    }
+                    notificationManager.StartNotifications();
+                }
+                else
+                {
+                    notificationManager.StopNotifications();
                 }
             };
         }
 
         public async Task ViewDetails(Memory memory) //grrrrr, switch to AsyncCommand
         {
-            await CoreMethods.PushPageModel<DetailsPageModel>(memory);
+            await CoreMethods.PushPageModel<DetailsViewModel>(memory);
         }
 
         public override void ReverseInit(object returnedData)

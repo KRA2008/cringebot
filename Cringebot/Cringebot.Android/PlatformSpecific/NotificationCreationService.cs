@@ -19,8 +19,8 @@ namespace Cringebot.Droid.PlatformSpecific
             
             var notificationManager = Application.Context.GetSystemService(NotificationService) as NotificationManager;
             
-            const int notificationId = 0;
-            notificationManager.Notify(notificationId, notification);
+            const int NOTIFICATION_ID = 0;
+            notificationManager?.Notify(NOTIFICATION_ID, notification);
         }
     }
 }

@@ -6,8 +6,8 @@
              mc:Ignorable="d"
              xmlns:fresh="clr-namespace:FreshMvvm;assembly=FreshMvvm"
              xmlns:model="clr-namespace:Cringebot.Model"
-             xmlns:ce="clr-namespace:Cringebot.Page.CustomElements"
              xmlns:corcav="clr-namespace:Corcav.Behaviors;assembly=Corcav.Behaviors"
+             xmlns:customElements="clr-namespace:Cringebot.Page.CustomElements;assembly=Cringebot"
              d:DataContext="{d:DesignInstance Type=model:Memory, IsDesignTimeCreatable=False}"
              x:Class="Cringebot.Page.DetailsPage"
              Title="Memory Details">
@@ -20,7 +20,7 @@
                 <Label Text="{Binding Memory.Occurrences.Count}"
                        VerticalTextAlignment="Center"/>
             </StackLayout>
-            <ce:DeselectListView ItemsSource="{Binding Memory.Occurrences}"
+            <customElements:DeselectListView ItemsSource="{Binding Memory.Occurrences}"
                                  x:Name="OccurrenceList"
                                  VerticalOptions="FillAndExpand">
                 <x:Arguments>
@@ -62,7 +62,7 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-            </ce:DeselectListView>
+            </customElements:DeselectListView>
             <Button Text="Delete"
                     Command="{Binding DeleteMemoryCommand}"
                     HorizontalOptions="CenterAndExpand"/>

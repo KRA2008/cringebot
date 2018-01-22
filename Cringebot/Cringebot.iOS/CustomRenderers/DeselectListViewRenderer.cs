@@ -1,7 +1,7 @@
 ﻿using Xamarin.Forms.Platform.iOS;
 using Xamarin.Forms;
-using Cringebot.Page.CustomElements;
 using Cringebot.iOS.CustomRenderers;
+using Cringebot.Page.CustomElements;
 
 [assembly: ExportRenderer(typeof(DeselectListView), typeof(DeselectListViewRenderer))]
 namespace Cringebot.iOS.CustomRenderers
@@ -17,16 +17,16 @@ namespace Cringebot.iOS.CustomRenderers
             if(e.OldElement != null)
             {
                 e.OldElement.ItemAppearing -= ItemAppearing;
+                return;
             }
 
-            if (e.NewElement != null && !_isConfigured)
-            {
-                _isConfigured = true;
-                e.NewElement.ItemAppearing += ItemAppearing;
-            }
+            if (e.NewElement == null || _isConfigured) return;
+
+            _isConfigured = true;
+            e.NewElement.ItemAppearing += ItemAppearing;
         }
 
-        private void ItemAppearing(object sender, ItemVisibilityEventArgs e)
+        private static void ItemAppearing(object sender, ItemVisibilityEventArgs e)
         {
             var what = e.Item;
         }

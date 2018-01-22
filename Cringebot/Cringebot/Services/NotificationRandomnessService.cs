@@ -14,7 +14,7 @@ namespace Cringebot.Services
         private const int MAXIMUM_INTERVAL_MILLISECONDS = 1000 * 60 * 60 * 8;
         private const int MINIMUM_INTERVAL_MILLISECONDS = 1000 * 60 * 10;
 #endif
-        private static readonly IEnumerable<string> TITLE_OPTIONS = new[]
+        private static readonly IEnumerable<string> _titleOptions = new[]
         {
             "Yikes",
             "Yeeesh",
@@ -36,7 +36,7 @@ namespace Cringebot.Services
             "*Cringe*"
         };
 
-        private static Random _random;
+        private static readonly Random _random;
 
         static NotificationRandomnessService()
         {
@@ -50,12 +50,13 @@ namespace Cringebot.Services
 
         public static string GetNotificationTitle()
         {
-            return TITLE_OPTIONS.ElementAt(_random.Next(0, TITLE_OPTIONS.Count() - 1)) + "...";
+            return _titleOptions.ElementAt(_random.Next(0, _titleOptions.Count() - 1)) + "...";
         }
 
         public static Memory GetRandomMemory(IEnumerable<Memory> memory)
         {
-            return memory.ElementAt(_random.Next(0, memory.Count() - 1));
+            var memoryArray = memory as Memory[] ?? memory.ToArray();
+            return memoryArray.ElementAt(_random.Next(0, memoryArray.Length - 1));
         }
     }
 }

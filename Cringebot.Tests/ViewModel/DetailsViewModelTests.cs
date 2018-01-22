@@ -1,19 +1,19 @@
-﻿using Cringebot.Model;
-using Cringebot.PageModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Cringebot.Model;
 using Cringebot.Wrappers;
+using Cringebot.ViewModel;
 using FreshMvvm;
 using Moq;
 using NUnit.Framework;
 using SharpTestsEx;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
-namespace Cringebot.Tests.PageModel
+namespace Cringebot.Tests.ViewModel
 {
-    public class DetailsPageModelTests
+    public class DetailsViewModelTests
     {
-        protected DetailsPageModel _pageModel;
+        protected DetailsViewModel ViewModel;
         private Mock<IAppDataStore> _dataStore;
         private Mock<IPageModelCoreMethods> _coreMethods;
 
@@ -26,14 +26,14 @@ namespace Cringebot.Tests.PageModel
                 .Returns(new List<Memory> { new Memory() });
             var starterMemory = new Memory();
             starterMemory.Occurrences.Add(new DateTime());
-            _pageModel = new DetailsPageModel(_dataStore.Object)
+            ViewModel = new DetailsViewModel
             {
-                Memory = starterMemory
+                Memory = starterMemory,
+                CoreMethods = _coreMethods.Object
             };
-            _pageModel.CoreMethods = _coreMethods.Object;
         }
 
-        public class InitMethod : DetailsPageModelTests
+        public class InitMethod : DetailsViewModelTests
         {
             [Test]
             public void ShouldBindPassedMemory()
@@ -42,14 +42,14 @@ namespace Cringebot.Tests.PageModel
                 var targetMemory = new Memory();
 
                 //act
-                _pageModel.Init(targetMemory);
+                ViewModel.Init(targetMemory);
 
                 //assert
-                _pageModel.Memory.Should().Be.SameInstanceAs(targetMemory);
+                ViewModel.Memory.Should().Be.SameInstanceAs(targetMemory);
             }
         }
 
-        public class DeleteOccurrenceCommand : DetailsPageModelTests
+        public class DeleteOccurrenceCommand : DetailsViewModelTests
         {
             [Test]
             public void ShouldDeleteOccurrence()
@@ -57,18 +57,18 @@ namespace Cringebot.Tests.PageModel
                 //arrange
                 var targetTime = new DateTime(111, 11, 1, 1, 1, 1);
 
-                _pageModel.Memory.Occurrences.Add(targetTime);
-                _pageModel.Memory.Occurrences.Contains(targetTime).Should().Be.True();
+                ViewModel.Memory.Occurrences.Add(targetTime);
+                ViewModel.Memory.Occurrences.Contains(targetTime).Should().Be.True();
 
                 //act
-                _pageModel.DeleteOccurrenceCommand.Execute(targetTime);
+                ViewModel.DeleteOccurrenceCommand.Execute(targetTime);
 
                 //assert
-                _pageModel.Memory.Occurrences.Contains(targetTime).Should().Be.False();
+                ViewModel.Memory.Occurrences.Contains(targetTime).Should().Be.False();
             }
         }
 
-        public class DeleteMemoryMethod : DetailsPageModelTests
+        public class DeleteMemoryMethod : DetailsViewModelTests
         {
             [Test]
             public async Task ShouldPopBackAndPassMemory()
@@ -77,7 +77,7 @@ namespace Cringebot.Tests.PageModel
                 var targetMemory = new Memory();
 
                 //act
-                await _pageModel.DeleteMemory(targetMemory);
+                await ViewModel.DeleteMemory(targetMemory);
 
                 //assert
                 _coreMethods.Verify(c => c.PopPageModel(targetMemory, false, true));

@@ -14,7 +14,7 @@ namespace Cringebot.iOS
     // User Interface of the application, as well as listening (and optionally responding) to 
     // application events from iOS.
     [Register("AppDelegate")]
-    public partial class AppDelegate : Xamarin.Forms.Platform.iOS.FormsApplicationDelegate, INotificationManager
+    public class AppDelegate : Xamarin.Forms.Platform.iOS.FormsApplicationDelegate, INotificationManager
     {
         private static IEnumerable<Memory> _memories;
         private static bool _notificationsOn;
@@ -71,29 +71,28 @@ namespace Cringebot.iOS
             }
         }
 
-        private void ClearExistingNotifications()
+        private static void ClearExistingNotifications()
         {
             UIApplication.SharedApplication.CancelAllLocalNotifications();
         }
 
-        private void RestartNotificationQueue()
+        private static void RestartNotificationQueue()
         {
-            if(_memories != null && _memories.Count() > 0)
-            {
-                ClearExistingNotifications();
-                for (var ii=1;ii<30;ii++)
-                {
-                    var fireDate = NSDate.FromTimeIntervalSinceNow((NotificationRandomnessService.GetNotificationInterval() / 1000) * ii);
-                    var notification = new UILocalNotification
-                    {
-                        FireDate = fireDate,
-                        AlertTitle = NotificationRandomnessService.GetNotificationTitle(),
-                        AlertBody = NotificationRandomnessService.GetRandomMemory(_memories).Description,
-                        SoundName = UILocalNotification.DefaultSoundName
-                    };
+            if (_memories == null || !_memories.Any()) return;
 
-                    UIApplication.SharedApplication.ScheduleLocalNotification(notification);
-                }
+            ClearExistingNotifications();
+            for (var ii=1;ii<30;ii++)
+            {
+                var fireDate = NSDate.FromTimeIntervalSinceNow((NotificationRandomnessService.GetNotificationInterval() / 1000) * ii);
+                var notification = new UILocalNotification
+                {
+                    FireDate = fireDate,
+                    AlertTitle = NotificationRandomnessService.GetNotificationTitle(),
+                    AlertBody = NotificationRandomnessService.GetRandomMemory(_memories).Description,
+                    SoundName = UILocalNotification.DefaultSoundName
+                };
+
+                UIApplication.SharedApplication.ScheduleLocalNotification(notification);
             }
         }
     }

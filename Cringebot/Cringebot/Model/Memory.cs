@@ -7,16 +7,9 @@ namespace Cringebot.Model
     public class Memory : INotifyPropertyChanged
     {
         private string _id;
-        public string ID
+        public string Id
         {
-            get
-            {
-                if (_id == null)
-                {
-                    _id = Guid.NewGuid().ToString();
-                }
-                return _id;
-            }
+            get => _id ?? (_id = Guid.NewGuid().ToString());
             set
             {
                 if (_id == null)

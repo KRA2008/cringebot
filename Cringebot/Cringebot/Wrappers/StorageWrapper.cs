@@ -17,14 +17,9 @@ namespace Cringebot.Wrappers
 
         public T LoadOrDefault<T>(string key, T defaultValue)
         {
-            if (Application.Current.Properties.ContainsKey(key))
-            {
-                return JsonConvert.DeserializeObject<T>(Application.Current.Properties[key] as string);
-            }
-            else
-            {
-                return defaultValue;
-            }
+            return Application.Current.Properties.ContainsKey(key)
+                ? JsonConvert.DeserializeObject<T>(Application.Current.Properties[key] as string)
+                : defaultValue;
         }
 
         public void Save(string key, object data)

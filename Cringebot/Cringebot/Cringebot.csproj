@@ -45,8 +45,8 @@
       <DependentUpon>DetailsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Page\NotConverter.cs" />
-    <Compile Include="PageModel\DetailsPageModel.cs" />
-    <Compile Include="PageModel\MainPageModel.cs" />
+    <Compile Include="ViewModel\DetailsViewModel.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Page\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

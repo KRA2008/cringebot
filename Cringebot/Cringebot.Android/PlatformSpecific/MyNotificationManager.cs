@@ -37,9 +37,9 @@ namespace Cringebot.Droid.PlatformSpecific
 
         public override void OnReceive(Context context, Intent intent)
         {
-            if(_memories != null && _memories.Count() > 0)
+            if(_memories != null && _memories.Any())
             {
-                Intent createNotificationIntent = new Intent(context, typeof(NotificationCreationService));
+                var createNotificationIntent = new Intent(context, typeof(NotificationCreationService));
                 createNotificationIntent.PutExtra(NOTIFICATION_TITLE_EXTRA, NotificationRandomnessService.GetNotificationTitle());
                 createNotificationIntent.PutExtra(NOTIFICATION_TEXT_EXTRA, NotificationRandomnessService.GetRandomMemory(_memories).Description);
                 context.StartService(createNotificationIntent);
@@ -47,7 +47,7 @@ namespace Cringebot.Droid.PlatformSpecific
             SetNextNotification();
         }
 
-        private void SetNextNotification()
+        private static void SetNextNotification()
         {
             var timerIntent = new Intent(Application.Context, typeof(MyNotificationManager));
             var timerPendingIntent = PendingIntent.GetBroadcast
@@ -57,7 +57,7 @@ namespace Cringebot.Droid.PlatformSpecific
             alarmManager.SetExact(AlarmType.ElapsedRealtime, alarmTimeMillis, timerPendingIntent);
         }
 
-        private void CancelNextNotification()
+        private static void CancelNextNotification()
         {
             var cancelTimerIntent = new Intent(Application.Context, typeof(MyNotificationManager));
             var cancelTimerPendingIntent = PendingIntent.GetBroadcast(Application.Context, NOTIFICATION_REQUEST_CODE, cancelTimerIntent, 0); //why 0?

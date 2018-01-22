@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using SharpTestsEx;
 
-namespace Cringebot.Tests
+namespace Cringebot.Tests.Model
 {
     public class MemoryTests
     {
