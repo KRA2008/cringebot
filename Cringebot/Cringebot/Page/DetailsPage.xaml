@@ -5,12 +5,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              xmlns:fresh="clr-namespace:FreshMvvm;assembly=FreshMvvm"
-             xmlns:model="clr-namespace:Cringebot.Model"
              xmlns:corcav="clr-namespace:Corcav.Behaviors;assembly=Corcav.Behaviors"
              xmlns:customElements="clr-namespace:Cringebot.Page.CustomElements;assembly=Cringebot"
-             d:DataContext="{d:DesignInstance Type=model:Memory, IsDesignTimeCreatable=False}"
+             xmlns:viewModel="clr-namespace:Cringebot.ViewModel;assembly=Cringebot"
+             d:DataContext="{d:DesignInstance Type=viewModel:DetailsViewModel, IsDesignTimeCreatable=False}"
              x:Class="Cringebot.Page.DetailsPage"
-             Title="Memory Details">
+             Title="Memory/Occurrences">
     <ContentPage.Content>
         <StackLayout Padding="15"
                      Spacing="15">
