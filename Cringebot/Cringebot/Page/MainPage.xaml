@@ -67,8 +67,7 @@
                                                  Grid.Row="0"
                                                  Grid.Column="1"
                                                  VerticalOptions="Fill"
-                                                 Padding="15,0,15,0"
-                                                 IsVisible="{Binding Source={x:Reference MemoryList}, Path=BindingContext.Simulate, Converter={page:NotConverter}}">
+                                                 Padding="15,0,15,0">
                                         <!-- ReSharper restore Xaml.BindingWithContextNotResolved -->
                                         <!-- ReSharper restore Xaml.InvalidType -->
                                         <StackLayout.GestureRecognizers>
