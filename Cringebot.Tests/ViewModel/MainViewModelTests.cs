@@ -221,6 +221,26 @@ namespace Cringebot.Tests.ViewModel
                 memoryArray.SingleOrDefault(m => m.Description == MEM1).Should().Not.Be.Null();
                 memoryArray.SingleOrDefault(m => m.Description == MEM2).Should().Not.Be.Null();
             }
+
+            [Test]
+            public void ShouldRaisePropertyChangedOnMemories()
+            {
+                //arrange
+                var eventRaised = false;
+                _viewModel.PropertyChanged += (sender, args) =>
+                {
+                    if (args.PropertyName == nameof(_viewModel.Memories))
+                    {
+                        eventRaised = true;
+                    }
+                };
+
+                //act
+                _viewModel.ReverseInit(new Memory());
+
+                //assert
+                eventRaised.Should().Be.True();
+            }
         }
 
         public class AddMemoryCommand : MainViewModelTests
@@ -297,6 +317,27 @@ namespace Cringebot.Tests.ViewModel
                 var memoryArray = actualList as Memory[] ?? actualList.ToArray();
                 memoryArray.SingleOrDefault(m => m.Description == MEM1).Should().Not.Be.Null();
                 memoryArray.SingleOrDefault(m => m.Description == MEM2).Should().Not.Be.Null();
+            }
+
+            [Test]
+            public void ShouldRaisePropertyChangedOnMemories()
+            {
+                //arrange
+                var eventRaised = false;
+                _viewModel.PropertyChanged += (sender, args) =>
+                {
+                    if (args.PropertyName == nameof(_viewModel.Memories))
+                    {
+                        eventRaised = true;
+                    }
+                };
+
+                //act
+                _viewModel.MemoryInput = "whatever";
+                _viewModel.AddMemoryCommand.Execute(null);
+
+                //assert
+                eventRaised.Should().Be.True();
             }
         }
 

@@ -8,15 +8,13 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using System;
 using System.Linq;
-using Cringebot.Page.CustomElements;
 
 namespace Cringebot.ViewModel
 {
     public class MainViewModel : FreshBasePageModel
     {
-        private List<Memory> _filteredOutMemories;
-        [DependsOn(nameof(MemoryInput), nameof(_filteredOutMemories))]
-        private ObservableCollection<Memory> _memories;
+        [DependsOn(nameof(MemoryInput))]
+        private List<Memory> _memories;
         public ObservableCollection<Memory> Memories
         {
             get
@@ -26,18 +24,17 @@ namespace Cringebot.ViewModel
                 {
                     filterPredicate = a => a.Description.ToLower().Contains(MemoryInput.ToLower());
                 }
-                _memories.FilterButPreserve(_filteredOutMemories, filterPredicate);
+                var filtered = _memories.Where(m => filterPredicate(m)).ToList();
                 if (LimitListVisibility)
                 {
-                    if(_memories.Count > 1 || string.IsNullOrWhiteSpace(MemoryInput) || MemoryInput.Length < 3)
+                    if(filtered.Count > 1 || string.IsNullOrWhiteSpace(MemoryInput) || MemoryInput.Length < 3)
                     {
-                        _memories.FilterButPreserve(_filteredOutMemories, a => false);
+                        filtered = filtered.Where(m => false).ToList();
                     }
                 }
-                _memories.Sort((a, b) => string.Compare(a.Description, b.Description, StringComparison.Ordinal));
-                return _memories;
+                return new ObservableCollection<Memory>(filtered.OrderBy(m => m.Description));
             }
-            set => _memories = value;
+            set => _memories = value.ToList();
         }
 
         public bool Simulate { get; set; }
@@ -55,8 +52,7 @@ namespace Cringebot.ViewModel
         {
             _dataStore = dataStore;
             _notificationManager = notificationManager;
-            _filteredOutMemories = new List<Memory>();
-            _memories = new ObservableCollection<Memory>();
+            _memories = new List<Memory>();
 
             AddMemoryCommand = new Command(() =>
             {
@@ -67,11 +63,12 @@ namespace Cringebot.ViewModel
                     Description = MemoryInput
                 };
                 newMemory.Occurrences.Add(SystemTime.Now());
-                _filteredOutMemories.Add(newMemory);
+                _memories.Add(newMemory);
+                RaisePropertyChanged(nameof(Memories));
 
                 MemoryInput = null;
 
-                notificationManager.SetMemories(_filteredOutMemories.Union(_memories));
+                notificationManager.SetMemories(_memories);
             });
 
             AddOccurrenceCommand = new Command(arg => 
@@ -111,10 +108,10 @@ namespace Cringebot.ViewModel
             base.ReverseInit(returnedData);
 
             var memoryToRemove = (Memory)returnedData;
-            _filteredOutMemories.Remove(memoryToRemove);
             _memories.Remove(memoryToRemove);
+            RaisePropertyChanged(nameof(Memories));
 
-            _notificationManager.SetMemories(_filteredOutMemories.Union(_memories));
+            _notificationManager.SetMemories(_memories);
         }
 
         public override void Init(object initData)
@@ -123,16 +120,16 @@ namespace Cringebot.ViewModel
 
             Simulate = _dataStore.LoadOrDefault(StorageWrapper.SIMULATE_STORE_KEY, false);
             LimitListVisibility = _dataStore.LoadOrDefault(StorageWrapper.LIMIT_LIST_STORE_KEY, false);
-            _filteredOutMemories = _dataStore.LoadOrDefault(StorageWrapper.MEMORY_LIST_STORE_KEY, new List<Memory>());
+            _memories = _dataStore.LoadOrDefault(StorageWrapper.MEMORY_LIST_STORE_KEY, new List<Memory>());
 
-            _notificationManager.SetMemories(_filteredOutMemories.Union(_memories));
+            _notificationManager.SetMemories(_memories);
         }
 
         public void Save()
         {
             _dataStore.Save(StorageWrapper.LIMIT_LIST_STORE_KEY, LimitListVisibility);
             _dataStore.Save(StorageWrapper.SIMULATE_STORE_KEY, Simulate);
-            _dataStore.Save(StorageWrapper.MEMORY_LIST_STORE_KEY, _filteredOutMemories.Union(_memories));
+            _dataStore.Save(StorageWrapper.MEMORY_LIST_STORE_KEY, _memories);
         }
     }
 }
