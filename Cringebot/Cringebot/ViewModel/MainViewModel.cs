@@ -34,7 +34,6 @@ namespace Cringebot.ViewModel
                 }
                 return new ObservableCollection<Memory>(filtered.OrderBy(m => m.Description));
             }
-            set => _memories = value.ToList();
         }
 
         public bool Simulate { get; set; }
