@@ -43,6 +43,8 @@ namespace Cringebot.ViewModel
         public Command AddMemoryCommand { get; }
         public Command AddOccurrenceCommand { get; }
         public Command ViewDetailsCommand { get; }
+        public Command ViewStatsCommand { get; }
+        public Command ViewHelpCommand { get; }
 
         private readonly IAppDataStore _dataStore;
         private readonly INotificationManager _notificationManager;
@@ -82,6 +84,16 @@ namespace Cringebot.ViewModel
                 await ViewDetails(memory);
             });
 
+            ViewStatsCommand = new Command(async args =>
+            {
+                await ViewStats(_memories);
+            });
+
+            ViewHelpCommand = new Command(async args =>
+            {
+                await ViewHelp();
+            });
+
             PropertyChanged += (sender, args) =>
             {
                 if (args.PropertyName != nameof(Simulate)) return;
@@ -100,6 +112,16 @@ namespace Cringebot.ViewModel
         public async Task ViewDetails(Memory memory) //grrrrr, switch to AsyncCommand
         {
             await CoreMethods.PushPageModel<DetailsViewModel>(memory);
+        }
+
+        public async Task ViewStats(IEnumerable<Memory> memories)
+        {
+            await CoreMethods.PushPageModel<StatsViewModel>(memories);
+        }
+
+        public async Task ViewHelp()
+        {
+            await CoreMethods.PushPageModel<HelpViewModel>();
         }
 
         public override void ReverseInit(object returnedData)

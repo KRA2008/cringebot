@@ -536,5 +536,40 @@ namespace Cringebot.Tests.ViewModel
                 _notificationManager.Verify(m => m.StopNotifications());
             }
         }
+
+        public class ViewStatsMethod : MainViewModelTests
+        {
+            [Test]
+            public async Task ShouldNavigateToStatsPage()
+            {
+                //arrange
+                var coreMethods = new Mock<IPageModelCoreMethods>();
+                _viewModel.CoreMethods = coreMethods.Object;
+                var memories = new List<Memory>();
+
+                //act
+                await _viewModel.ViewStats(memories);
+
+                //assert
+                coreMethods.Verify(c => c.PushPageModel<StatsViewModel>(memories, false, true));
+            }
+        }
+
+        public class ViewHelpMethod : MainViewModelTests
+        {
+            [Test]
+            public async Task ShouldNavigateToHelpPage()
+            {
+                //arrange
+                var coreMethods = new Mock<IPageModelCoreMethods>();
+                _viewModel.CoreMethods = coreMethods.Object;
+
+                //act
+                await _viewModel.ViewHelp();
+
+                //assert
+                coreMethods.Verify(c => c.PushPageModel<HelpViewModel>(true));
+            }
+        }
     }
 }

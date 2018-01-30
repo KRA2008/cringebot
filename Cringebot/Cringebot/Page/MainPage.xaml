@@ -13,8 +13,10 @@
              x:Class="Cringebot.Page.MainPage"
              Title="Cringebot">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="?"/>
-        <ToolbarItem Icon="chart"/>
+        <ToolbarItem Text="?"
+                     Command="{Binding ViewHelpCommand}"/>
+        <ToolbarItem Icon="chart"
+                     Command="{Binding ViewStatsCommand}"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout Padding="0" 
