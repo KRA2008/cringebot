@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ViewModel\DetailsViewModelTests.cs" />
+    <Compile Include="ViewModel\HelpViewModelTests.cs" />
     <Compile Include="ViewModel\MainViewModelTests.cs" />
     <Compile Include="Model\MemoryTests.cs" />
     <Compile Include="Page\CustomElements\ObservableCollectionExtensionsTests.cs" />

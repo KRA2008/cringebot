@@ -1,9 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<freshMvvm:FreshBaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:freshMvvm="clr-namespace:FreshMvvm;assembly=FreshMvvm"
-             x:Class="Cringebot.Page.HelpPage"
-             Title="Help">
+<fresh:FreshBaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+                            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                            mc:Ignorable="d"
+                            xmlns:fresh="clr-namespace:FreshMvvm;assembly=FreshMvvm"
+                            xmlns:viewModel="clr-namespace:Cringebot.ViewModel;assembly=Cringebot"
+                            d:DataContext="{d:DesignInstance Type=viewModel:HelpViewModel, IsDesignTimeCreatable=False}"
+                            x:Class="Cringebot.Page.HelpPage"
+                            Title="Help">
     <ContentPage.Content>
         <StackLayout Padding="15"
                      Spacing="15">
@@ -11,6 +16,9 @@
             <Label Text="Each time you recall a memory involuntarily, click the plus icon on the right of that memory to mark an occurrence."/>
             <Label Text="You can limit list visibility to minimize the chances of accidentally reading a memory while still being able to search, add, and track."/>
             <Label Text="Activate simulation mode by flipping the switch. Cringebot will send you random notifications containing memories from the list."/>
+            <Button Text="Feedback"
+                    Command="{Binding FeedbackCommand}"
+                    VerticalOptions="EndAndExpand"/>
         </StackLayout>
     </ContentPage.Content>
-</freshMvvm:FreshBaseContentPage>
+</fresh:FreshBaseContentPage>
