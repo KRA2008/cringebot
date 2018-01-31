@@ -1,14 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<freshMvvm:FreshBaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:freshMvvm="clr-namespace:FreshMvvm;assembly=FreshMvvm"
-             x:Class="Cringebot.Page.StatsPage"
-             Title="Stats">
+<fresh:FreshBaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+                            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                            mc:Ignorable="d"
+                            xmlns:fresh="clr-namespace:FreshMvvm;assembly=FreshMvvm"
+                            xmlns:viewModel="clr-namespace:Cringebot.ViewModel;assembly=Cringebot"
+                            xmlns:ce="clr-namespace:Cringebot.Page.CustomElements;assembly=Cringebot"
+                            d:DataContext="{d:DesignInstance Type=viewModel:StatsViewModel, IsDesignTimeCreatable=False}"
+                            x:Class="Cringebot.Page.StatsPage"
+                            Title="Stats">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Stats go here."
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <ce:DeselectListView ItemsSource="{Binding Statistics}"
+                        HasUnevenRows="True">
+            <x:Arguments>
+                <ListViewCachingStrategy>RecycleElement</ListViewCachingStrategy>
+            </x:Arguments>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <ViewCell.View>
+                            <StackLayout Orientation="Horizontal"
+                                         Padding="15">
+                                <Label Text="{Binding Description}"
+                                       VerticalTextAlignment="Center"/>
+                                <Label Text="{Binding Number}"
+                                       VerticalTextAlignment="Center"/>
+                            </StackLayout>
+                        </ViewCell.View>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ce:DeselectListView>
     </ContentPage.Content>
-</freshMvvm:FreshBaseContentPage>
+</fresh:FreshBaseContentPage>

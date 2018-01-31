@@ -7,8 +7,7 @@
              xmlns:fresh="clr-namespace:FreshMvvm;assembly=FreshMvvm"
              xmlns:corcav="clr-namespace:Corcav.Behaviors;assembly=Corcav.Behaviors"
              xmlns:viewModel="clr-namespace:Cringebot.ViewModel;assembly=Cringebot"
-             xmlns:page="clr-namespace:Cringebot.Page;assembly=Cringebot"
-             xmlns:customElements="clr-namespace:Cringebot.Page.CustomElements;assembly=Cringebot"
+             xmlns:ce="clr-namespace:Cringebot.Page.CustomElements;assembly=Cringebot"
              d:DataContext="{d:DesignInstance Type=viewModel:MainViewModel, IsDesignTimeCreatable=False}"
              x:Class="Cringebot.Page.MainPage"
              Title="Cringebot">
@@ -31,7 +30,7 @@
                     </corcav:BehaviorCollection>
                 </corcav:Interaction.Behaviors>
             </Entry>
-            <customElements:DeselectListView ItemsSource="{Binding Memories}"
+            <ce:DeselectListView ItemsSource="{Binding Memories}"
                                  VerticalOptions="FillAndExpand"
                                  Margin="0,0,0,0"
                                  x:Name="MemoryList">
@@ -95,7 +94,7 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-            </customElements:DeselectListView>
+            </ce:DeselectListView>
             <StackLayout Orientation="Horizontal"
                          HorizontalOptions="CenterAndExpand"
                          Padding="15,0,15,0">

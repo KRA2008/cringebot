@@ -5,10 +5,9 @@
              x:Class="Cringebot.Page.HelpPage"
              Title="Help">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Help goes here."
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout Padding="15"
+                     Spacing="15">
+            <Label Text="Helps goes here."/>
         </StackLayout>
     </ContentPage.Content>
 </freshMvvm:FreshBaseContentPage>
