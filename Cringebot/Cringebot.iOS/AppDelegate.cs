@@ -81,7 +81,7 @@ namespace Cringebot.iOS
             if (_memories == null || !_memories.Any()) return;
 
             ClearExistingNotifications();
-            for (var ii=1;ii<30;ii++)
+            for (var ii=1;ii<64;ii++) // limited to 64 on iOS
             {
                 var fireDate = NSDate.FromTimeIntervalSinceNow((NotificationRandomnessService.GetNotificationInterval() / 1000) * ii);
                 var notification = new UILocalNotification
