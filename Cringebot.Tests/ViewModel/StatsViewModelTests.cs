@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Cringebot.Model;
 using Cringebot.ViewModel;
@@ -20,6 +21,18 @@ namespace Cringebot.Tests.ViewModel
 
         public class InitMethod : StatsViewModelTests
         {
+            [Test]
+            public void ShouldNotDieWhenEmptyList()
+            {
+                _viewModel.Init(new List<Memory>());
+            }
+
+            [Test]
+            public void ShouldNotDieWhenNoOccurrences()
+            {
+                _viewModel.Init(new List<Memory>{ new Memory()});
+            }
+
             [Test]
             public void ShouldTotalCringes()
             {

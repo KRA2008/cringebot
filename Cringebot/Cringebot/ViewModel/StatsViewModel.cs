@@ -23,53 +23,58 @@ namespace Cringebot.ViewModel
 
             var memories = (IEnumerable<Memory>) initData;
 
-            var occurrences = memories.SelectMany(m => m.Occurrences).OrderByDescending(d => d).ToList();
-
-            var now = SystemTime.Now();
-            var firstCringe = occurrences.Min();
-            var daysUsingCringebot = (now.Date - firstCringe.Date).Days+1;
-
-            Statistics.Add(new MemoryStatistic
+            if (memories.Any())
             {
-                Description = "total cringes",
-                Number = occurrences.Count
-            });
+                var occurrences = memories.SelectMany(m => m.Occurrences).OrderByDescending(d => d).ToList();
+                if (occurrences.Any())
+                {
+                    var now = SystemTime.Now();
+                    var firstCringe = occurrences.Min();
+                    var daysUsingCringebot = (now.Date - firstCringe.Date).Days + 1;
 
-            Statistics.Add(new MemoryStatistic
-            {
-                Description = "total days using Cringebot",
-                Number = daysUsingCringebot
-            });
+                    Statistics.Add(new MemoryStatistic
+                    {
+                        Description = "total cringes",
+                        Number = occurrences.Count
+                    });
 
-            Statistics.Add(new MemoryStatistic
-            {
-                Description = "average cringes per day",
-                Number = Math.Round((double)occurrences.Count/daysUsingCringebot, 1)
-            });
+                    Statistics.Add(new MemoryStatistic
+                    {
+                        Description = "total days using Cringebot",
+                        Number = daysUsingCringebot
+                    });
 
-            Statistics.Add(new MemoryStatistic
-            {
-                Description = "most cringes in single day",
-                Number = memories.OrderByDescending(m => m.Occurrences.Count).First().Occurrences.Count
-            });
+                    Statistics.Add(new MemoryStatistic
+                    {
+                        Description = "average cringes per day",
+                        Number = Math.Round((double)occurrences.Count / daysUsingCringebot, 1)
+                    });
 
-            Statistics.Add(new MemoryStatistic
-            {
-                Description = "total days without cringe",
-                Number = daysUsingCringebot - occurrences.Select(d => d.Date).Distinct().Count()
-            });
+                    Statistics.Add(new MemoryStatistic
+                    {
+                        Description = "most cringes in single day",
+                        Number = memories.OrderByDescending(m => m.Occurrences.Count).First().Occurrences.Count
+                    });
 
-            var contiguousDaysWithout = new List<int>();
-            for(var ii=0;ii<occurrences.Count-1;ii++)
-            {
-                contiguousDaysWithout.Add((occurrences[ii].Date - occurrences[ii + 1].Date).Days);
+                    Statistics.Add(new MemoryStatistic
+                    {
+                        Description = "total days without cringe",
+                        Number = daysUsingCringebot - occurrences.Select(d => d.Date).Distinct().Count()
+                    });
+
+                    var contiguousDaysWithout = new List<int>();
+                    for (var ii = 0; ii < occurrences.Count - 1; ii++)
+                    {
+                        contiguousDaysWithout.Add((occurrences[ii].Date - occurrences[ii + 1].Date).Days);
+                    }
+
+                    Statistics.Add(new MemoryStatistic
+                    {
+                        Description = "most days without cringe",
+                        Number = contiguousDaysWithout.Max()
+                    });
+                }
             }
-
-            Statistics.Add(new MemoryStatistic
-            {
-                Description = "most days without cringe",
-                Number = contiguousDaysWithout.Max()
-            });
         }
     }
 }
