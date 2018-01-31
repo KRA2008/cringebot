@@ -7,7 +7,10 @@
     <ContentPage.Content>
         <StackLayout Padding="15"
                      Spacing="15">
-            <Label Text="Helps goes here."/>
+            <Label Text="Enter unpleasant memories that make you cringe in the text box to add it to the list of memories."/>
+            <Label Text="Each time you recall a memory involuntarily, click the plus icon on the right of that memory to mark an occurrence."/>
+            <Label Text="You can limit list visibility to minimize the chances of accidentally reading a memory while still being able to search, add, and track."/>
+            <Label Text="Activate simulation mode by flipping the switch. Cringebot will send you random notifications containing memories from the list."/>
         </StackLayout>
     </ContentPage.Content>
 </freshMvvm:FreshBaseContentPage>
