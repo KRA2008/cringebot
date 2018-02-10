@@ -1,17 +1,33 @@
-# cringebot
+# Cringebot
 
-Cringebot explores the tendency many human brains have to cause themselves discomfort by involuntarily recalling negative memories. 
-
-I hope that by making users of the app aware of the tendencies they have for this behavior, they will be more empowered to accept themselves and live happier lives.
+Cringebot explores the tendency many people have to make themselves cringe by remembering embarrassing events in their past and to generate recurrent negative thoughts. I hope that by using Cringebot, users will become more aware of these tendencies and will be more empowered to live happier lives.
 
 Cringebot helps you to see that you are the Cringebot.
 
 ---
 
 Cringebot can do a couple things:
-* Track occurrences of involuntary recall/intrusive memories in real time
-* Simulate involuntary recall/intrusive memories from a user-generated list of memories
+* Track occurrences of cringes and negative thoughts in real time
+* Simulate involuntary recall and negative thoughts from a user-generated list of prompts
     
-By tracking occurrences, Cringebot helps you to be more aware of how much these occurrences affect your daily life. By simulating, Cringebot helps you to realize the absurdity of the phenomenon and perhaps build up a psychological tolerance. Simulation could also be used by people who don't experience such things so they can better understand people who do.
+By tracking occurrences, Cringebot helps you to be more aware of how much these occurrences affect your daily life. By simulating, Cringebot helps you to realize the absurdity of the phenomena and perhaps build up a psychological tolerance. Simulation could also be used by people who don't experience such things so they can better understand people who do.
 
 (I am not a doctor. Cringebot is not therapy.)
+
+---
+
+The above describes Cringebot in its value as a running application. As a repository, Cringebot fulfills two main functions. First, it acts as a bit of a résumé booster for its creator. Second, it demonstrates the ease of building a non-trivial, useful, robust, and maintainable Xamarin.Forms application for those who might be interested in pursuing the technology.
+
+Some of the niceties incorporated here that I would encourage others to use:
+* https://www.nuget.org/packages/xcc/
+    * When combined with ReSharper, adds auto-complete/intellisense to Xamarin.Forms XAML pages in Visual Studio on Windows
+* https://www.nuget.org/packages/PropertyChanged.Fody/
+    * Automatically weaves in all that PropertyChanged event handler boilerplate
+* https://www.nuget.org/packages/FreshMvvm/
+    * Makes the MVVM pattern a breeze, makes navigation super easy and unit testable
+* https://www.nuget.org/packages/Corcav.Behaviors/
+    * Eliminates codebehind by allowing ViewModels to handle every UI event directly
+* https://www.nuget.org/packages/moq/
+    * Friendly mocking for unit tests
+* https://www.nuget.org/packages/SharpTestsEx/
+    * Testing assertions that read like sentences

@@ -10,7 +10,7 @@
              xmlns:viewModel="clr-namespace:Cringebot.ViewModel;assembly=Cringebot"
              d:DataContext="{d:DesignInstance Type=viewModel:DetailsViewModel, IsDesignTimeCreatable=False}"
              x:Class="Cringebot.Page.DetailsPage"
-             Title="Memory/Occurrences">
+             Title="Item/Occurrences">
     <ContentPage.ToolbarItems>
         <ToolbarItem Icon="chart"
                      Command="{Binding ViewStatsCommand}"/>

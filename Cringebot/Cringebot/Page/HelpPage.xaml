@@ -10,15 +10,28 @@
                             x:Class="Cringebot.Page.HelpPage"
                             Title="Help">
     <ContentPage.Content>
-        <StackLayout Padding="15"
-                     Spacing="15">
-            <Label Text="Enter unpleasant memories that make you cringe in the text box to add it to the list of memories."/>
-            <Label Text="Each time you recall a memory involuntarily, click the plus icon on the right of that memory to mark an occurrence."/>
-            <Label Text="You can limit list visibility to minimize the chances of accidentally reading a memory while still being able to search, add, and track."/>
-            <Label Text="Activate simulation mode by flipping the switch. Cringebot will send you random notifications containing memories from the list."/>
+        <StackLayout Padding="0"
+                     Spacing="0">
+            <ScrollView>
+                <StackLayout Padding="15"
+                             Spacing="15">
+                    <Label Text="What is Cringebot?"
+                           FontSize="Medium"/>
+                    <Label Text="Cringebot explores the tendency many people have to make themselves cringe by remembering embarrassing events in their past and to generate recurrent negative thoughts. I hope that by using Cringebot, users will become more aware of these tendencies and will be more empowered to live happier lives."/>
+                    <Label Text="Cringebot helps you to see that you are the Cringebot."/>
+                    <Label Text="How do I use Cringebot?"
+                           FontSize="Medium"/>
+                    <Label Text="Enter recurrent negative thoughts and cringy memories in the text box to add them to the list. Rest assured your list is completely private - Cringebot does not even request internet access."/>
+                    <Label Text="As you go about your life, each time you experience a negative thought or recall a cringy memory, click the plus icon on the right of that item to mark an occurrence."/>
+                    <Label Text="Limit list visibility by flipping the switch. Cringebot will only show your search results if there is exactly one matching result in order to minimize the chances of accidentally reading other items while adding and tracking."/>
+                    <Label Text="Activate simulation mode by flipping the switch. Cringebot will send you random notifications about items in the list."/>
+                    <Label Text="(I am not a doctor. Cringebot is not therapy.)"/>
+                </StackLayout>
+            </ScrollView>
             <Button Text="Feedback"
                     Command="{Binding FeedbackCommand}"
-                    VerticalOptions="EndAndExpand"/>
+                    VerticalOptions="EndAndExpand"
+                    Margin="15"/>
         </StackLayout>
     </ContentPage.Content>
 </fresh:FreshBaseContentPage>

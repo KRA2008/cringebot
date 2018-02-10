@@ -3,7 +3,7 @@ using Android.Content;
 
 namespace Cringebot.Droid
 {
-    [Activity(Theme = "@style/MyTheme.Splash", MainLauncher = true, NoHistory = true)]
+    [Activity(Theme = "@style/SplashTheme", MainLauncher = true, NoHistory = true)]
     public class SplashActivity : Activity
     {
         protected override void OnResume()

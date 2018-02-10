@@ -20,7 +20,7 @@
     <ContentPage.Content>
         <StackLayout Padding="0" 
                      Spacing="15">
-            <Entry Placeholder="Search/Add Memory..."
+            <Entry Placeholder="Search/Add Item..."
                    Text="{Binding MemoryInput}"
                    Margin="15,15,15,0">
                 <corcav:Interaction.Behaviors>
