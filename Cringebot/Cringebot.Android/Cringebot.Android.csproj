@@ -196,9 +196,7 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxhdpi\clear.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CustomRenderers\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-hdpi\chart.png" />
   </ItemGroup>
