@@ -14,6 +14,11 @@ namespace Cringebot.Services
         private const int MAXIMUM_INTERVAL_MILLISECONDS = 1000 * 60 * 60 * 8;
         private const int MINIMUM_INTERVAL_MILLISECONDS = 1000 * 60 * 10;
 #endif
+        private static readonly TimeSpan _doNotDisturbStart = new TimeSpan(22,0,0);
+        private static readonly TimeSpan _doNotDisturbStop = new TimeSpan(8, 0, 0);
+        private static readonly int _doNotDisturbIntervalMilliseconds =
+            (int) (_doNotDisturbStop.Add(new TimeSpan(1, 0, 0, 0)) - _doNotDisturbStart).TotalMilliseconds;
+
         private static readonly IEnumerable<string> _titleOptions = new[]
         {
             "Yikes",
@@ -45,7 +50,14 @@ namespace Cringebot.Services
 
         public static int GetNotificationInterval()
         {
-            return _random.Next(MINIMUM_INTERVAL_MILLISECONDS, MAXIMUM_INTERVAL_MILLISECONDS);
+            var interval = _random.Next(MINIMUM_INTERVAL_MILLISECONDS, MAXIMUM_INTERVAL_MILLISECONDS);
+            var notificationTime = DateTime.Now.AddMilliseconds(interval).TimeOfDay;
+            if (notificationTime > _doNotDisturbStart ||
+                notificationTime < _doNotDisturbStop)
+            {
+                return interval + _doNotDisturbIntervalMilliseconds;
+            }
+            return interval;
         }
 
         public static string GetNotificationTitle()
