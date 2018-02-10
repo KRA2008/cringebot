@@ -50,13 +50,13 @@ namespace Cringebot.Services
 
         public static string GetNotificationTitle()
         {
-            return _titleOptions.ElementAt(_random.Next(0, _titleOptions.Count() - 1)) + "...";
+            return _titleOptions.ElementAt(_random.Next(0, _titleOptions.Count())) + "..."; // random.next is max exclusive
         }
 
         public static Memory GetRandomMemory(IEnumerable<Memory> memory)
         {
             var memoryArray = memory as Memory[] ?? memory.ToArray();
-            return memoryArray.ElementAt(_random.Next(0, memoryArray.Length - 1));
+            return memoryArray.ElementAt(_random.Next(0, memoryArray.Length)); // random.next is max exclusive
         }
     }
 }
