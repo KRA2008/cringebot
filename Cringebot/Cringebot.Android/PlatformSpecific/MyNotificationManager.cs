@@ -53,7 +53,12 @@ namespace Cringebot.Droid.PlatformSpecific
             var timerPendingIntent = PendingIntent.GetBroadcast
                 (Application.Context, NOTIFICATION_REQUEST_CODE, timerIntent, PendingIntentFlags.UpdateCurrent);
             var alarmManager = (AlarmManager)Application.Context.GetSystemService(Context.AlarmService);
-            var alarmTimeMillis = SystemClock.ElapsedRealtime() + NotificationRandomnessService.GetNotificationInterval();
+            var notificationInterval = NotificationRandomnessService.GetNotificationIntervalMilliseconds();
+            if (NotificationRandomnessService.DoesIntervalLandInDoNotDisturb(notificationInterval))
+            {
+                notificationInterval += NotificationRandomnessService.DoNotDisturbLengthMilliseconds;
+            }
+            var alarmTimeMillis = SystemClock.ElapsedRealtime() + notificationInterval;
             alarmManager.SetExact(AlarmType.ElapsedRealtime, alarmTimeMillis, timerPendingIntent);
         }
 

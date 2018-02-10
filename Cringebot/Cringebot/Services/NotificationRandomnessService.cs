@@ -16,7 +16,7 @@ namespace Cringebot.Services
 #endif
         private static readonly TimeSpan _doNotDisturbStart = new TimeSpan(22,0,0);
         private static readonly TimeSpan _doNotDisturbStop = new TimeSpan(8, 0, 0);
-        private static readonly int _doNotDisturbIntervalMilliseconds =
+        public static readonly int DoNotDisturbLengthMilliseconds =
             (int) (_doNotDisturbStop.Add(new TimeSpan(1, 0, 0, 0)) - _doNotDisturbStart).TotalMilliseconds;
 
         private static readonly IEnumerable<string> _titleOptions = new[]
@@ -48,16 +48,16 @@ namespace Cringebot.Services
             _random = new Random();
         }
 
-        public static int GetNotificationInterval()
+        public static bool DoesIntervalLandInDoNotDisturb(double originalIntervalMilliseconds)
         {
-            var interval = _random.Next(MINIMUM_INTERVAL_MILLISECONDS, MAXIMUM_INTERVAL_MILLISECONDS);
-            var notificationTime = DateTime.Now.AddMilliseconds(interval).TimeOfDay;
-            if (notificationTime > _doNotDisturbStart ||
-                notificationTime < _doNotDisturbStop)
-            {
-                return interval + _doNotDisturbIntervalMilliseconds;
-            }
-            return interval;
+            var notificationTime = DateTime.Now.AddMilliseconds(originalIntervalMilliseconds).TimeOfDay;
+            return notificationTime > _doNotDisturbStart ||
+                   notificationTime < _doNotDisturbStop;
+        }
+
+        public static int GetNotificationIntervalMilliseconds()
+        {
+            return _random.Next(MINIMUM_INTERVAL_MILLISECONDS, MAXIMUM_INTERVAL_MILLISECONDS);
         }
 
         public static string GetNotificationTitle()

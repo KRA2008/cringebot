@@ -81,12 +81,18 @@ namespace Cringebot.iOS
             if (_memories == null || !_memories.Any()) return;
 
             ClearExistingNotifications();
-            for (var ii=1;ii<64;ii++) // limited to 64 on iOS
+            const int IOS_NOTIFICATION_LIMIT = 64;
+            double runningIntervalTotal = 0;
+            for (var ii = 1; ii < IOS_NOTIFICATION_LIMIT; ii++)
             {
-                var fireDate = NSDate.FromTimeIntervalSinceNow((NotificationRandomnessService.GetNotificationInterval() / 1000) * ii);
+                runningIntervalTotal += NotificationRandomnessService.GetNotificationIntervalMilliseconds();
+                if (NotificationRandomnessService.DoesIntervalLandInDoNotDisturb(runningIntervalTotal))
+                {
+                    runningIntervalTotal += NotificationRandomnessService.DoNotDisturbLengthMilliseconds;
+                }
                 var notification = new UILocalNotification
                 {
-                    FireDate = fireDate,
+                    FireDate = NSDate.FromTimeIntervalSinceNow(runningIntervalTotal / 1000),
                     AlertTitle = NotificationRandomnessService.GetNotificationTitle(),
                     AlertBody = NotificationRandomnessService.GetRandomMemory(_memories).Description,
                     SoundName = UILocalNotification.DefaultSoundName
