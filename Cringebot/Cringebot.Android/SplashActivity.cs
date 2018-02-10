@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Android.App;
+﻿using Android.App;
 using Android.Content;
 
 namespace Cringebot.Droid
@@ -10,10 +9,7 @@ namespace Cringebot.Droid
         protected override void OnResume()
         {
             base.OnResume();
-            //Task.Run(() =>
-            //{
-                StartActivity(new Intent(Application.Context, typeof(MainActivity)));
-            //});
+            StartActivity(new Intent(Application.Context, typeof(MainActivity)));
         }
 
         public override void OnBackPressed() { }
