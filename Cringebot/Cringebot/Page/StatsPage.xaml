@@ -9,7 +9,7 @@
                             xmlns:ce="clr-namespace:Cringebot.Page.CustomElements;assembly=Cringebot"
                             d:DataContext="{d:DesignInstance Type=viewModel:StatsViewModel, IsDesignTimeCreatable=False}"
                             x:Class="Cringebot.Page.StatsPage"
-                            Title="Stats">
+                            Title="{Binding Title}">
     <ContentPage.Content>
         <ce:DeselectListView ItemsSource="{Binding Statistics}"
                         HasUnevenRows="True">

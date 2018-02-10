@@ -53,7 +53,7 @@ namespace Cringebot.Tests.ViewModel
                 _viewModel.Init(memories);
 
                 //assert
-                _viewModel.Statistics.First(s => s.Description == "total cringes").Number.Should().Be.EqualTo(3);
+                _viewModel.Statistics.First(s => s.Description == "total occurrences").Number.Should().Be.EqualTo(3);
             }
 
             [Test]
@@ -88,7 +88,7 @@ namespace Cringebot.Tests.ViewModel
                 _viewModel.Init(memories);
 
                 //assert
-                _viewModel.Statistics.First(s => s.Description == "total days using Cringebot").Number.Should().Be
+                _viewModel.Statistics.First(s => s.Description == "total days on Cringebot").Number.Should().Be
                     .EqualTo(DAYS_SINCE+1);
             }
 
@@ -117,7 +117,7 @@ namespace Cringebot.Tests.ViewModel
                 _viewModel.Init(memories);
 
                 //assert
-                _viewModel.Statistics.First(s => s.Description == "average cringes per day").Number.Should().Be
+                _viewModel.Statistics.First(s => s.Description == "average occurrences per day").Number.Should().Be
                     .EqualTo(0.2);
             }
 
@@ -141,7 +141,7 @@ namespace Cringebot.Tests.ViewModel
                 _viewModel.Init(memories);
 
                 //assert
-                _viewModel.Statistics.First(s => s.Description == "most cringes in single day").Number.Should().Be
+                _viewModel.Statistics.First(s => s.Description == "most occurrences in single day").Number.Should().Be
                     .EqualTo(4);
             }
 
@@ -178,7 +178,7 @@ namespace Cringebot.Tests.ViewModel
                 _viewModel.Init(memories);
 
                 //assert
-                _viewModel.Statistics.First(s => s.Description == "total days without cringe").Number.Should().Be
+                _viewModel.Statistics.First(s => s.Description == "total days without occurrence").Number.Should().Be
                     .EqualTo(28);
             }
 
@@ -214,8 +214,57 @@ namespace Cringebot.Tests.ViewModel
                 _viewModel.Init(memories);
 
                 //assert
-                _viewModel.Statistics.First(s => s.Description == "most days without cringe").Number.Should().Be
+                _viewModel.Statistics.First(s => s.Description == "most days without occurrence").Number.Should().Be
                     .EqualTo(19);
+            }
+
+            [Test]
+            public void ShouldGetZeroForLongestRunWithoutCringeWhenOneOccurrenceTotal()
+            {
+                //arrange
+                var memory = new Memory();
+                memory.Occurrences.Add(new DateTime());
+
+                var memories = new[]
+                {
+                    memory
+                };
+
+                //act
+                _viewModel.Init(memories);
+
+                //assert
+                _viewModel.Statistics.First(s => s.Description == "most days without occurrence").Number.Should().Be
+                    .EqualTo(0);
+            }
+
+            [Test]
+            public void ShouldSetTitleToSingleMemoryWhenSingle()
+            {
+                //arrange
+                const string DESC = "hello there";
+
+                //act
+                _viewModel.Init(new[] {new Memory
+                {
+                    Description = DESC
+                }});
+
+                //assert
+                _viewModel.Title.Should().Be.EqualTo("Stats (" + DESC + ")");
+            }
+
+            [Test]
+            public void ShouldSetTitleToGlobalWhenGlobal()
+            {
+                //act
+                _viewModel.Init(new[] {
+                    new Memory(),
+                    new Memory()
+                });
+
+                //assert
+                _viewModel.Title.Should().Be.EqualTo("Stats");
             }
         }
     }

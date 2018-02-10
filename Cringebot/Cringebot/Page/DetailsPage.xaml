@@ -11,6 +11,10 @@
              d:DataContext="{d:DesignInstance Type=viewModel:DetailsViewModel, IsDesignTimeCreatable=False}"
              x:Class="Cringebot.Page.DetailsPage"
              Title="Memory/Occurrences">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="chart"
+                     Command="{Binding ViewStatsCommand}"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout Padding="15"
                      Spacing="15">
