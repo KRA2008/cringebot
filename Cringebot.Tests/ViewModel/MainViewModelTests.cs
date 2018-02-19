@@ -15,14 +15,18 @@ namespace Cringebot.Tests.ViewModel
     public class MainViewModelTests
     {
         private MainViewModel _viewModel;
+        private Settings _settings;
         private Mock<IAppDataStore> _dataStore;
         private Mock<INotificationManager> _notificationManager;
 
         [SetUp]
         public void SetupViewModel()
         {
+            _settings = new Settings();
             _notificationManager = new Mock<INotificationManager>();
             _dataStore = new Mock<IAppDataStore>();
+            _dataStore.Setup(d => d.LoadOrDefault(StorageWrapper.SETTINGS_STORE_KEY, It.IsAny<Settings>()))
+                .Returns(_settings);
             _dataStore.Setup(d => d.LoadOrDefault(StorageWrapper.SIMULATE_STORE_KEY, It.IsAny<bool>())).Returns(false);
             _dataStore.Setup(d => d.LoadOrDefault(StorageWrapper.LIMIT_LIST_STORE_KEY, It.IsAny<bool>())).Returns(false);
             _dataStore.Setup(d => d.LoadOrDefault(StorageWrapper.MEMORY_LIST_STORE_KEY, It.IsAny<List<Memory>>())).Returns(new List<Memory>());
@@ -477,6 +481,23 @@ namespace Cringebot.Tests.ViewModel
             }
 
             [Test]
+            public void ShouldSaveSettings()
+            {
+                //arrange
+                var settings = new Settings();
+                _dataStore.Setup(d => d.LoadOrDefault(StorageWrapper.SETTINGS_STORE_KEY, It.IsAny<Settings>()))
+                    .Returns(settings);
+
+                _viewModel.Init(null);
+
+                //act
+                _viewModel.Save();
+
+                //assert
+                _dataStore.Verify(d => d.Save(StorageWrapper.SETTINGS_STORE_KEY, settings));
+            }
+
+            [Test]
             public void ShouldSaveStateOfList()
             {
                 //arrange
@@ -569,6 +590,25 @@ namespace Cringebot.Tests.ViewModel
 
                 //assert
                 coreMethods.Verify(c => c.PushPageModel<HelpViewModel>(true));
+            }
+        }
+
+        public class ViewSettingsMethod : MainViewModelTests
+        {
+            [Test]
+            public async Task ShouldNavigateToSettingsPage()
+            {
+                //arrange
+                var coreMethods = new Mock<IPageModelCoreMethods>();
+                _viewModel.CoreMethods = coreMethods.Object;
+
+                _viewModel.Init(null); // load saved settings
+
+                //act
+                await _viewModel.ViewSettings();
+
+                //assert
+                coreMethods.Verify(c => c.PushPageModel<SettingsViewModel>(_settings, false, true));
             }
         }
     }

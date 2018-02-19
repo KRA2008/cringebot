@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<fresh:FreshBaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:fresh="clr-namespace:FreshMvvm;assembly=FreshMvvm"
+             xmlns:vm="clr-namespace:Cringebot.ViewModel;assembly=Cringebot"
+             d:DataContext="{d:DesignInstance Type=vm:SettingsViewModel, IsDesignTimeCreatable=False}"
+             x:Class="Cringebot.Page.SettingsPage"
+             Title="Settings">
+    <ContentPage.Content>
+        <ScrollView>
+            <TableView Intent="Settings"
+                       HasUnevenRows="True">
+                <TableRoot>
+                    <TableSection Title="Notification Generation Interval">
+                        <ViewCell>
+                            <ViewCell.View>
+                                <StackLayout Padding="15">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="50"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Label Grid.Row="0"
+                                               Grid.Column="0"
+                                               Text="Minimum"
+                                               HorizontalOptions="EndAndExpand"
+                                               VerticalTextAlignment="Center"/>
+                                        <Picker Grid.Row="0"
+                                                Grid.Column="1"
+                                                ItemsSource="{Binding MinHoursChoices}"
+                                                SelectedItem="{Binding MinHours}"/>
+                                        <Label Grid.Row="0"
+                                               Grid.Column="2"
+                                               Text="Hours"
+                                               VerticalTextAlignment="Center"/>
+                                        <Label Grid.Row="1"
+                                               Grid.Column="0"
+                                               Text="Maximum"
+                                               HorizontalOptions="EndAndExpand"
+                                               VerticalTextAlignment="Center"/>
+                                        <Picker Grid.Row="1"
+                                               Grid.Column="1"
+                                               ItemsSource="{Binding MaxHoursChoices}"
+                                               SelectedItem="{Binding MaxHours}"/>
+                                        <Label Grid.Row="1" 
+                                               Grid.Column="2"
+                                               Text="Hours"
+                                               VerticalTextAlignment="Center"/>
+                                    </Grid>
+                                    <Label Text="{Binding GenerationIntervalExplanation}"/>
+                                </StackLayout>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </TableSection>
+                    <TableSection Title="Do Not Disturb">
+                        <ViewCell>
+                            <ViewCell.View>
+                                <StackLayout Padding="15">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <Label Grid.Row="0" 
+                                               Grid.Column="0"
+                                               Text="Begin"
+                                               HorizontalOptions="EndAndExpand"
+                                               VerticalTextAlignment="Center"/>
+                                        <TimePicker Grid.Row="0"
+                                                    Grid.Column="1"
+                                                    Time="{Binding Settings.DoNotDisturbStartTime}"/>
+                                        <Label Grid.Row="1" 
+                                               Grid.Column="0" 
+                                               Text="End"
+                                               HorizontalOptions="EndAndExpand"
+                                               VerticalTextAlignment="Center"/>
+                                        <TimePicker Grid.Row="1" 
+                                                    Grid.Column="1" 
+                                                    Time="{Binding Settings.DoNotDisturbStopTime}"/>
+                                    </Grid>
+                                    <Label Text="{Binding DoNotDisturbExplanation}"/>
+                                </StackLayout>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </TableSection>
+                </TableRoot>
+            </TableView>
+        </ScrollView>
+    </ContentPage.Content>
+</fresh:FreshBaseContentPage>

@@ -7,18 +7,6 @@ namespace Cringebot.Services
 {
     public static class NotificationRandomnessService
     {
-#if DEBUG
-        private const int MAXIMUM_INTERVAL_MILLISECONDS = 1000 * 30;
-        private const int MINIMUM_INTERVAL_MILLISECONDS = 1000 * 10;
-#else
-        private const int MAXIMUM_INTERVAL_MILLISECONDS = 1000 * 60 * 60 * 8;
-        private const int MINIMUM_INTERVAL_MILLISECONDS = 1000 * 60 * 10;
-#endif
-        private static readonly TimeSpan _doNotDisturbStart = new TimeSpan(22,0,0);
-        private static readonly TimeSpan _doNotDisturbStop = new TimeSpan(8, 0, 0);
-        public static readonly int DoNotDisturbLengthMilliseconds =
-            (int) (_doNotDisturbStop.Add(new TimeSpan(1, 0, 0, 0)) - _doNotDisturbStart).TotalMilliseconds;
-
         private static readonly IEnumerable<string> _titleOptions = new[]
         {
             "Yikes",
@@ -48,16 +36,40 @@ namespace Cringebot.Services
             _random = new Random();
         }
 
-        public static bool DoesIntervalLandInDoNotDisturb(double originalIntervalMilliseconds)
+        public static bool DoesIntervalLandInDoNotDisturb(double originalIntervalMilliseconds, TimeSpan doNotDisturbStart, TimeSpan doNotDisturbStop)
         {
             var notificationTime = DateTime.Now.AddMilliseconds(originalIntervalMilliseconds).TimeOfDay;
-            return notificationTime > _doNotDisturbStart ||
-                   notificationTime < _doNotDisturbStop;
+            
+            //https://stackoverflow.com/a/21343435
+            if (doNotDisturbStart <= doNotDisturbStop)
+            {
+                // start and stop times are in the same day
+                if (notificationTime >= doNotDisturbStart && notificationTime <= doNotDisturbStop)
+                {
+                    // current time is between start and stop
+                    return true;
+                }
+            }
+            else
+            {
+                // start and stop times are in different days
+                if (notificationTime >= doNotDisturbStart || notificationTime <= doNotDisturbStop)
+                {
+                    // current time is between start and stop
+                    return true;
+                }
+            }
+            return false;
         }
 
-        public static int GetNotificationIntervalMilliseconds()
+        public static int GetNotificationIntervalMilliseconds(TimeSpan generationMinimumInterval, TimeSpan generationMaximumInterval)
         {
-            return _random.Next(MINIMUM_INTERVAL_MILLISECONDS, MAXIMUM_INTERVAL_MILLISECONDS);
+            return _random.Next((int)generationMinimumInterval.TotalMilliseconds, (int)generationMaximumInterval.TotalMilliseconds);
+        }
+
+        public static int GetDoNotDisturbLengthMilliseconds(TimeSpan doNotDisturbStart, TimeSpan doNotDisturbStop)
+        {
+            return (int)(doNotDisturbStop.Add(new TimeSpan(1, 0, 0, 0)) - doNotDisturbStart).TotalMilliseconds;
         }
 
         public static string GetNotificationTitle()

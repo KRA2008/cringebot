@@ -45,6 +45,9 @@ namespace Cringebot.ViewModel
         public Command ViewDetailsCommand { get; }
         public Command ViewStatsCommand { get; }
         public Command ViewHelpCommand { get; }
+        public Command ViewSettingsCommand { get; }
+
+        private Settings _settings;
 
         private readonly IAppDataStore _dataStore;
         private readonly INotificationManager _notificationManager;
@@ -94,6 +97,11 @@ namespace Cringebot.ViewModel
                 await ViewHelp();
             });
 
+            ViewSettingsCommand = new Command(async args =>
+            {
+                await ViewSettings();
+            });
+
             PropertyChanged += (sender, args) =>
             {
                 if (args.PropertyName != nameof(Simulate)) return;
@@ -124,6 +132,11 @@ namespace Cringebot.ViewModel
             await CoreMethods.PushPageModel<HelpViewModel>();
         }
 
+        public async Task ViewSettings()
+        {
+            await CoreMethods.PushPageModel<SettingsViewModel>(_settings);
+        }
+
         public override void ReverseInit(object returnedData)
         {
             base.ReverseInit(returnedData);
@@ -142,7 +155,9 @@ namespace Cringebot.ViewModel
             Simulate = _dataStore.LoadOrDefault(StorageWrapper.SIMULATE_STORE_KEY, false);
             LimitListVisibility = _dataStore.LoadOrDefault(StorageWrapper.LIMIT_LIST_STORE_KEY, false);
             _memories = _dataStore.LoadOrDefault(StorageWrapper.MEMORY_LIST_STORE_KEY, new List<Memory>());
+            _settings = _dataStore.LoadOrDefault(StorageWrapper.SETTINGS_STORE_KEY, new Settings());
 
+            _notificationManager.SetSettings(_settings);
             _notificationManager.SetMemories(_memories);
         }
 
@@ -151,6 +166,7 @@ namespace Cringebot.ViewModel
             _dataStore.Save(StorageWrapper.LIMIT_LIST_STORE_KEY, LimitListVisibility);
             _dataStore.Save(StorageWrapper.SIMULATE_STORE_KEY, Simulate);
             _dataStore.Save(StorageWrapper.MEMORY_LIST_STORE_KEY, _memories);
+            _dataStore.Save(StorageWrapper.SETTINGS_STORE_KEY, _settings);
         }
     }
 }

@@ -17,6 +17,7 @@ namespace Cringebot.iOS
     public class AppDelegate : Xamarin.Forms.Platform.iOS.FormsApplicationDelegate, INotificationManager
     {
         private static IEnumerable<Memory> _memories;
+        private static Settings _settings;
         private static bool _notificationsOn;
 
         //
@@ -71,6 +72,15 @@ namespace Cringebot.iOS
             }
         }
 
+        public void SetSettings(Settings settings)
+        {
+            _settings = settings;
+            if (_notificationsOn)
+            {
+                RestartNotificationQueue();
+            }
+        }
+
         private static void ClearExistingNotifications()
         {
             UIApplication.SharedApplication.CancelAllLocalNotifications();
@@ -83,12 +93,12 @@ namespace Cringebot.iOS
             ClearExistingNotifications();
             const int IOS_NOTIFICATION_LIMIT = 64;
             double runningIntervalTotal = 0;
-            for (var ii = 1; ii < IOS_NOTIFICATION_LIMIT; ii++)
+            for (var ii = 1; ii < IOS_NOTIFICATION_LIMIT-1; ii++)
             {
-                runningIntervalTotal += NotificationRandomnessService.GetNotificationIntervalMilliseconds();
-                if (NotificationRandomnessService.DoesIntervalLandInDoNotDisturb(runningIntervalTotal))
+                runningIntervalTotal += NotificationRandomnessService.GetNotificationIntervalMilliseconds(_settings.GenerationMinInterval, _settings.GenerationMaxInterval);
+                if (NotificationRandomnessService.DoesIntervalLandInDoNotDisturb(runningIntervalTotal, _settings.DoNotDisturbStartTime, _settings.DoNotDisturbStopTime))
                 {
-                    runningIntervalTotal += NotificationRandomnessService.DoNotDisturbLengthMilliseconds;
+                    runningIntervalTotal += NotificationRandomnessService.GetDoNotDisturbLengthMilliseconds(_settings.DoNotDisturbStartTime, _settings.DoNotDisturbStopTime);
                 }
                 var notification = new UILocalNotification
                 {
@@ -100,6 +110,16 @@ namespace Cringebot.iOS
 
                 UIApplication.SharedApplication.ScheduleLocalNotification(notification);
             }
+
+            var restartNotification = new UILocalNotification
+            {
+                FireDate = NSDate.FromTimeIntervalSinceNow(runningIntervalTotal / 1000),
+                AlertTitle = "Notification limit reached",
+                AlertBody = "Cringebot has reached the iOS-imposed limit of 64 scheduled notifications. Please relaunch Cringebot or toggle the simulation setting to receive notifications again.",
+                SoundName = UILocalNotification.DefaultSoundName,
+                RepeatInterval = NSCalendarUnit.Hour
+            };
+            UIApplication.SharedApplication.ScheduleLocalNotification(restartNotification);
         }
     }
 }

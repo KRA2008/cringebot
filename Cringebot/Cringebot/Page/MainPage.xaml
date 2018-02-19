@@ -12,6 +12,8 @@
              x:Class="Cringebot.Page.MainPage"
              Title="Cringebot">
     <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="gear"
+                     Command="{Binding ViewSettingsCommand}"/>
         <ToolbarItem Text="?"
                      Command="{Binding ViewHelpCommand}"/>
         <ToolbarItem Icon="chart"
@@ -105,7 +107,7 @@
             <StackLayout Orientation="Horizontal"
                          HorizontalOptions="CenterAndExpand"
                          Padding="15,0,15,15">
-                <Label Text="Simulate Intrusive Memory"
+                <Label Text="Simulate Intrusive Memory/Thoughts"
                        VerticalTextAlignment="Center"/>
                 <Switch IsToggled="{Binding Simulate}"/>
             </StackLayout>

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
+using PropertyChanged;
 
 namespace Cringebot.Model
 {
-    public class Memory : INotifyPropertyChanged
+    [AddINotifyPropertyChangedInterface]
+    public class Memory
     {
         public string Description { get; set; }
         public ObservableCollection<DateTime> Occurrences { get; }
@@ -13,7 +14,5 @@ namespace Cringebot.Model
         {
             Occurrences = new ObservableCollection<DateTime>();
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

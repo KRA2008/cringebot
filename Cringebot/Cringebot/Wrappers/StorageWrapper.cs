@@ -14,6 +14,7 @@ namespace Cringebot.Wrappers
         public const string SIMULATE_STORE_KEY = "simulate";
         public const string LIMIT_LIST_STORE_KEY = "limitList";
         public const string MEMORY_LIST_STORE_KEY = "memoryList";
+        public const string SETTINGS_STORE_KEY = "settings";
 
         public T LoadOrDefault<T>(string key, T defaultValue)
         {

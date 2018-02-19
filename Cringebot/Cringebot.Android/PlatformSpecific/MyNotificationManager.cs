@@ -19,6 +19,7 @@ namespace Cringebot.Droid.PlatformSpecific
         public const string NOTIFICATION_TEXT_EXTRA = "notificationText";
 
         private static IEnumerable<Memory> _memories;
+        private static Settings _settings;
 
         public void StopNotifications()
         {
@@ -33,6 +34,11 @@ namespace Cringebot.Droid.PlatformSpecific
         public void SetMemories(IEnumerable<Memory> memories)
         {
             _memories = memories;
+        }
+
+        public void SetSettings(Settings settings)
+        {
+            _settings = settings;
         }
 
         public override void OnReceive(Context context, Intent intent)
@@ -53,10 +59,10 @@ namespace Cringebot.Droid.PlatformSpecific
             var timerPendingIntent = PendingIntent.GetBroadcast
                 (Application.Context, NOTIFICATION_REQUEST_CODE, timerIntent, PendingIntentFlags.UpdateCurrent);
             var alarmManager = (AlarmManager)Application.Context.GetSystemService(Context.AlarmService);
-            var notificationInterval = NotificationRandomnessService.GetNotificationIntervalMilliseconds();
-            if (NotificationRandomnessService.DoesIntervalLandInDoNotDisturb(notificationInterval))
+            var notificationInterval = NotificationRandomnessService.GetNotificationIntervalMilliseconds(_settings.GenerationMinInterval, _settings.GenerationMaxInterval);
+            if (NotificationRandomnessService.DoesIntervalLandInDoNotDisturb(notificationInterval, _settings.DoNotDisturbStartTime, _settings.DoNotDisturbStopTime))
             {
-                notificationInterval += NotificationRandomnessService.DoNotDisturbLengthMilliseconds;
+                notificationInterval += NotificationRandomnessService.GetDoNotDisturbLengthMilliseconds(_settings.DoNotDisturbStartTime, _settings.DoNotDisturbStopTime);
             }
             var alarmTimeMillis = SystemClock.ElapsedRealtime() + notificationInterval;
             alarmManager.SetExact(AlarmType.ElapsedRealtime, alarmTimeMillis, timerPendingIntent);
