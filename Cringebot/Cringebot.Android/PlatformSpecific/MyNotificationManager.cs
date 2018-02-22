@@ -20,25 +20,38 @@ namespace Cringebot.Droid.PlatformSpecific
 
         private static IEnumerable<Memory> _memories;
         private static Settings _settings;
+        private bool _notificationsOn;
 
         public void StopNotifications()
         {
             CancelNextNotification();
+            _notificationsOn = false;
         }
 
-        public void StartNotifications()
+        public void StartNotifications(IEnumerable<Memory> memories, Settings settings)
         {
-            SetNextNotification();
+            _memories = memories;
+            _settings = settings;
+            RestartNotificationQueue();
+            _notificationsOn = true;
         }
 
         public void SetMemories(IEnumerable<Memory> memories)
         {
             _memories = memories;
+            if (_notificationsOn)
+            {
+                RestartNotificationQueue();
+            }
         }
 
         public void SetSettings(Settings settings)
         {
             _settings = settings;
+            if (_notificationsOn)
+            {
+                RestartNotificationQueue();
+            }
         }
 
         public override void OnReceive(Context context, Intent intent)
@@ -50,6 +63,12 @@ namespace Cringebot.Droid.PlatformSpecific
                 createNotificationIntent.PutExtra(NOTIFICATION_TEXT_EXTRA, NotificationRandomnessService.GetRandomMemory(_memories).Description);
                 context.StartService(createNotificationIntent);
             }
+            SetNextNotification();
+        }
+
+        private static void RestartNotificationQueue()
+        {
+            CancelNextNotification();
             SetNextNotification();
         }
 

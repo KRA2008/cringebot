@@ -43,7 +43,7 @@ namespace Cringebot.iOS
             RestartNotificationQueue();
         }
 
-        public void StartNotifications()
+        public void StartNotifications(IEnumerable<Memory> memories, Settings settings)
         {
             if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0))
             {
@@ -53,20 +53,14 @@ namespace Cringebot.iOS
 
                 UIApplication.SharedApplication.RegisterUserNotificationSettings(notificationSettings);
             }
-            _notificationsOn = true;
             RestartNotificationQueue();
-        }
-
-        public void StopNotifications()
-        {
-            _notificationsOn = false;
-            ClearExistingNotifications();
+            _notificationsOn = true;
         }
 
         public void SetMemories(IEnumerable<Memory> memories)
         {
             _memories = memories;
-            if(_notificationsOn)
+            if (_notificationsOn)
             {
                 RestartNotificationQueue();
             }
@@ -79,6 +73,12 @@ namespace Cringebot.iOS
             {
                 RestartNotificationQueue();
             }
+        }
+
+        public void StopNotifications()
+        {
+            ClearExistingNotifications();
+            _notificationsOn = false;
         }
 
         private static void ClearExistingNotifications()

@@ -88,13 +88,12 @@ namespace Cringebot.Tests.ViewModel
                 _viewModel.Memories.Should().Have.SameSequenceAs(new[] { targetMemory1, targetMemory2 });
             }
 
-            [Theory]
-            public void ShouldUpdateNotificationMemoryList(bool limitListVisibility)
+            [Test]
+            public void ShouldUpdateNotificationManagerIfSimulateOff()
             {
                 //arrange
                 const string MEM1 = "blah";
                 const string MEM2 = "gragh";
-                _viewModel.LimitListVisibility = limitListVisibility;
 
                 _viewModel.MemoryInput = MEM1;
                 _viewModel.AddMemoryCommand.Execute(null);
@@ -102,7 +101,38 @@ namespace Cringebot.Tests.ViewModel
                 _viewModel.AddMemoryCommand.Execute(null);
 
                 IEnumerable<Memory> actualList = null;
-                _notificationManager.Setup(m => m.SetMemories(It.IsAny<IEnumerable<Memory>>())).Callback<IEnumerable<Memory>>((list) =>
+                _notificationManager.Setup(m => m.SetMemories(It.IsAny<IEnumerable<Memory>>())).Callback<IEnumerable<Memory>>(list =>
+                {
+                    actualList = list;
+                });
+
+                //act
+                _viewModel.Init(null);
+
+                //assert
+                _notificationManager.Verify(n => n.SetSettings(_settings));
+                var memoryArray = actualList as Memory[] ?? actualList.ToArray();
+                memoryArray.SingleOrDefault(m => m.Description == MEM1).Should().Not.Be.Null();
+                memoryArray.SingleOrDefault(m => m.Description == MEM2).Should().Not.Be.Null();
+            }
+
+            [Theory]
+            public void ShouldStartNotificationsIfSimulateOn()
+            {
+                //arrange
+                const string MEM1 = "blah";
+                const string MEM2 = "gragh";
+
+                _viewModel.MemoryInput = MEM1;
+                _viewModel.AddMemoryCommand.Execute(null);
+                _viewModel.MemoryInput = MEM2;
+                _viewModel.AddMemoryCommand.Execute(null);
+
+                _dataStore.Setup(d => d.LoadOrDefault(StorageWrapper.SIMULATE_STORE_KEY, It.IsAny<bool>()))
+                    .Returns(true);
+
+                IEnumerable<Memory> actualList = null;
+                _notificationManager.Setup(m => m.StartNotifications(It.IsAny<IEnumerable<Memory>>(), _settings)).Callback<IEnumerable<Memory>,Settings>((list, settings) =>
                 {
                     actualList = list;
                 });
@@ -537,11 +567,24 @@ namespace Cringebot.Tests.ViewModel
             [Test]
             public void ShouldTurnOnNotificationsWhenSwitchedOn()
             {
+                //arrange
+                const string IN_MEMORY_DESCRIPTION = "a";
+
+                _viewModel.MemoryInput = IN_MEMORY_DESCRIPTION;
+                _viewModel.AddMemoryCommand.Execute(null);
+
+                IEnumerable<Memory> actualSavedList = null;
+                _notificationManager.Setup(m => m.StartNotifications(It.IsAny<IEnumerable<Memory>>(), _settings)).Callback<IEnumerable<Memory>,Settings>((list, settings) =>
+                {
+                    actualSavedList = list;
+                });
+
                 //act
                 _viewModel.Simulate = true;
 
                 //assert
-                _notificationManager.Verify(m => m.StartNotifications());
+                var memoryArray = actualSavedList as Memory[] ?? actualSavedList.ToArray();
+                memoryArray.Single(m => m.Description == IN_MEMORY_DESCRIPTION).Should().Not.Be.Null();
             }
 
             [Test]

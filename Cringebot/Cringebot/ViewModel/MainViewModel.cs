@@ -108,7 +108,7 @@ namespace Cringebot.ViewModel
 
                 if(Simulate)
                 {
-                    notificationManager.StartNotifications();
+                    notificationManager.StartNotifications(_memories, _settings);
                 }
                 else
                 {
@@ -157,8 +157,15 @@ namespace Cringebot.ViewModel
             _memories = _dataStore.LoadOrDefault(StorageWrapper.MEMORY_LIST_STORE_KEY, new List<Memory>());
             _settings = _dataStore.LoadOrDefault(StorageWrapper.SETTINGS_STORE_KEY, new Settings());
 
-            _notificationManager.SetSettings(_settings);
-            _notificationManager.SetMemories(_memories);
+            if (Simulate)
+            {
+                _notificationManager.StartNotifications(_memories, _settings);
+            }
+            else
+            {
+                _notificationManager.SetSettings(_settings);
+                _notificationManager.SetMemories(_memories);
+            }
         }
 
         public void Save()
