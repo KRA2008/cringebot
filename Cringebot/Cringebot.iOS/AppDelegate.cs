@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Cringebot.Model;
 using Cringebot.Wrappers;
 using Foundation;
@@ -6,6 +7,7 @@ using UIKit;
 using Cringebot.iOS;
 using Cringebot.Services;
 using System.Linq;
+using UserNotifications;
 
 [assembly: Xamarin.Forms.Dependency(typeof(AppDelegate))]
 namespace Cringebot.iOS
@@ -35,12 +37,17 @@ namespace Cringebot.iOS
 
             LoadApplication(new App());
 
+            UNUserNotificationCenter.Current.Delegate = new NotificationDelegate();
+
             return base.FinishedLaunching(app, options);
         }
 
-        public override void ReceivedLocalNotification(UIApplication application, UILocalNotification notification)
+        public override void ApplicationSignificantTimeChange(UIApplication application)
         {
-            RestartNotificationQueue();
+            if (_notificationsOn)
+            {
+                RestartNotificationQueue();
+            }
         }
 
         public void StartNotifications(IEnumerable<Memory> memories, Settings settings)
@@ -89,6 +96,7 @@ namespace Cringebot.iOS
         private static void RestartNotificationQueue()
         {
             if (_memories == null || !_memories.Any()) return;
+            if (_settings == null) return;
 
             ClearExistingNotifications();
             const int IOS_NOTIFICATION_LIMIT = 64;
@@ -120,6 +128,14 @@ namespace Cringebot.iOS
                 RepeatInterval = NSCalendarUnit.Hour
             };
             UIApplication.SharedApplication.ScheduleLocalNotification(restartNotification);
+        }
+    }
+
+    public class NotificationDelegate : UNUserNotificationCenterDelegate
+    {
+        public override void WillPresentNotification(UNUserNotificationCenter center, UNNotification notification, Action<UNNotificationPresentationOptions> completionHandler)
+        {
+            completionHandler(UNNotificationPresentationOptions.Alert);
         }
     }
 }
