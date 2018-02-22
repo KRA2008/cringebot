@@ -15,7 +15,7 @@ namespace Cringebot.Tests.ViewModel
         private Settings _settings;
         private Mock<INotificationManager> _notificationManager;
 
-        private const decimal RAPID_FIRE_TIME_HOURS = 0.02m;
+        private const double RAPID_FIRE_TIME_HOURS = 0.005;
 
         [SetUp]
         public void InstantiateViewModel()
@@ -34,8 +34,8 @@ namespace Cringebot.Tests.ViewModel
                 _viewModel.Init(_settings);
 
                 //assert
-                _viewModel.MaxHoursChoices.First().Should().Be.EqualTo(0.02);
-                _viewModel.MaxHoursChoices.Last().Should().Be.EqualTo(99);
+                _viewModel.MaxHoursChoices.First().Should().Be.EqualTo(RAPID_FIRE_TIME_HOURS);
+                _viewModel.MaxHoursChoices.Last().Should().Be.EqualTo(999);
             }
 
             [Test]
@@ -46,7 +46,7 @@ namespace Cringebot.Tests.ViewModel
 
                 //assert
                 _viewModel.MinHoursChoices.First().Should().Be.EqualTo(0);
-                _viewModel.MinHoursChoices.Last().Should().Be.EqualTo(99);
+                _viewModel.MinHoursChoices.Last().Should().Be.EqualTo(999);
             }
 
             [Test]
@@ -63,7 +63,7 @@ namespace Cringebot.Tests.ViewModel
             public void ShouldInitializeTimePropsToConvertedSettings()
             {
                 //arrange
-                _settings.GenerationMaxInterval = new TimeSpan(4, 1, 15, 0);
+                _settings.GenerationMaxInterval = new TimeSpan(4, 1, 15, 18);
                 _settings.GenerationMinInterval = new TimeSpan(3, 5, 0, 0);
 
                 //act
@@ -71,7 +71,7 @@ namespace Cringebot.Tests.ViewModel
 
                 //assert
                 _viewModel.Satisfies(vm =>
-                        vm.MaxHours == 97.25m &&
+                        vm.MaxHours == 97.255 &&
                         vm.MinHours == 77)
                     .Should().Be.True();
             }
@@ -253,7 +253,7 @@ namespace Cringebot.Tests.ViewModel
                 //arrange
                 _viewModel.Init(_settings);
                 _viewModel.MinHours = 0;
-                _viewModel.MaxHours = 0.02m;
+                _viewModel.MaxHours = RAPID_FIRE_TIME_HOURS;
 
                 Settings savedSettings = null;
                 _notificationManager.Setup(m => m.SetSettings(It.IsAny<Settings>())).Callback<Settings>(s =>
@@ -268,7 +268,8 @@ namespace Cringebot.Tests.ViewModel
                 savedSettings.Satisfies(s =>
                     s.GenerationMaxInterval.Days == 0 &&
                     s.GenerationMaxInterval.Hours == 0 &&
-                    s.GenerationMaxInterval.Minutes == 1 &&
+                    s.GenerationMaxInterval.Minutes == 0 &&
+                    s.GenerationMaxInterval.Seconds == 18 &&
                     s.GenerationMinInterval.Days == 0 &&
                     s.GenerationMinInterval.Hours == 0);
             }

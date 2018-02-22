@@ -74,6 +74,8 @@ namespace Cringebot.Droid.PlatformSpecific
 
         private static void SetNextNotification()
         {
+            if (_settings == null) return;
+
             var timerIntent = new Intent(Application.Context, typeof(MyNotificationManager));
             var timerPendingIntent = PendingIntent.GetBroadcast
                 (Application.Context, NOTIFICATION_REQUEST_CODE, timerIntent, PendingIntentFlags.UpdateCurrent);

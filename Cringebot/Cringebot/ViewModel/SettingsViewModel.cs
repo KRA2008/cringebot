@@ -9,15 +9,16 @@ namespace Cringebot.ViewModel
 {
     public class SettingsViewModel : FreshBasePageModel
     {
-        private const decimal RAPID_FIRE_TIME_HOURS = 0.02m;
+        private const double RAPID_FIRE_TIME_HOURS = 0.005;
+        private const double MAX_HOURS = 999;
 
         private readonly INotificationManager _notificationManager;
         public Settings Settings { get; set; }
 
-        public IList<decimal> MaxHoursChoices { get; set; }
-        public IList<decimal> MinHoursChoices { get; set; }
-        public decimal MaxHours { get; set; }
-        public decimal MinHours { get; set; }
+        public IList<double> MaxHoursChoices { get; set; }
+        public IList<double> MinHoursChoices { get; set; }
+        public double MaxHours { get; set; }
+        public double MinHours { get; set; }
 
         public string DoNotDisturbExplanation => "You will receive no notifications between " + DateTime.Today.Add(Settings.DoNotDisturbStartTime).ToString("t") +
                                                  " and " + DateTime.Today.Add(Settings.DoNotDisturbStopTime).ToString("t") + ".";
@@ -36,23 +37,24 @@ namespace Cringebot.ViewModel
             Settings.PropertyChanged += OnSettingsPropertyChanged;
             PropertyChanged += OnPropertyChanged;
 
-            MinHoursChoices = new List<decimal>{0};
-            MaxHoursChoices = new List<decimal>{ RAPID_FIRE_TIME_HOURS };
-            for (var i = 1; i < 100; i++)
+            MinHoursChoices = new List<double> {0};
+            MaxHoursChoices = new List<double> { RAPID_FIRE_TIME_HOURS };
+            for (var i = 1; i < MAX_HOURS+1; i++)
             {
                 MaxHoursChoices.Add(i);
                 MinHoursChoices.Add(i);
             }
 
-            MaxHours = Math.Round(GetHoursFromTimeSpan(Settings.GenerationMaxInterval),2);
+            MaxHours = GetHoursFromTimeSpan(Settings.GenerationMaxInterval);
             MinHours = GetHoursFromTimeSpan(Settings.GenerationMinInterval);
         }
 
-        private static decimal GetHoursFromTimeSpan(TimeSpan timeSpan)
+        private static double GetHoursFromTimeSpan(TimeSpan timeSpan)
         {
             return timeSpan.Days * 24 +
                    timeSpan.Hours +
-                   timeSpan.Minutes / 60m;
+                   timeSpan.Minutes / 60.0 +
+                   timeSpan.Seconds / (60.0 * 60.0);
         }
 
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
@@ -104,7 +106,7 @@ namespace Cringebot.ViewModel
 
         public void SaveSettings()
         {
-            Settings.GenerationMaxInterval = new TimeSpan((int)MaxHours / 24, (int)MaxHours % 24, (int)(MaxHours % 1 * 60), 0);
+            Settings.GenerationMaxInterval = new TimeSpan((int)MaxHours / 24, (int)MaxHours % 24, (int)(MaxHours % 1 * 60), (int)(MaxHours % 1 * 60 % 1 * 60));
             Settings.GenerationMinInterval = new TimeSpan((int)MinHours / 24, (int)MinHours % 24, 0, 0);
             _notificationManager.SetSettings(Settings);
         }
