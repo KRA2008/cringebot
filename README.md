@@ -31,3 +31,5 @@ Some of the niceties incorporated here that I would encourage others to use:
     * Friendly mocking for unit tests
 * https://www.nuget.org/packages/SharpTestsEx/
     * Testing assertions that read like sentences
+* http://www.ncrunch.net/
+	* Automatic smart test execution
