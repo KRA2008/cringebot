@@ -18,6 +18,7 @@ namespace Cringebot.Tests.ViewModel
         private Settings _settings;
         private Mock<IAppDataStore> _dataStore;
         private Mock<INotificationManager> _notificationManager;
+        private Mock<IKeyboardHelper> _keyboardHelper;
 
         [SetUp]
         public void SetupViewModel()
@@ -30,7 +31,8 @@ namespace Cringebot.Tests.ViewModel
             _dataStore.Setup(d => d.LoadOrDefault(StorageWrapper.SIMULATE_STORE_KEY, It.IsAny<bool>())).Returns(false);
             _dataStore.Setup(d => d.LoadOrDefault(StorageWrapper.LIMIT_LIST_STORE_KEY, It.IsAny<bool>())).Returns(false);
             _dataStore.Setup(d => d.LoadOrDefault(StorageWrapper.MEMORY_LIST_STORE_KEY, It.IsAny<List<Memory>>())).Returns(new List<Memory>());
-            _viewModel = new MainViewModel(_dataStore.Object, _notificationManager.Object);
+            _keyboardHelper = new Mock<IKeyboardHelper>();
+            _viewModel = new MainViewModel(_dataStore.Object, _notificationManager.Object, _keyboardHelper.Object);
             _viewModel.Init(null);
         }
 
@@ -390,6 +392,29 @@ namespace Cringebot.Tests.ViewModel
 
                 //assert
                 memory.Occurrences.Count.Should().Be.EqualTo(3);
+            }
+
+            [Test]
+            public void ShouldClearInput()
+            {
+                //arrange
+                _viewModel.MemoryInput = "blahblah";
+
+                //act
+                _viewModel.AddOccurrenceCommand.Execute(new Memory());
+
+                //assert
+                _viewModel.MemoryInput.Should().Be.Empty();
+            }
+
+            [Test]
+            public void ShouldHideKeyboard()
+            {
+                //act
+                _viewModel.AddOccurrenceCommand.Execute(new Memory());
+
+                //assert
+                _keyboardHelper.Verify(h => h.HideKeyboard());
             }
         }
 

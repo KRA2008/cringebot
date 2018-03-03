@@ -140,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
+    <Compile Include="PlatformSpecific\KeyboardHelper.cs" />
     <Compile Include="PlatformSpecific\NotificationCreationService.cs" />
     <Compile Include="PlatformSpecific\MyNotificationManager.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />

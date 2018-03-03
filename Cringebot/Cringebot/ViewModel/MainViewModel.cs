@@ -52,7 +52,8 @@ namespace Cringebot.ViewModel
         private readonly IAppDataStore _dataStore;
         private readonly INotificationManager _notificationManager;
 
-        public MainViewModel(IAppDataStore dataStore, INotificationManager notificationManager)
+        public MainViewModel(IAppDataStore dataStore, INotificationManager notificationManager,
+            IKeyboardHelper keyboardHelper)
         {
             _dataStore = dataStore;
             _notificationManager = notificationManager;
@@ -79,6 +80,8 @@ namespace Cringebot.ViewModel
             {
                 var memory = (Memory)arg;
                 memory.Occurrences.Add(SystemTime.Now());
+                MemoryInput = "";
+                keyboardHelper.HideKeyboard();
             });
 
             ViewDetailsCommand = new Command(async args => 

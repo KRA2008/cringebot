@@ -70,6 +70,7 @@
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\StatsViewModel.cs" />
     <Compile Include="Wrappers\DeviceWrapper.cs" />
+    <Compile Include="Wrappers\IKeyboardHelper.cs" />
     <Compile Include="Wrappers\INotificationManager.cs" />
     <Compile Include="Wrappers\StorageWrapper.cs" />
     <Compile Include="Wrappers\SystemTime.cs" />
