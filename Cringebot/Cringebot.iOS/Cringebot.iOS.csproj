@@ -106,6 +106,12 @@
     <Reference Include="Corcav.Behaviors, Version=2.3.7.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Corcav.Behaviors.2.3.7\lib\dotnet\Corcav.Behaviors.dll</HintPath>
     </Reference>
+    <Reference Include="FreshIOC, Version=1.0.6606.27413, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FreshMvvm.2.2.4\lib\netstandard1.0\FreshIOC.dll</HintPath>
+    </Reference>
+    <Reference Include="FreshMvvm, Version=1.0.6606.27413, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FreshMvvm.2.2.4\lib\netstandard1.0\FreshMvvm.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.11.0.1\lib\netstandard2.0\Newtonsoft.Json.dll</HintPath>
@@ -128,12 +134,6 @@
       <HintPath>..\..\packages\Xamarin.Forms.2.5.0.280555\lib\Xamarin.iOS10\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.iOS" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Cringebot\Cringebot.csproj">
-      <Project>{26981b3f-51e3-43ee-95d6-e658c76a8eb4}</Project>
-      <Name>Cringebot</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\add.png" />
@@ -170,6 +170,12 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\gear%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Cringebot\Cringebot.csproj">
+      <Project>{BE226C5C-3CCA-4A53-A06C-FF8BDF914F3C}</Project>
+      <Name>Cringebot</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

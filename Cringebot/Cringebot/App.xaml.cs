@@ -1,6 +1,8 @@
 ﻿using Cringebot.ViewModel;
 using FreshMvvm;
+using Xamarin.Forms.Xaml;
 
+[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace Cringebot
 {
     public partial class App

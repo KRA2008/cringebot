@@ -74,16 +74,8 @@
                                         <!-- ReSharper restore Xaml.BindingWithContextNotResolved -->
                                         <!-- ReSharper restore Xaml.InvalidType -->
                                         <StackLayout.GestureRecognizers>
-                                            <TapGestureRecognizer>
-                                                <corcav:Interaction.Behaviors>
-                                                    <corcav:BehaviorCollection>
-                                                        <!-- ReSharper disable once Xaml.BindingWithContextNotResolved - binding context logic is beyong ReSharper-->
-                                                        <corcav:EventToCommand EventName="Tapped"
-                                                                               Command="{Binding Source={x:Reference MemoryList}, Path=BindingContext.AddOccurrenceCommand}"
-                                                                               CommandParameter="{Binding}"/>
-                                                    </corcav:BehaviorCollection>
-                                                </corcav:Interaction.Behaviors>
-                                            </TapGestureRecognizer>
+                                            <TapGestureRecognizer Command="{Binding Source={x:Reference MemoryList}, Path=BindingContext.AddOccurrenceCommand}"
+                                                                  CommandParameter="{Binding}"/>
                                         </StackLayout.GestureRecognizers>
                                         <Label Text="{Binding Occurrences.Count}"
                                                VerticalOptions="CenterAndExpand">

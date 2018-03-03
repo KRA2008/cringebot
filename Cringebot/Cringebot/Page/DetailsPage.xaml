@@ -5,8 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              xmlns:fresh="clr-namespace:FreshMvvm;assembly=FreshMvvm"
-             xmlns:corcav="clr-namespace:Corcav.Behaviors;assembly=Corcav.Behaviors"
-             xmlns:customElements="clr-namespace:Cringebot.Page.CustomElements;assembly=Cringebot"
+             xmlns:ce="clr-namespace:Cringebot.Page.CustomElements;assembly=Cringebot"
              xmlns:viewModel="clr-namespace:Cringebot.ViewModel;assembly=Cringebot"
              d:DataContext="{d:DesignInstance Type=viewModel:DetailsViewModel, IsDesignTimeCreatable=False}"
              x:Class="Cringebot.Page.DetailsPage"
@@ -24,7 +23,7 @@
                 <Label Text="{Binding Memory.Occurrences.Count}"
                        VerticalTextAlignment="Center"/>
             </StackLayout>
-            <customElements:DeselectListView ItemsSource="{Binding Memory.Occurrences}"
+            <ce:DeselectListView ItemsSource="{Binding Memory.Occurrences}"
                                  x:Name="OccurrenceList"
                                  VerticalOptions="FillAndExpand">
                 <x:Arguments>
@@ -50,15 +49,8 @@
                                            HorizontalOptions="EndAndExpand"
                                            VerticalOptions="CenterAndExpand">
                                         <Image.GestureRecognizers>
-                                            <TapGestureRecognizer>
-                                                <corcav:Interaction.Behaviors>
-                                                    <corcav:BehaviorCollection>
-                                                        <corcav:EventToCommand EventName="Tapped"
-                                                                               Command="{Binding Source={x:Reference OccurrenceList}, Path=BindingContext.DeleteOccurrenceCommand}"
-                                                                               CommandParameter="{Binding}"/>
-                                                    </corcav:BehaviorCollection>
-                                                </corcav:Interaction.Behaviors>
-                                            </TapGestureRecognizer>
+                                            <TapGestureRecognizer Command="{Binding Source={x:Reference OccurrenceList}, Path=BindingContext.DeleteOccurrenceCommand}"
+                                                                  CommandParameter="{Binding}"/>
                                         </Image.GestureRecognizers>
                                     </Image>
                                 </Grid>
@@ -66,7 +58,7 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-            </customElements:DeselectListView>
+            </ce:DeselectListView>
             <Button Text="Delete"
                     Command="{Binding DeleteMemoryCommand}"
                     HorizontalOptions="CenterAndExpand"/>

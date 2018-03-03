@@ -2,7 +2,7 @@
 using System.Globalization;
 using Xamarin.Forms;
 
-namespace Cringebot.Page
+namespace Cringebot.Page.ValueConverters
 {
     public class NotConverter : IValueConverter
     {
