@@ -95,10 +95,10 @@ namespace Cringebot.iOS
 
         private static void RestartNotificationQueue()
         {
+            ClearExistingNotifications();
             if (_memories == null || !_memories.Any()) return;
             if (_settings == null) return;
 
-            ClearExistingNotifications();
             const int IOS_NOTIFICATION_LIMIT = 64;
             double runningIntervalTotal = 0;
             for (var ii = 1; ii < IOS_NOTIFICATION_LIMIT-1; ii++)
