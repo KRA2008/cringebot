@@ -34,7 +34,11 @@ namespace Cringebot.ViewModel
 
         public async Task DeleteMemory(Memory memory)
         {
-            await CoreMethods.PopPageModel(memory);
+            var delete = await CoreMethods.DisplayAlert("Confirm", "Really delete?", "Delete", "Cancel");
+            if (delete)
+            {
+                await CoreMethods.PopPageModel(memory);
+            }
         }
 
         public async Task ViewStats(Memory memory)

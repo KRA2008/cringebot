@@ -91,11 +91,30 @@ namespace Cringebot.Tests.ViewModel
                 //arrange
                 var targetMemory = new Memory();
 
+                _coreMethods.Setup(c => c.DisplayAlert("Confirm", "Really delete?", "Delete", "Cancel"))
+                    .Returns(Task.FromResult(true));
+
                 //act
                 await _viewModel.DeleteMemory(targetMemory);
 
                 //assert
                 _coreMethods.Verify(c => c.PopPageModel(targetMemory, false, true));
+            }
+
+            [Test]
+            public async Task ShouldNotDeleteIfConfirmationCancelled()
+            {
+                //arrange
+                var targetMemory = new Memory();
+
+                _coreMethods.Setup(c => c.DisplayAlert("Confirm", "Really delete?", "Delete", "Cancel"))
+                    .Returns(Task.FromResult(false));
+
+                //act
+                await _viewModel.DeleteMemory(targetMemory);
+
+                //assert
+                _coreMethods.Verify(c => c.PopPageModel(targetMemory, false, true),Times.Never);
             }
         }
     }
