@@ -19,8 +19,6 @@ By tracking occurrences, Cringebot helps you to be more aware of how much these 
 The above describes Cringebot in its value as a running application. As a repository, Cringebot fulfills two main functions. First, it acts as a bit of a résumé booster for its creator. Second, it demonstrates the ease of building a non-trivial, useful, robust, and maintainable Xamarin.Forms application for those who might be interested in pursuing the technology.
 
 Some of the niceties incorporated here that I would encourage others to use:
-* https://www.nuget.org/packages/xcc/
-    * When combined with ReSharper, adds auto-complete/intellisense to Xamarin.Forms XAML pages in Visual Studio on Windows
 * https://www.nuget.org/packages/PropertyChanged.Fody/
     * Automatically weaves in all that PropertyChanged event handler boilerplate
 * https://www.nuget.org/packages/FreshMvvm/
@@ -33,3 +31,6 @@ Some of the niceties incorporated here that I would encourage others to use:
     * Testing assertions that read like sentences
 * http://www.ncrunch.net/
 	* Automatic smart test execution
+* ~~https://www.nuget.org/packages/xcc/~~
+    * ~~When combined with ReSharper, adds auto-complete/intellisense to Xamarin.Forms XAML pages for your binding context in Visual Studio on Windows~~
+	* Xamarin.Forms is now able to understand 'xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"' which makes xcc unneeded, so I'd suggest using xcc if you're not up to that version of Xamarin.Forms yet
