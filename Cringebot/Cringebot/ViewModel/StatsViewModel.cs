@@ -12,6 +12,7 @@ namespace Cringebot.ViewModel
     {
         public ObservableCollection<MemoryStatistic> Statistics { get; }
         public string Title { get; set; }
+        public bool IsDataPresent { get; set; }
 
         public StatsViewModel()
         {
@@ -36,6 +37,8 @@ namespace Cringebot.ViewModel
                 var occurrences = memories.SelectMany(m => m.Occurrences).OrderByDescending(d => d).ToList();
                 if (occurrences.Any())
                 {
+                    IsDataPresent = true;
+
                     var now = SystemTime.Now();
                     var firstCringe = occurrences.Min();
                     var daysUsingCringebot = (now.Date - firstCringe.Date).Days + 1;

@@ -1,8 +1,8 @@
 ﻿namespace Cringebot.Page
 {
-	public partial class GraphPage
+	public partial class ChartPage
 	{
-		public GraphPage ()
+		public ChartPage ()
 		{
 			InitializeComponent ();
 		}

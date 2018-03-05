@@ -79,7 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ViewModel\DetailsViewModelTests.cs" />
-    <Compile Include="ViewModel\GraphViewModelTests.cs" />
+    <Compile Include="ViewModel\ChartViewModelTests.cs" />
     <Compile Include="ViewModel\HelpViewModelTests.cs" />
     <Compile Include="ViewModel\MainViewModelTests.cs" />
     <Compile Include="Model\MemoryTests.cs" />

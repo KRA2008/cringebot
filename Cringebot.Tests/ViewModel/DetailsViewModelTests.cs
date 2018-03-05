@@ -59,7 +59,7 @@ namespace Cringebot.Tests.ViewModel
 
                 //assert
                 _coreMethods.Verify(c =>
-                    c.PushPageModel<GraphViewModel>(
+                    c.PushPageModel<ChartViewModel>(
                         It.Is<object>(o => ((IEnumerable<Memory>) o).First() == targetMemory), false, true));
             }
         }

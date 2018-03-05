@@ -640,7 +640,7 @@ namespace Cringebot.Tests.ViewModel
                 await _viewModel.ViewGraph(memories);
 
                 //assert
-                coreMethods.Verify(c => c.PushPageModel<GraphViewModel>(memories, false, true));
+                coreMethods.Verify(c => c.PushPageModel<ChartViewModel>(memories, false, true));
             }
         }
 

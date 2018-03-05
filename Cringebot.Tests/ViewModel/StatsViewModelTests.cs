@@ -266,6 +266,45 @@ namespace Cringebot.Tests.ViewModel
                 //assert
                 _viewModel.Title.Should().Be.EqualTo("Stats");
             }
+
+            [Test]
+            public void ShouldSetNoDataIfNoMemories()
+            {
+                //act
+                _viewModel.Init(new List<Memory>());
+
+                //assert
+                _viewModel.IsDataPresent.Should().Be.False();
+            }
+
+            [Test]
+            public void ShouldSetNoDataIfNoOccurrences()
+            {
+                //act
+                _viewModel.Init(new List<Memory>
+                {
+                    new Memory()
+                });
+
+                //assert
+                _viewModel.IsDataPresent.Should().Be.False();
+            }
+
+            [Test]
+            public void ShouldSetYesDataIfData()
+            {
+                //act
+                _viewModel.Init(new List<Memory>
+                {
+                    new Memory
+                    {
+                        Occurrences = { new DateTime()}
+                    }
+                });
+
+                //assert
+                _viewModel.IsDataPresent.Should().Be.True();
+            }
         }
     }
 }

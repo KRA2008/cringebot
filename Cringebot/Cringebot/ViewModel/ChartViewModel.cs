@@ -11,41 +11,52 @@ using Entry = Microcharts.Entry;
 
 namespace Cringebot.ViewModel
 {
-    public class GraphViewModel : FreshBasePageModel
+    public class ChartViewModel : FreshBasePageModel
     {
         private IEnumerable<Memory> _memories;
 
         public string Title { get; set; }
+        public bool IsDataPresent { get; set; }
         public Command ViewStatsCommand { get; set; }
         public Command SetLast7DaysCommand { get; set; }
         public Command SetLast30DaysCommand { get; set; }
-        public Command SetLast365DaysCommand { get; set; }
+        public Command SetLast52WeeksCommand { get; set; }
+        public Command SetTimeOfDayCommand { get; set; }
+        public Command SetDayOfWeekCommand { get; set; }
         public LineChart Chart { get; set; }
 
-        public GraphViewModel()
+        public ChartViewModel()
         {
             ViewStatsCommand = new Command(async () =>
             {
                 await ViewStats();
             });
-            SetLast7DaysCommand = new Command(SetLast7Days);
-            SetLast30DaysCommand = new Command(SetLast30Days);
-            SetLast365DaysCommand = new Command(SetLast365Days);
+            SetLast7DaysCommand = new Command(() => {});
+            SetLast30DaysCommand = new Command(() => { });
+            SetLast52WeeksCommand = new Command(() => { });
+            SetTimeOfDayCommand = new Command(() => { });
+            SetDayOfWeekCommand = new Command(() => { });
         }
 
         public override void Init(object initData)
         {
             base.Init(initData);
             _memories = (IEnumerable<Memory>) initData;
-            Title = "Graph";
+            Title = "Chart";
             if (_memories.Count() == 1)
             {
                 Title += " (" + _memories.First().Description + ")";
             }
 
-            if (_memories.Any())
+            if (_memories.Any() && _memories.Any(m => m.Occurrences.Any()))
             {
+                IsDataPresent = true;
                 SetLast7Days();
+                SetLast7DaysCommand = new Command(SetLast7Days);
+                SetLast30DaysCommand = new Command(SetLast30Days);
+                SetLast52WeeksCommand = new Command(SetLast52Weeks);
+                SetTimeOfDayCommand = new Command(SetTimeOfDay);
+                SetDayOfWeekCommand = new Command(SetDayOfWeek);
             }
         }
 
@@ -59,8 +70,8 @@ namespace Cringebot.ViewModel
                 var occurrencesOnDay = occurrencesList.Count(o => o.Date == day.Date);
                 dayEntries.Add(new Entry(occurrencesOnDay)
                 {
-                    Label = day.DayOfWeek.ToString(),
-                    ValueLabel = occurrencesOnDay.ToString()
+                    ValueLabel = occurrencesOnDay.ToString(),
+                    Label = day.Day.ToString()
                 });
             }
             
@@ -68,7 +79,7 @@ namespace Cringebot.ViewModel
             {
                 Entries = dayEntries,
                 LineMode = LineMode.Straight,
-                LabelTextSize = 25
+                LabelTextSize = 35
             };
         }
 
@@ -94,23 +105,55 @@ namespace Cringebot.ViewModel
             };
         }
 
-        private void SetLast365Days()
+        private void SetLast52Weeks()
         {
             GetOccurrencesAndDays(out var occurrences, out var days, 365);
-            var occurrencesList = occurrences.ToList();
-            var dayEntries = new List<Entry>();
-            foreach (var day in days.Reverse())
+            var weekStackedOccurrences = occurrences.Select(o => o.Date.AddDays(-(int) o.DayOfWeek)).ToList();
+            var weekStarters = days.Where(d => d.DayOfWeek == 0);
+            var weekEntries = new List<Entry>();
+            foreach (var day in weekStarters.Reverse())
             {
-                var occurrencesOnDay = occurrencesList.Count(o => o.Date == day.Date);
-                dayEntries.Add(new Entry(occurrencesOnDay));
+                var occurrencesInWeek = weekStackedOccurrences.Count(o => o.Date == day.Date);
+                weekEntries.Add(new Entry(occurrencesInWeek)
+                {
+                    ValueLabel = occurrencesInWeek.ToString()
+                });
             }
 
             Chart = new LineChart
             {
-                Entries = dayEntries,
+                Entries = weekEntries,
                 LineMode = LineMode.Straight,
-                LabelTextSize = 25
+                LabelTextSize = 15
             };
+        }
+
+        private void SetTimeOfDay()
+        {
+            var hours = Enumerable.Range(0, 23);
+            var occurrencesByHour = _memories.SelectMany(m => m.Occurrences).Select(o => o.TimeOfDay.Hours).ToList();
+            var hourlyEntries = new List<Entry>();
+            foreach (var hour in hours)
+            {
+                var occurrencesInHour = occurrencesByHour.Count(o => o == hour);
+                hourlyEntries.Add(new Entry(occurrencesInHour)
+                {
+                    ValueLabel = occurrencesInHour.ToString(),
+                    Label = hour.ToString()
+                });
+            }
+
+            Chart = new LineChart
+            {
+                Entries = hourlyEntries,
+                LineMode = LineMode.Straight,
+                LabelTextSize = 15
+            };
+        }
+
+        private void SetDayOfWeek()
+        {
+
         }
 
         private void GetOccurrencesAndDays(out IEnumerable<DateTime> occurrences, out IEnumerable<DateTime> days,

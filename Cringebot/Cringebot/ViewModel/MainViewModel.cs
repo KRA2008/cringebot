@@ -127,7 +127,7 @@ namespace Cringebot.ViewModel
 
         public async Task ViewGraph(IEnumerable<Memory> memories)
         {
-            await CoreMethods.PushPageModel<GraphViewModel>(memories);
+            await CoreMethods.PushPageModel<ChartViewModel>(memories);
         }
 
         public async Task ViewHelp()

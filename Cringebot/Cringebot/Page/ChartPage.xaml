@@ -7,8 +7,9 @@
                             xmlns:fresh="clr-namespace:FreshMvvm;assembly=FreshMvvm"
                             xmlns:viewModel="clr-namespace:Cringebot.ViewModel;assembly=Cringebot"
                             xmlns:microChart="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
-                            d:DataContext="{d:DesignInstance Type=viewModel:GraphViewModel, IsDesignTimeCreatable=False}"
-                            x:Class="Cringebot.Page.GraphPage"
+                            xmlns:vc="clr-namespace:Cringebot.Page.ValueConverters;assembly=Cringebot"
+                            d:DataContext="{d:DesignInstance Type=viewModel:ChartViewModel, IsDesignTimeCreatable=False}"
+                            x:Class="Cringebot.Page.ChartPage"
                             BackgroundColor="White"
                             Title="{Binding Title}">
     <ContentPage.ToolbarItems>
@@ -17,6 +18,8 @@
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout Padding="15">
+            <Label Text="No data. Please add data."
+                   IsVisible="{Binding IsDataPresent, Converter={vc:NotConverter}}"/>
             <microChart:ChartView Chart="{Binding Chart}"
                                   HorizontalOptions="FillAndExpand"
                                   VerticalOptions="FillAndExpand"/>
@@ -27,8 +30,16 @@
                 <Button Command="{Binding SetLast30DaysCommand}"
                         Text="Last 30 Days"
                         HorizontalOptions="CenterAndExpand"/>
-                <Button Command="{Binding SetLast365DaysCommand}"
-                        Text="Last 365 Days"
+                <Button Command="{Binding SetLast52WeeksCommand}"
+                        Text="Last 52 Weeks"
+                        HorizontalOptions="CenterAndExpand"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Button Command="{Binding SetTimeOfDayCommand}"
+                        Text="Time of Day"
+                        HorizontalOptions="CenterAndExpand"/>
+                <Button Command="{Binding SetDayOfWeekCommand}"
+                        Text="Day of Week"
                         HorizontalOptions="CenterAndExpand"/>
             </StackLayout>
         </StackLayout>

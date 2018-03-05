@@ -43,7 +43,7 @@ namespace Cringebot.ViewModel
 
         public async Task ViewGraph(Memory memory)
         {
-            await CoreMethods.PushPageModel<GraphViewModel>(new[] {memory});
+            await CoreMethods.PushPageModel<ChartViewModel>(new[] {memory});
         }
 
         public override void Init(object initData)
