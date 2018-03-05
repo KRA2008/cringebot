@@ -31,6 +31,8 @@ Some of the niceties incorporated here that I would encourage others to use:
     * Testing assertions that read like sentences
 * http://www.ncrunch.net/
 	* Automatic smart test execution
+* https://github.com/aloisdeniel/Microcharts
+	* Nice charts
 * ~~https://www.nuget.org/packages/xcc/~~
     * ~~When combined with ReSharper, adds auto-complete/intellisense to Xamarin.Forms XAML pages for your binding context in Visual Studio on Windows~~
 	* Xamarin.Forms is now able to understand 'xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"' which makes xcc unneeded, so I'd suggest using xcc if you're not up to that version of Xamarin.Forms yet
