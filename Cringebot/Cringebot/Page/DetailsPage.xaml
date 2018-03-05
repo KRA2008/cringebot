@@ -12,7 +12,7 @@
              Title="Item/Occurrences">
     <ContentPage.ToolbarItems>
         <ToolbarItem Icon="chart"
-                     Command="{Binding ViewStatsCommand}"/>
+                     Command="{Binding ViewGraphCommand}"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout Padding="15"

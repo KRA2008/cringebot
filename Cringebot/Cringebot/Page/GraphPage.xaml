@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<fresh:FreshBaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+                            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                            mc:Ignorable="d"
+                            xmlns:fresh="clr-namespace:FreshMvvm;assembly=FreshMvvm"
+                            xmlns:viewModel="clr-namespace:Cringebot.ViewModel;assembly=Cringebot"
+                            d:DataContext="{d:DesignInstance Type=viewModel:GraphViewModel, IsDesignTimeCreatable=False}"
+                            x:Class="Cringebot.Page.GraphPage"
+                            Title="{Binding Title}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="list"
+                     Command="{Binding ViewStatsCommand}"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Welcome to Xamarin.Forms!"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+        </StackLayout>
+    </ContentPage.Content>
+</fresh:FreshBaseContentPage>

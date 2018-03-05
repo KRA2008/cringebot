@@ -46,7 +46,7 @@ namespace Cringebot.Tests.ViewModel
             }
         }
 
-        public class ViewStatsMethod : DetailsViewModelTests
+        public class ViewGraphMethod : DetailsViewModelTests
         {
             [Test]
             public async Task ShouldNavigateToStats()
@@ -55,11 +55,11 @@ namespace Cringebot.Tests.ViewModel
                 var targetMemory = new Memory();
 
                 //act
-                await _viewModel.ViewStats(targetMemory);
+                await _viewModel.ViewGraph(targetMemory);
 
                 //assert
                 _coreMethods.Verify(c =>
-                    c.PushPageModel<StatsViewModel>(
+                    c.PushPageModel<GraphViewModel>(
                         It.Is<object>(o => ((IEnumerable<Memory>) o).First() == targetMemory), false, true));
             }
         }

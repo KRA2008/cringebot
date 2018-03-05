@@ -43,7 +43,7 @@ namespace Cringebot.ViewModel
         public Command AddMemoryCommand { get; }
         public Command AddOccurrenceCommand { get; }
         public Command ViewDetailsCommand { get; }
-        public Command ViewStatsCommand { get; }
+        public Command ViewGraphCommand { get; }
         public Command ViewHelpCommand { get; }
         public Command ViewSettingsCommand { get; }
 
@@ -90,9 +90,9 @@ namespace Cringebot.ViewModel
                 await ViewDetails(memory);
             });
 
-            ViewStatsCommand = new Command(async args =>
+            ViewGraphCommand = new Command(async args =>
             {
-                await ViewStats(_memories);
+                await ViewGraph(_memories);
             });
 
             ViewHelpCommand = new Command(async args =>
@@ -125,9 +125,9 @@ namespace Cringebot.ViewModel
             await CoreMethods.PushPageModel<DetailsViewModel>(memory);
         }
 
-        public async Task ViewStats(IEnumerable<Memory> memories)
+        public async Task ViewGraph(IEnumerable<Memory> memories)
         {
-            await CoreMethods.PushPageModel<StatsViewModel>(memories);
+            await CoreMethods.PushPageModel<GraphViewModel>(memories);
         }
 
         public async Task ViewHelp()

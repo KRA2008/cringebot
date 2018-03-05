@@ -10,21 +10,4 @@
     <PackageReference Include="PropertyChanged.Fody" Version="2.2.9" />
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.280555" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Page\DetailsPage.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Page\HelpPage.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Page\MainPage.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Page\SettingsPage.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Page\StatsPage.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
 </Project>

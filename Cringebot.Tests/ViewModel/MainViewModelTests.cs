@@ -626,7 +626,7 @@ namespace Cringebot.Tests.ViewModel
             }
         }
 
-        public class ViewStatsMethod : MainViewModelTests
+        public class ViewGraphMethod : MainViewModelTests
         {
             [Test]
             public async Task ShouldNavigateToStatsPage()
@@ -637,10 +637,10 @@ namespace Cringebot.Tests.ViewModel
                 var memories = new List<Memory>();
 
                 //act
-                await _viewModel.ViewStats(memories);
+                await _viewModel.ViewGraph(memories);
 
                 //assert
-                coreMethods.Verify(c => c.PushPageModel<StatsViewModel>(memories, false, true));
+                coreMethods.Verify(c => c.PushPageModel<GraphViewModel>(memories, false, true));
             }
         }
 

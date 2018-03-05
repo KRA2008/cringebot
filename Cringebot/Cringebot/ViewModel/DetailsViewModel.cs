@@ -12,7 +12,7 @@ namespace Cringebot.ViewModel
 
         public Command DeleteOccurrenceCommand { get; }
         public Command DeleteMemoryCommand { get; }
-        public Command ViewStatsCommand { get; }
+        public Command ViewGraphCommand { get; }
 
         public DetailsViewModel()
         {
@@ -26,9 +26,9 @@ namespace Cringebot.ViewModel
                 await DeleteMemory(Memory);
             });
 
-            ViewStatsCommand = new Command(async () =>
+            ViewGraphCommand = new Command(async () =>
             {
-                await ViewStats(Memory);
+                await ViewGraph(Memory);
             });
         }
 
@@ -41,9 +41,9 @@ namespace Cringebot.ViewModel
             }
         }
 
-        public async Task ViewStats(Memory memory)
+        public async Task ViewGraph(Memory memory)
         {
-            await CoreMethods.PushPageModel<StatsViewModel>(new[] {memory});
+            await CoreMethods.PushPageModel<GraphViewModel>(new[] {memory});
         }
 
         public override void Init(object initData)
