@@ -31,7 +31,7 @@ Some of the niceties incorporated here that I would encourage others to use:
     * Testing assertions that read like sentences
 * http://www.ncrunch.net/
 	* Automatic smart test execution
-* https://github.com/aloisdeniel/Microcharts
+* https://www.nuget.org/packages/Syncfusion.Xamarin.SfChart/
 	* Nice charts
 * ~~https://www.nuget.org/packages/xcc/~~
     * ~~When combined with ReSharper, adds auto-complete/intellisense to Xamarin.Forms XAML pages for your binding context in Visual Studio on Windows~~

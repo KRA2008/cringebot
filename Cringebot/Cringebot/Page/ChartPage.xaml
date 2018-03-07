@@ -6,7 +6,7 @@
                             mc:Ignorable="d"
                             xmlns:fresh="clr-namespace:FreshMvvm;assembly=FreshMvvm"
                             xmlns:viewModel="clr-namespace:Cringebot.ViewModel;assembly=Cringebot"
-                            xmlns:microChart="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
+                            xmlns:sfChart="clr-namespace:Syncfusion.SfChart.XForms;assembly=Syncfusion.SfChart.XForms"
                             xmlns:vc="clr-namespace:Cringebot.Page.ValueConverters;assembly=Cringebot"
                             d:DataContext="{d:DesignInstance Type=viewModel:ChartViewModel, IsDesignTimeCreatable=False}"
                             x:Class="Cringebot.Page.ChartPage"
@@ -20,9 +20,20 @@
         <StackLayout Padding="15">
             <Label Text="No data. Please add data."
                    IsVisible="{Binding IsDataPresent, Converter={vc:NotConverter}}"/>
-            <microChart:ChartView Chart="{Binding Chart}"
-                                  HorizontalOptions="FillAndExpand"
-                                  VerticalOptions="FillAndExpand"/>
+            <sfChart:SfChart HorizontalOptions="FillAndExpand"
+                             VerticalOptions="FillAndExpand">
+                <sfChart:SfChart.PrimaryAxis>
+                    <sfChart:NumericalAxis>
+                    </sfChart:NumericalAxis>
+                </sfChart:SfChart.PrimaryAxis>
+                <sfChart:SfChart.SecondaryAxis>
+                    <sfChart:NumericalAxis>
+                    </sfChart:NumericalAxis>
+                </sfChart:SfChart.SecondaryAxis>
+                <sfChart:SfChart.Series>
+                    <sfChart:LineSeries ItemsSource="{Binding Data}"/>
+                </sfChart:SfChart.Series>
+            </sfChart:SfChart>
             <StackLayout Orientation="Horizontal">
                 <Button Command="{Binding SetLast7DaysCommand}"
                         Text="Last 7 Days"
