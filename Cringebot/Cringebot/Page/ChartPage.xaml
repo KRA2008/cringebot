@@ -23,15 +23,17 @@
             <sfChart:SfChart HorizontalOptions="FillAndExpand"
                              VerticalOptions="FillAndExpand">
                 <sfChart:SfChart.PrimaryAxis>
-                    <sfChart:NumericalAxis>
-                    </sfChart:NumericalAxis>
+                    <sfChart:CategoryAxis LabelRotationAngle="45"/>
                 </sfChart:SfChart.PrimaryAxis>
                 <sfChart:SfChart.SecondaryAxis>
                     <sfChart:NumericalAxis>
+                        <sfChart:NumericalAxis.Title>
+                            <sfChart:ChartAxisTitle Text="Occurrences"/>
+                        </sfChart:NumericalAxis.Title>
                     </sfChart:NumericalAxis>
                 </sfChart:SfChart.SecondaryAxis>
                 <sfChart:SfChart.Series>
-                    <sfChart:LineSeries ItemsSource="{Binding Data}"/>
+                    <sfChart:ColumnSeries ItemsSource="{Binding Data}"/>
                 </sfChart:SfChart.Series>
             </sfChart:SfChart>
             <StackLayout Orientation="Horizontal">
