@@ -34,6 +34,7 @@ namespace Cringebot.iOS
             Xamarin.Forms.Forms.Init();
 
             Corcav.Behaviors.Infrastructure.Init();
+            Syncfusion.SfChart.XForms.iOS.Renderers.SfChartRenderer.Init();
 
             LoadApplication(new App());
 

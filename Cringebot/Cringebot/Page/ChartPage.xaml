@@ -17,11 +17,13 @@
                      Command="{Binding ViewStatsCommand}"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout Padding="15">
+        <StackLayout Padding="0"
+                     Spacing="5">
             <Label Text="No data. Please add data."
                    IsVisible="{Binding IsDataPresent, Converter={vc:NotConverter}}"/>
             <sfChart:SfChart HorizontalOptions="FillAndExpand"
-                             VerticalOptions="FillAndExpand">
+                             VerticalOptions="FillAndExpand"
+                             Margin="5,15,15,0">
                 <sfChart:SfChart.PrimaryAxis>
                     <sfChart:CategoryAxis LabelRotationAngle="45"/>
                 </sfChart:SfChart.PrimaryAxis>
@@ -36,7 +38,8 @@
                     <sfChart:ColumnSeries ItemsSource="{Binding Data}"/>
                 </sfChart:SfChart.Series>
             </sfChart:SfChart>
-            <StackLayout Orientation="Horizontal">
+            <StackLayout Orientation="Horizontal"
+                         Padding="15,0,15,0">
                 <Button Command="{Binding SetLast7DaysCommand}"
                         Text="Last 7 Days"
                         HorizontalOptions="CenterAndExpand"/>
@@ -47,7 +50,8 @@
                         Text="Last 52 Weeks"
                         HorizontalOptions="CenterAndExpand"/>
             </StackLayout>
-            <StackLayout Orientation="Horizontal">
+            <StackLayout Orientation="Horizontal"
+                         Padding="15,0,15,15">
                 <Button Command="{Binding SetTimeOfDayCommand}"
                         Text="Time of Day"
                         HorizontalOptions="CenterAndExpand"/>
