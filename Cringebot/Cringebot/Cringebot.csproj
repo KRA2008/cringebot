@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
       <TargetFramework>netstandard2.0</TargetFramework>
-      <PackageTargetFallback>$(PackageTargetFallback);portable-net45+win8+wp8+wpa81;</PackageTargetFallback>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Corcav.Behaviors" Version="2.3.7" />
