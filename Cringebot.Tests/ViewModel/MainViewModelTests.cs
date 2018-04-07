@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Cringebot.Model;
@@ -288,7 +289,7 @@ namespace Cringebot.Tests.ViewModel
                 const string TEST_DESCRIPTION = "that time with that thing";
                 _viewModel.MemoryInput = TEST_DESCRIPTION;
 
-                var fakeNow = new System.DateTime(1234, 5, 6, 7, 8, 9, 10);
+                var fakeNow = new DateTime(1234, 5, 6, 7, 8, 9, 10);
                 SystemTime.Now = () => fakeNow;
 
                 //act
@@ -380,18 +381,24 @@ namespace Cringebot.Tests.ViewModel
         public class AddOccurrenceCommand : MainViewModelTests
         {
             [Test]
-            public void ShouldAddOccurrenceOfMemory()
+            public void ShouldAddOccurrenceOfMemoryAtStartOfList()
             {
                 //arrange
                 var memory = new Memory();
+                var now = new DateTime(1, 2, 3, 4, 5, 6, 7);
+                SystemTime.Now = () => now;
 
                 //act
                 _viewModel.AddOccurrenceCommand.Execute(memory);
+                SystemTime.Now = () => now.AddSeconds(1);
                 _viewModel.AddOccurrenceCommand.Execute(memory);
+                SystemTime.Now = () => now.AddSeconds(2);
                 _viewModel.AddOccurrenceCommand.Execute(memory);
 
                 //assert
-                memory.Occurrences.Count.Should().Be.EqualTo(3);
+                memory.Occurrences.ElementAt(0).Should().Be.EqualTo(now.AddSeconds(2));
+                memory.Occurrences.ElementAt(1).Should().Be.EqualTo(now.AddSeconds(1));
+                memory.Occurrences.ElementAt(2).Should().Be.EqualTo(now);
             }
 
             [Test]

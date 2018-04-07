@@ -79,7 +79,7 @@ namespace Cringebot.ViewModel
             AddOccurrenceCommand = new Command(arg => 
             {
                 var memory = (Memory)arg;
-                memory.Occurrences.Add(SystemTime.Now());
+                memory.Occurrences.Insert(0, SystemTime.Now());
                 MemoryInput = "";
                 keyboardHelper.HideKeyboard();
             });
