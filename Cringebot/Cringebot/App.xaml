@@ -1,5 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Cringebot.App" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" d1p1:Ignorable="d" xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006">
     <Application.Resources>
+        <ResourceDictionary>
+            <x:String x:Key="comicSans">
+                Comic Sans MS.ttf#Comic Sans MS
+            </x:String>
+            <Style TargetType="Label">
+                <Setter Property="FontFamily"
+                        Value="{DynamicResource comicSans}"/>
+            </Style>
+            <Style TargetType="Entry">
+                <Setter Property="FontFamily"
+                        Value="{DynamicResource comicSans}"/>
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="FontFamily"
+                        Value="{DynamicResource comicSans}"/>
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

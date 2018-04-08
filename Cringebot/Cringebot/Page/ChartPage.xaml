@@ -12,6 +12,14 @@
                             x:Class="Cringebot.Page.ChartPage"
                             BackgroundColor="White"
                             Title="{Binding Title}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Button">
+                <Setter Property="FontSize"
+                        Value="12"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.ToolbarItems>
         <ToolbarItem Icon="list"
                      Command="{Binding ViewStatsCommand}"/>
