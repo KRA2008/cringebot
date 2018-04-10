@@ -27,6 +27,9 @@
     <MtouchArch>i386, x86_64</MtouchArch>
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
+    <OptimizePNGs>true</OptimizePNGs>
+    <DeviceSpecificBuild>true</DeviceSpecificBuild>
+    <MtouchFastDev>true</MtouchFastDev>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -180,6 +183,12 @@
     <BundleResource Include="Resources\gear%403x.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ShareExtension\ShareExtension.csproj">
+      <Project>{2ddd3526-6761-4879-a1f8-4b53741b8583}</Project>
+      <Name>ShareExtension</Name>
+      <IsAppExtension>true</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
+    </ProjectReference>
     <ProjectReference Include="..\Cringebot\Cringebot.csproj">
       <Project>{BE226C5C-3CCA-4A53-A06C-FF8BDF914F3C}</Project>
       <Name>Cringebot</Name>

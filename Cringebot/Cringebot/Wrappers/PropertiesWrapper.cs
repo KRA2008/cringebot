@@ -3,13 +3,13 @@ using Xamarin.Forms;
 
 namespace Cringebot.Wrappers
 {
-    public interface IAppDataStore
+    public interface IAppProperties
     {
         T LoadOrDefault<T>(string key, T defaultValue);
         void Save(string key, object data);
     }
     
-    public class StorageWrapper : IAppDataStore
+    public class PropertiesWrapper : IAppProperties
     {
         public const string SIMULATE_STORE_KEY = "simulate";
         public const string LIMIT_LIST_STORE_KEY = "limitList";

@@ -9,10 +9,11 @@ namespace Cringebot
     {
         public Bootstrapper()
         {
-            FreshIOC.Container.Register<IAppDataStore, StorageWrapper>();
+            FreshIOC.Container.Register<IAppProperties, PropertiesWrapper>();
             FreshIOC.Container.Register(DependencyService.Get<INotificationManager>());
             FreshIOC.Container.Register<IDeviceWrapper, DeviceWrapper>();
             FreshIOC.Container.Register(DependencyService.Get<IKeyboardHelper>());
+            FreshIOC.Container.Register<IFileImportStore, FileImportStore>();
         }
 
         // ReSharper disable once MemberCanBeMadeStatic.Global - if static, no instantiation, if no instantiation, no registrations!

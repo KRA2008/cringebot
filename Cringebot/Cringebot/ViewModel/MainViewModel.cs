@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using System;
 using System.Linq;
+using System.Net;
 
 namespace Cringebot.ViewModel
 {
@@ -49,14 +50,16 @@ namespace Cringebot.ViewModel
 
         private Settings _settings;
 
-        private readonly IAppDataStore _dataStore;
+        private readonly IAppProperties _properties;
         private readonly INotificationManager _notificationManager;
+        private readonly IFileImportStore _fileImportStore;
 
-        public MainViewModel(IAppDataStore dataStore, INotificationManager notificationManager,
-            IKeyboardHelper keyboardHelper)
+        public MainViewModel(IAppProperties properties, INotificationManager notificationManager,
+            IKeyboardHelper keyboardHelper, IFileImportStore fileImportStore)
         {
-            _dataStore = dataStore;
+            _properties = properties;
             _notificationManager = notificationManager;
+            _fileImportStore = fileImportStore;
             _memories = new List<Memory>();
 
             AddMemoryCommand = new Command(() =>
@@ -155,10 +158,10 @@ namespace Cringebot.ViewModel
         {
             base.Init(initData);
 
-            Simulate = _dataStore.LoadOrDefault(StorageWrapper.SIMULATE_STORE_KEY, false);
-            LimitListVisibility = _dataStore.LoadOrDefault(StorageWrapper.LIMIT_LIST_STORE_KEY, false);
-            _memories = _dataStore.LoadOrDefault(StorageWrapper.MEMORY_LIST_STORE_KEY, new List<Memory>());
-            _settings = _dataStore.LoadOrDefault(StorageWrapper.SETTINGS_STORE_KEY, new Settings());
+            Simulate = _properties.LoadOrDefault(PropertiesWrapper.SIMULATE_STORE_KEY, false);
+            LimitListVisibility = _properties.LoadOrDefault(PropertiesWrapper.LIMIT_LIST_STORE_KEY, false);
+            _memories = _properties.LoadOrDefault(PropertiesWrapper.MEMORY_LIST_STORE_KEY, new List<Memory>());
+            _settings = _properties.LoadOrDefault(PropertiesWrapper.SETTINGS_STORE_KEY, new Settings());
 
             if (Simulate)
             {
@@ -171,12 +174,27 @@ namespace Cringebot.ViewModel
             }
         }
 
+        public void Import(string import)
+        {
+            var lines = WebUtility.UrlDecode(import).Split('\n');
+            foreach (var line in lines)
+            {
+                _memories.Add(new Memory
+                {
+                    Description = line
+                });
+            }
+            RaisePropertyChanged(nameof(Memories));
+
+            _notificationManager.SetMemories(_memories);
+        }
+
         public void Save()
         {
-            _dataStore.Save(StorageWrapper.LIMIT_LIST_STORE_KEY, LimitListVisibility);
-            _dataStore.Save(StorageWrapper.SIMULATE_STORE_KEY, Simulate);
-            _dataStore.Save(StorageWrapper.MEMORY_LIST_STORE_KEY, _memories);
-            _dataStore.Save(StorageWrapper.SETTINGS_STORE_KEY, _settings);
+            _properties.Save(PropertiesWrapper.LIMIT_LIST_STORE_KEY, LimitListVisibility);
+            _properties.Save(PropertiesWrapper.SIMULATE_STORE_KEY, Simulate);
+            _properties.Save(PropertiesWrapper.MEMORY_LIST_STORE_KEY, _memories);
+            _properties.Save(PropertiesWrapper.SETTINGS_STORE_KEY, _settings);
         }
     }
 }

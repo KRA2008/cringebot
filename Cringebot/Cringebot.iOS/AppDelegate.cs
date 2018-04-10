@@ -21,6 +21,7 @@ namespace Cringebot.iOS
         private static IEnumerable<Memory> _memories;
         private static Settings _settings;
         private static bool _notificationsOn;
+        private static App _app;
 
         //
         // This method is invoked when the application has loaded and is ready to run. In this 
@@ -36,11 +37,18 @@ namespace Cringebot.iOS
             Corcav.Behaviors.Infrastructure.Init();
             Syncfusion.SfChart.XForms.iOS.Renderers.SfChartRenderer.Init();
 
-            LoadApplication(new App());
+            _app = new App();
+            LoadApplication(_app);
 
             UNUserNotificationCenter.Current.Delegate = new NotificationDelegate();
 
             return base.FinishedLaunching(app, options);
+        }
+
+        public override bool OpenUrl(UIApplication application, NSUrl url, string sourceApplication, NSObject annotation)
+        {
+            _app.Import(url.Query);
+            return true;
         }
 
         public override void ApplicationSignificantTimeChange(UIApplication application)

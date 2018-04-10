@@ -17,7 +17,7 @@ namespace Cringebot.Tests.ViewModel
     {
         private MainViewModel _viewModel;
         private Settings _settings;
-        private Mock<IAppDataStore> _dataStore;
+        private Mock<IAppProperties> _dataStore;
         private Mock<INotificationManager> _notificationManager;
         private Mock<IKeyboardHelper> _keyboardHelper;
 
@@ -26,14 +26,14 @@ namespace Cringebot.Tests.ViewModel
         {
             _settings = new Settings();
             _notificationManager = new Mock<INotificationManager>();
-            _dataStore = new Mock<IAppDataStore>();
-            _dataStore.Setup(d => d.LoadOrDefault(StorageWrapper.SETTINGS_STORE_KEY, It.IsAny<Settings>()))
+            _dataStore = new Mock<IAppProperties>();
+            _dataStore.Setup(d => d.LoadOrDefault(PropertiesWrapper.SETTINGS_STORE_KEY, It.IsAny<Settings>()))
                 .Returns(_settings);
-            _dataStore.Setup(d => d.LoadOrDefault(StorageWrapper.SIMULATE_STORE_KEY, It.IsAny<bool>())).Returns(false);
-            _dataStore.Setup(d => d.LoadOrDefault(StorageWrapper.LIMIT_LIST_STORE_KEY, It.IsAny<bool>())).Returns(false);
-            _dataStore.Setup(d => d.LoadOrDefault(StorageWrapper.MEMORY_LIST_STORE_KEY, It.IsAny<List<Memory>>())).Returns(new List<Memory>());
+            _dataStore.Setup(d => d.LoadOrDefault(PropertiesWrapper.SIMULATE_STORE_KEY, It.IsAny<bool>())).Returns(false);
+            _dataStore.Setup(d => d.LoadOrDefault(PropertiesWrapper.LIMIT_LIST_STORE_KEY, It.IsAny<bool>())).Returns(false);
+            _dataStore.Setup(d => d.LoadOrDefault(PropertiesWrapper.MEMORY_LIST_STORE_KEY, It.IsAny<List<Memory>>())).Returns(new List<Memory>());
             _keyboardHelper = new Mock<IKeyboardHelper>();
-            _viewModel = new MainViewModel(_dataStore.Object, _notificationManager.Object, _keyboardHelper.Object);
+            _viewModel = new MainViewModel(_dataStore.Object, _notificationManager.Object, _keyboardHelper.Object, null);
             _viewModel.Init(null);
         }
 
@@ -43,7 +43,7 @@ namespace Cringebot.Tests.ViewModel
             public void ShouldLoadSavedStateOfSimulateSettingOrDefault(bool expectedStoredSetting)
             {
                 //arrange
-                _dataStore.Setup(w => w.LoadOrDefault(StorageWrapper.SIMULATE_STORE_KEY, false)).Returns(expectedStoredSetting);
+                _dataStore.Setup(w => w.LoadOrDefault(PropertiesWrapper.SIMULATE_STORE_KEY, false)).Returns(expectedStoredSetting);
 
                 //act
                 _viewModel.Init(null);
@@ -56,7 +56,7 @@ namespace Cringebot.Tests.ViewModel
             public void ShouldLoadSavedStateOfShowListSettingOrDefault(bool expectedStoredSetting)
             {
                 //arrange
-                _dataStore.Setup(w => w.LoadOrDefault(StorageWrapper.LIMIT_LIST_STORE_KEY, false)).Returns(expectedStoredSetting);
+                _dataStore.Setup(w => w.LoadOrDefault(PropertiesWrapper.LIMIT_LIST_STORE_KEY, false)).Returns(expectedStoredSetting);
 
                 //act
                 _viewModel.Init(null);
@@ -82,7 +82,7 @@ namespace Cringebot.Tests.ViewModel
                     targetMemory1,
                     targetMemory2
                 };
-                _dataStore.Setup(w => w.LoadOrDefault(StorageWrapper.MEMORY_LIST_STORE_KEY, new List<Memory>())).Returns(expectedList);
+                _dataStore.Setup(w => w.LoadOrDefault(PropertiesWrapper.MEMORY_LIST_STORE_KEY, new List<Memory>())).Returns(expectedList);
 
                 //act
                 _viewModel.Init(null);
@@ -131,7 +131,7 @@ namespace Cringebot.Tests.ViewModel
                 _viewModel.MemoryInput = MEM2;
                 _viewModel.AddMemoryCommand.Execute(null);
 
-                _dataStore.Setup(d => d.LoadOrDefault(StorageWrapper.SIMULATE_STORE_KEY, It.IsAny<bool>()))
+                _dataStore.Setup(d => d.LoadOrDefault(PropertiesWrapper.SIMULATE_STORE_KEY, It.IsAny<bool>()))
                     .Returns(true);
 
                 IEnumerable<Memory> actualList = null;
@@ -526,7 +526,7 @@ namespace Cringebot.Tests.ViewModel
                 _viewModel.Save();
 
                 //assert
-                _dataStore.Verify(d => d.Save(StorageWrapper.SIMULATE_STORE_KEY, simulate));
+                _dataStore.Verify(d => d.Save(PropertiesWrapper.SIMULATE_STORE_KEY, simulate));
             }
 
             [Theory]
@@ -539,7 +539,7 @@ namespace Cringebot.Tests.ViewModel
                 _viewModel.Save();
 
                 //assert
-                _dataStore.Verify(d => d.Save(StorageWrapper.LIMIT_LIST_STORE_KEY, showList));
+                _dataStore.Verify(d => d.Save(PropertiesWrapper.LIMIT_LIST_STORE_KEY, showList));
             }
 
             [Test]
@@ -547,7 +547,7 @@ namespace Cringebot.Tests.ViewModel
             {
                 //arrange
                 var settings = new Settings();
-                _dataStore.Setup(d => d.LoadOrDefault(StorageWrapper.SETTINGS_STORE_KEY, It.IsAny<Settings>()))
+                _dataStore.Setup(d => d.LoadOrDefault(PropertiesWrapper.SETTINGS_STORE_KEY, It.IsAny<Settings>()))
                     .Returns(settings);
 
                 _viewModel.Init(null);
@@ -556,7 +556,7 @@ namespace Cringebot.Tests.ViewModel
                 _viewModel.Save();
 
                 //assert
-                _dataStore.Verify(d => d.Save(StorageWrapper.SETTINGS_STORE_KEY, settings));
+                _dataStore.Verify(d => d.Save(PropertiesWrapper.SETTINGS_STORE_KEY, settings));
             }
 
             [Test]
@@ -578,7 +578,7 @@ namespace Cringebot.Tests.ViewModel
                 var whatever = _viewModel.Memories; // trigger filtering
 
                 IEnumerable<Memory> actualSavedList = null;
-                _dataStore.Setup(d => d.Save(StorageWrapper.MEMORY_LIST_STORE_KEY, It.IsAny<object>())).Callback<string, object>((s, l) =>
+                _dataStore.Setup(d => d.Save(PropertiesWrapper.MEMORY_LIST_STORE_KEY, It.IsAny<object>())).Callback<string, object>((s, l) =>
                 {
                     actualSavedList = (IEnumerable<Memory>)l;
                 });

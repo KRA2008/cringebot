@@ -21,6 +21,11 @@ namespace Cringebot
             MainPage = startingPage;
         }
 
+        public void Import(string import)
+        {
+            _mainViewModel.Import(import);
+        }
+
         protected override void OnStart()
         {
         }
