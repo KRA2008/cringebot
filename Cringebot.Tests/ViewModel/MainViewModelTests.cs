@@ -686,5 +686,58 @@ namespace Cringebot.Tests.ViewModel
                 coreMethods.Verify(c => c.PushPageModel<SettingsViewModel>(_settings, false, true));
             }
         }
+
+        public class ImportMethod : MainViewModelTests
+        {
+            [Test]
+            public void ShouldImportAndDecodeMemories()
+            {
+                //arrange
+                const string INPUT_STRING = "thing1%0Athing2%0Ayet%20another%20thing";
+
+
+                //act
+                _viewModel.Import(INPUT_STRING);
+
+                //assert
+                _viewModel.Memories.ElementAt(0).Description.Should().Be.EqualTo("thing1");
+                _viewModel.Memories.ElementAt(1).Description.Should().Be.EqualTo("thing2");
+                _viewModel.Memories.ElementAt(2).Description.Should().Be.EqualTo("yet another thing");
+            }
+
+            [Test]
+            public void ShouldRaiseChangedEvent()
+            {
+                //arrange
+                var eventRaised = false;
+                _viewModel.PropertyChanged += (sender, args) =>
+                {
+                    if (args.PropertyName == nameof(_viewModel.Memories))
+                    {
+                        eventRaised = true;
+                    }
+                };
+
+                //act
+                _viewModel.Import("blah blah blah");
+
+                //assert
+                eventRaised.Should().Be.True();
+            }
+
+            [Test]
+            public void ShouldSetNotificationMemoryList()
+            {
+                //arrange
+                const string EXPECTED_MEMORY = "this one";
+
+                //act
+                _viewModel.Import(EXPECTED_MEMORY);
+
+                //assert
+                _notificationManager.Verify(n =>
+                    n.SetMemories(It.Is<IEnumerable<Memory>>(m => m.First().Description == EXPECTED_MEMORY)));
+            }
+        }
     }
 }
