@@ -160,6 +160,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomRenderers\FontablePickerRenderer.cs" />
+    <Compile Include="CustomRenderers\FontableTimePickerRenderer.cs" />
+    <Compile Include="CustomRenderers\IdkRenderer.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="PlatformSpecific\KeyboardHelper.cs" />
     <Compile Include="PlatformSpecific\NotificationCreationService.cs" />
