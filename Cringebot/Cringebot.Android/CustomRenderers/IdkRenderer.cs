@@ -16,7 +16,10 @@ namespace Cringebot.Droid.CustomRenderers
         {
             base.OnElementChanged(e);
 
-
+            if (!_initialized)
+            {
+                _initialized = true;
+            }
         }
     }
 }
