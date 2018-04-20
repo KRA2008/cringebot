@@ -10,7 +10,6 @@
                             xmlns:vc="clr-namespace:Cringebot.Page.ValueConverters;assembly=Cringebot"
                             d:DataContext="{d:DesignInstance Type=viewModel:ChartViewModel, IsDesignTimeCreatable=False}"
                             x:Class="Cringebot.Page.ChartPage"
-                            BackgroundColor="White"
                             Title="{Binding Title}">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -31,7 +30,8 @@
                    IsVisible="{Binding IsDataPresent, Converter={vc:NotConverter}}"/>
             <sfChart:SfChart HorizontalOptions="FillAndExpand"
                              VerticalOptions="FillAndExpand"
-                             Margin="5,15,15,0">
+                             Margin="5,15,15,0"
+                             BackgroundColor="{DynamicResource styledPageBackgroundColor}">
                 <sfChart:SfChart.PrimaryAxis>
                     <sfChart:CategoryAxis LabelRotationAngle="45"/>
                 </sfChart:SfChart.PrimaryAxis>

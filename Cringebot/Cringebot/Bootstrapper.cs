@@ -18,7 +18,11 @@ namespace Cringebot
         // ReSharper disable once MemberCanBeMadeStatic.Global - if static, no instantiation, if no instantiation, no registrations!
         public Xamarin.Forms.Page GetStartingPage()
         {
-            return new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<MainViewModel>());
+            return new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<MainViewModel>())
+            {
+                BarBackgroundColor = (Color)Application.Current.Resources["styledNavBarColor"],
+                BarTextColor = (Color)Application.Current.Resources["styledNavBarTextColor"]
+            };
         }
     }
 }

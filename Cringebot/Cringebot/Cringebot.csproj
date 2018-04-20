@@ -7,7 +7,7 @@
     <PackageReference Include="FreshMvvm" Version="2.2.4" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
     <PackageReference Include="PropertyChanged.Fody" Version="2.3.0" />
-    <PackageReference Include="Syncfusion.Xamarin.SfChart" Version="16.1.0.24" />
+    <PackageReference Include="Syncfusion.Xamarin.SfChart" Version="16.1.0.32" />
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.280555" />
   </ItemGroup>
   <ItemGroup>

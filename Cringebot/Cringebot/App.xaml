@@ -8,17 +8,41 @@
             <x:String x:Key="styledFontLong">
                 Comic Sans MS.ttf#Comic Sans MS
             </x:String>
+            <Color x:Key="styledTextColor">Black</Color>
+            <Color x:Key="styledNavBarColor">Red</Color>
+            <Color x:Key="styledNavBarTextColor">Green</Color>
+            <Color x:Key="styledPageBackgroundColor">Turquoise</Color>
+            <Color x:Key="styledButtonBackgroundColor">Yellow</Color>
+            <Color x:Key="styledButtonTextColor">DeepPink</Color>
+            <x:Int32 x:Key="styledButtonCornerRadius">15</x:Int32>
             <Style TargetType="Label">
+                <Setter Property="TextColor"
+                        Value="{DynamicResource styledTextColor}"/>
                 <Setter Property="FontFamily"
                         Value="{DynamicResource styledFontLong}"/>
             </Style>
             <Style TargetType="Entry">
+                <Setter Property="TextColor"
+                        Value="{DynamicResource styledTextColor}"/>
                 <Setter Property="FontFamily"
                         Value="{DynamicResource styledFontLong}"/>
             </Style>
             <Style TargetType="Button">
+                <Setter Property="TextColor"
+                        Value="{DynamicResource styledButtonTextColor}"/>
+                <Setter Property="BackgroundColor"
+                        Value="{DynamicResource styledButtonBackgroundColor}"/>
+                <Setter Property="BorderColor"
+                        Value="{DynamicResource styledButtonBackgroundColor}"/>
+                <Setter Property="CornerRadius"
+                        Value="{DynamicResource styledButtonCornerRadius}"/>
                 <Setter Property="FontFamily"
                         Value="{DynamicResource styledFontLong}"/>
+            </Style>
+            <Style TargetType="ContentPage"
+                   ApplyToDerivedTypes="True">
+                <Setter Property="BackgroundColor"
+                        Value="{DynamicResource styledPageBackgroundColor}"/>
             </Style>
         </ResourceDictionary>
     </Application.Resources>
