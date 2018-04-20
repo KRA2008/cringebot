@@ -2,13 +2,26 @@
 <Application xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Cringebot.App" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" d1p1:Ignorable="d" xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006">
     <Application.Resources>
         <ResourceDictionary>
-            <x:String x:Key="styledFontShort">
-                Comic Sans MS.ttf
-            </x:String>
-            <x:String x:Key="styledFontLong">
-                Comic Sans MS.ttf#Comic Sans MS
-            </x:String>
+            <OnPlatform x:TypeArguments="x:String" 
+                        x:Key="styledFontShort">
+                <On Platform="iOS">
+                    Comic Sans MS
+                </On>
+                <On Platform="Android">
+                    Comic-Sans-MS.ttf
+                </On>
+            </OnPlatform>
+            <OnPlatform x:TypeArguments="x:String" 
+                        x:Key="styledFontLong">
+                <On Platform="iOS">
+                    Comic Sans MS
+                </On>
+                <On Platform="Android">
+                    Comic-Sans-MS.ttf#Comic Sans MS
+                </On>
+            </OnPlatform>
             <Color x:Key="styledTextColor">Black</Color>
+            <Color x:Key="styledPlaceholderColor">DimGray</Color>
             <Color x:Key="styledNavBarColor">Red</Color>
             <Color x:Key="styledNavBarTextColor">Green</Color>
             <Color x:Key="styledPageBackgroundColor">Turquoise</Color>
@@ -26,6 +39,10 @@
                         Value="{DynamicResource styledTextColor}"/>
                 <Setter Property="FontFamily"
                         Value="{DynamicResource styledFontLong}"/>
+                <Setter Property="BackgroundColor"
+                        Value="{DynamicResource styledPageBackgroundColor}"/>
+                <Setter Property="TextColor"
+                        Value="{DynamicResource styledPlaceholderColor}"/>
             </Style>
             <Style TargetType="Button">
                 <Setter Property="TextColor"
@@ -41,6 +58,15 @@
             </Style>
             <Style TargetType="ContentPage"
                    ApplyToDerivedTypes="True">
+                <Setter Property="BackgroundColor"
+                        Value="{DynamicResource styledPageBackgroundColor}"/>
+            </Style>
+            <Style TargetType="ListView"
+                   ApplyToDerivedTypes="True">
+                <Setter Property="BackgroundColor"
+                        Value="{DynamicResource styledPageBackgroundColor}"/>
+            </Style>
+            <Style TargetType="TableView">
                 <Setter Property="BackgroundColor"
                         Value="{DynamicResource styledPageBackgroundColor}"/>
             </Style>

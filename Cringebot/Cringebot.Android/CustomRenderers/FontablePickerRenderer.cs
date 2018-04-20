@@ -1,4 +1,5 @@
-﻿using Android.Content;
+﻿using System.Linq;
+using Android.Content;
 using Android.Graphics;
 using Cringebot.Droid.CustomRenderers;
 using Xamarin.Forms;
@@ -24,7 +25,9 @@ namespace Cringebot.Droid.CustomRenderers
 
             if (Control != null && !_initialized)
             {
-                Control.Typeface = Typeface.CreateFromAsset(_context.Assets, Application.Current.Resources["styledFontShort"].ToString());
+                var platformString = (OnPlatform<string>)Application.Current.Resources["styledFontShort"];
+                var fontName = (string)platformString.Platforms.First(p => p.Platform.First() == "Android").Value;
+                Control.Typeface = Typeface.CreateFromAsset(_context.Assets, fontName);
                 _initialized = true;
             }
         }

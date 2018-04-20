@@ -48,5 +48,9 @@
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
+  <key>UIAppFonts</key>
+  <array>
+    <string>Comic-Sans-MS.ttf</string>
+  </array>
 </dict>
 </plist>

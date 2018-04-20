@@ -35,6 +35,10 @@ namespace Cringebot.iOS
 
             Corcav.Behaviors.Infrastructure.Init();
             Syncfusion.SfChart.XForms.iOS.Renderers.SfChartRenderer.Init();
+            UINavigationBar.Appearance.SetTitleTextAttributes(new UITextAttributes
+            {
+                Font = UIFont.FromName("Comic Sans MS", 26)
+            });
 
             LoadApplication(new App());
 
