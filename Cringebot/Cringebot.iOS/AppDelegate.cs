@@ -38,10 +38,10 @@ namespace Cringebot.iOS
             Corcav.Behaviors.Infrastructure.Init();
             Syncfusion.SfChart.XForms.iOS.Renderers.SfChartRenderer.Init();
 
-            LoadApplication(new App());
+            var bootstrapper = new Bootstrapper();
+            LoadApplication(bootstrapper.ResolveApp());
 
-            ApplyTheme(null);
-            MessagingCenter.Subscribe<SettingsViewModel>(this, SettingsViewModel.THEME_EVENT, ApplyTheme);
+            MessagingCenter.Subscribe<SettingsViewModel>(this, ThemeService.THEME_SET_MESSAGE, ApplyTheme);
 
             UNUserNotificationCenter.Current.Delegate = new NotificationDelegate();
 

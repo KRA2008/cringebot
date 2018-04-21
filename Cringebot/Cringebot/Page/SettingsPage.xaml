@@ -17,15 +17,16 @@
                     <ViewCell>
                         <ViewCell.View>
                             <StackLayout Padding="15">
-                                <Button Text="Cringe"
+                                <!-- would be nice to use xlabs repeater view here but something's f'd with the .net standard setup and package management -->
+                                <Button Text="{Binding ThemeNames[0]}"
                                             Command="{Binding SetTheme}"
-                                            CommandParameter="0"/>
-                                <Button Text="Pink"
-                                            Command="{Binding SetTheme}"
-                                            CommandParameter="1"/>
-                                <Button Text="Brown"
-                                            Command="{Binding SetTheme}"
-                                            CommandParameter="2"/>
+                                            CommandParameter="{Binding ThemeNames[0]}"/>
+                                <Button Text="{Binding ThemeNames[1]}"
+                                        Command="{Binding SetTheme}"
+                                        CommandParameter="{Binding ThemeNames[1]}"/>
+                                <Button Text="{Binding ThemeNames[2]}"
+                                        Command="{Binding SetTheme}"
+                                        CommandParameter="{Binding ThemeNames[2]}"/>
                             </StackLayout>
                         </ViewCell.View>
                     </ViewCell>

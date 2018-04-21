@@ -172,8 +172,9 @@
     <Compile Include="SplashActivity.cs" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\Comic-Sans-MS.ttf" />
     <None Include="app.config" />
+    <AndroidAsset Include="Assets\Comic Sans MS.ttf" />
+    <AndroidAsset Include="Assets\SBC Macaroni Regular.ttf" />
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />

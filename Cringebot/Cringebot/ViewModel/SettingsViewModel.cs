@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using Cringebot.Model;
+using Cringebot.Services;
 using Cringebot.Wrappers;
 using FreshMvvm;
 using Xamarin.Forms;
@@ -11,13 +12,13 @@ namespace Cringebot.ViewModel
 {
     public class SettingsViewModel : FreshBasePageModel
     {
-        public const string THEME_EVENT = "themeSet";
-        public const string DESTROY_SETTINGS_EVENT = "destroySettings";
+        public const string DESTROY_SETTINGS_MESSAGE = "destroySettings";
 
         private const double RAPID_FIRE_TIME_HOURS = 0.005;
         private const double MAX_HOURS = 999;
 
         private readonly INotificationManager _notificationManager;
+        private readonly IThemeService _themeService;
         public Settings Settings { get; set; }
 
         public IList<double> MaxHoursChoices { get; set; }
@@ -25,7 +26,7 @@ namespace Cringebot.ViewModel
         public double MaxHours { get; set; }
         public double MinHours { get; set; }
 
-        private readonly IEnumerable<Theme> _themes;
+        public ObservableCollection<string> ThemeNames { get; set; }
 
         public string DoNotDisturbExplanation => "You will receive no notifications between " + DateTime.Today.Add(Settings.DoNotDisturbStartTime).ToString("t") +
                                                  " and " + DateTime.Today.Add(Settings.DoNotDisturbStopTime).ToString("t") + ".";
@@ -34,42 +35,17 @@ namespace Cringebot.ViewModel
 
         public Command SetTheme { get; set; }
 
-        public SettingsViewModel(INotificationManager notificationManager)
+        public SettingsViewModel(INotificationManager notificationManager, IThemeService themeService)
         {
             _notificationManager = notificationManager;
+            _themeService = themeService;
             SetTheme = new Command(SetThemeMethod);
-            _themes = new[]
-            {
-                new Theme
-                {
-                    AndroidFontLong = "Comic-Sans-MS.ttf#Comic Sans MS",
-                    AndroidFontShort = "Comic-Sans-MS.ttf",
-                    iOSFont = "Comic Sans MS",
-                    TextColor = Color.Black,
-                    PlaceholderColor = Color.DimGray,
-                    NavBarColor = Color.Red,
-                    NavBarTextColor = Color.Green,
-                    PageBackgroundColor = Color.Turquoise,
-                    ButtonBackgroundColor = Color.Yellow,
-                    ButtonTextColor = Color.DeepPink,
-                    ButtonCornerRadius = 15
-                },
-                new Theme
-                {
-                    TextColor = Color.DeepPink
-                },
-                new Theme
-                {
-                    TextColor = Color.Brown
-                }
-            };
         }
 
         private void SetThemeMethod(object obj)
         {
-            var themeIndex = int.Parse((string)obj);
-            Application.Current.Resources["styledTextColor"] = _themes.ElementAt(themeIndex).TextColor;
-            MessagingCenter.Send(this,THEME_EVENT);
+            var themeName = (string)obj;
+            _themeService.ApplyTheme(themeName);
         }
 
         public override void Init(object initData)
@@ -89,6 +65,8 @@ namespace Cringebot.ViewModel
 
             MaxHours = GetHoursFromTimeSpan(Settings.GenerationMaxInterval);
             MinHours = GetHoursFromTimeSpan(Settings.GenerationMinInterval);
+
+            ThemeNames = new ObservableCollection<string>(_themeService.GetThemes());
         }
 
         private static double GetHoursFromTimeSpan(TimeSpan timeSpan)
@@ -144,7 +122,7 @@ namespace Cringebot.ViewModel
             SaveSettings();
             Settings.PropertyChanged -= OnSettingsPropertyChanged;
             PropertyChanged -= OnPropertyChanged;
-            MessagingCenter.Send(this, DESTROY_SETTINGS_EVENT);
+            MessagingCenter.Send(this, DESTROY_SETTINGS_MESSAGE);
         }
 
         public void SaveSettings()

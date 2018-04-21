@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using Cringebot.iOS.CustomRenderers;
+﻿using Cringebot.iOS.CustomRenderers;
+using Cringebot.Services;
 using Cringebot.ViewModel;
 using UIKit;
 using Xamarin.Forms;
@@ -19,27 +19,37 @@ namespace Cringebot.iOS.CustomRenderers
             if (Control != null && !_initialized)
             {
                 ApplyTheme(null);
-                MessagingCenter.Subscribe<SettingsViewModel>(this, SettingsViewModel.THEME_EVENT, ApplyTheme);
-                MessagingCenter.Subscribe<SettingsViewModel>(this, SettingsViewModel.DESTROY_SETTINGS_EVENT, Unsubscribe);
+                MessagingCenter.Subscribe<SettingsViewModel>(this, ThemeService.THEME_SET_MESSAGE, ApplyTheme);
+                MessagingCenter.Subscribe<SettingsViewModel>(this, SettingsViewModel.DESTROY_SETTINGS_MESSAGE, Unsubscribe);
                 _initialized = true;
             }
         }
 
         private void Unsubscribe(SettingsViewModel vm)
         {
-            MessagingCenter.Unsubscribe<SettingsViewModel>(this, SettingsViewModel.THEME_EVENT);
-            MessagingCenter.Unsubscribe<SettingsViewModel>(this, SettingsViewModel.DESTROY_SETTINGS_EVENT);
+            MessagingCenter.Unsubscribe<SettingsViewModel>(this, ThemeService.THEME_SET_MESSAGE);
+            MessagingCenter.Unsubscribe<SettingsViewModel>(this, SettingsViewModel.DESTROY_SETTINGS_MESSAGE);
         }
 
         private void ApplyTheme(SettingsViewModel vm)
         {
-            var platformString = (OnPlatform<string>)Xamarin.Forms.Application.Current.Resources["styledFontShort"];
-            var fontName = (string)platformString.Platforms.First(p => p.Platform.First() == "iOS").Value;
-            Control.Font = UIFont.FromName(fontName, 16);
-            var backgroundColor = (Color)Xamarin.Forms.Application.Current.Resources["styledPageBackgroundColor"];
-            Control.BackgroundColor = UIColor.FromRGB((int)(backgroundColor.R * 255), (int)(backgroundColor.G * 255), (int)(backgroundColor.B * 255));
-            var textColor = (Color)Xamarin.Forms.Application.Current.Resources["styledTextColor"];
-            Control.TextColor = UIColor.FromRGB((int)(textColor.R * 255), (int)(textColor.G * 255), (int)(textColor.B * 255));
+            var font = Xamarin.Forms.Application.Current.Resources["styledFontShort"];
+            if (font != null)
+            {
+                Control.Font = UIFont.FromName((string)font, 16);
+            }
+            var backgroundColor = Xamarin.Forms.Application.Current.Resources["styledPageBackgroundColor"];
+            if (backgroundColor != null)
+            {
+                var color = (Color) backgroundColor;
+                Control.BackgroundColor = UIColor.FromRGB((int)(color.R * 255), (int)(color.G * 255), (int)(color.B * 255));
+            }
+            var textColor = Xamarin.Forms.Application.Current.Resources["styledTextColor"];
+            if (textColor != null)
+            {
+                var color = (Color) textColor;
+                Control.TextColor = UIColor.FromRGB((int)(color.R * 255), (int)(color.G * 255), (int)(color.B * 255));
+            }
         }
     }
 }

@@ -50,7 +50,8 @@
 	<string>LaunchScreen</string>
   <key>UIAppFonts</key>
   <array>
-    <string>Comic-Sans-MS.ttf</string>
+    <string>Fonts/Comic Sans MS.ttf</string>
+    <string>Fonts/SBC Macaroni Regular.ttf</string>
   </array>
 </dict>
 </plist>

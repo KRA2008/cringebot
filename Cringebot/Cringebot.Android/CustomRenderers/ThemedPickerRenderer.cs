@@ -1,7 +1,7 @@
-﻿using System.Linq;
-using Android.Content;
+﻿using Android.Content;
 using Android.Graphics;
 using Cringebot.Droid.CustomRenderers;
+using Cringebot.Services;
 using Cringebot.ViewModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
@@ -27,23 +27,25 @@ namespace Cringebot.Droid.CustomRenderers
             if (Control != null && !_initialized)
             {
                 ApplyTheme(null);
-                MessagingCenter.Subscribe<SettingsViewModel>(this, SettingsViewModel.THEME_EVENT, ApplyTheme);
-                MessagingCenter.Subscribe<SettingsViewModel>(this, SettingsViewModel.DESTROY_SETTINGS_EVENT, Unsubscribe);
+                MessagingCenter.Subscribe<SettingsViewModel>(this, ThemeService.THEME_SET_MESSAGE, ApplyTheme);
+                MessagingCenter.Subscribe<SettingsViewModel>(this, SettingsViewModel.DESTROY_SETTINGS_MESSAGE, Unsubscribe);
                 _initialized = true;
             }
         }
 
         private void Unsubscribe(SettingsViewModel vm)
         {
-            MessagingCenter.Unsubscribe<SettingsViewModel>(this, SettingsViewModel.THEME_EVENT);
-            MessagingCenter.Unsubscribe<SettingsViewModel>(this, SettingsViewModel.DESTROY_SETTINGS_EVENT);
+            MessagingCenter.Unsubscribe<SettingsViewModel>(this, ThemeService.THEME_SET_MESSAGE);
+            MessagingCenter.Unsubscribe<SettingsViewModel>(this, SettingsViewModel.DESTROY_SETTINGS_MESSAGE);
         }
 
         private void ApplyTheme(SettingsViewModel vm)
         {
-            var platformString = (OnPlatform<string>)Application.Current.Resources["styledFontShort"];
-            var fontName = (string)platformString.Platforms.First(p => p.Platform.First() == "Android").Value;
-            Control.Typeface = Typeface.CreateFromAsset(_context.Assets, fontName);
+            var font = Application.Current.Resources["styledFontShort"];
+            if (font != null)
+            {
+                Control.Typeface = Typeface.CreateFromAsset(_context.Assets, (string)font);
+            }
         }
     }
 }
