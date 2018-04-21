@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Cringebot.Model;
 using Cringebot.Wrappers;
 using FreshMvvm;
+using Xamarin.Forms;
 
 namespace Cringebot.ViewModel
 {
     public class SettingsViewModel : FreshBasePageModel
     {
+        public const string THEME_EVENT = "themeSet";
+        public const string DESTROY_SETTINGS_EVENT = "destroySettings";
+
         private const double RAPID_FIRE_TIME_HOURS = 0.005;
         private const double MAX_HOURS = 999;
 
@@ -20,14 +25,51 @@ namespace Cringebot.ViewModel
         public double MaxHours { get; set; }
         public double MinHours { get; set; }
 
+        private readonly IEnumerable<Theme> _themes;
+
         public string DoNotDisturbExplanation => "You will receive no notifications between " + DateTime.Today.Add(Settings.DoNotDisturbStartTime).ToString("t") +
                                                  " and " + DateTime.Today.Add(Settings.DoNotDisturbStopTime).ToString("t") + ".";
         public string GenerationIntervalExplanation => "Notifications will be generated at random intervals between " + MinHours +
                                                        " and " + MaxHours + " hours in length.";
 
+        public Command SetTheme { get; set; }
+
         public SettingsViewModel(INotificationManager notificationManager)
         {
             _notificationManager = notificationManager;
+            SetTheme = new Command(SetThemeMethod);
+            _themes = new[]
+            {
+                new Theme
+                {
+                    AndroidFontLong = "Comic-Sans-MS.ttf#Comic Sans MS",
+                    AndroidFontShort = "Comic-Sans-MS.ttf",
+                    iOSFont = "Comic Sans MS",
+                    TextColor = Color.Black,
+                    PlaceholderColor = Color.DimGray,
+                    NavBarColor = Color.Red,
+                    NavBarTextColor = Color.Green,
+                    PageBackgroundColor = Color.Turquoise,
+                    ButtonBackgroundColor = Color.Yellow,
+                    ButtonTextColor = Color.DeepPink,
+                    ButtonCornerRadius = 15
+                },
+                new Theme
+                {
+                    TextColor = Color.DeepPink
+                },
+                new Theme
+                {
+                    TextColor = Color.Brown
+                }
+            };
+        }
+
+        private void SetThemeMethod(object obj)
+        {
+            var themeIndex = int.Parse((string)obj);
+            Application.Current.Resources["styledTextColor"] = _themes.ElementAt(themeIndex).TextColor;
+            MessagingCenter.Send(this,THEME_EVENT);
         }
 
         public override void Init(object initData)
@@ -102,6 +144,7 @@ namespace Cringebot.ViewModel
             SaveSettings();
             Settings.PropertyChanged -= OnSettingsPropertyChanged;
             PropertyChanged -= OnPropertyChanged;
+            MessagingCenter.Send(this, DESTROY_SETTINGS_EVENT);
         }
 
         public void SaveSettings()

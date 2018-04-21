@@ -7,9 +7,11 @@ using UIKit;
 using Cringebot.iOS;
 using Cringebot.Services;
 using System.Linq;
+using Cringebot.ViewModel;
 using UserNotifications;
+using Xamarin.Forms;
 
-[assembly: Xamarin.Forms.Dependency(typeof(AppDelegate))]
+[assembly: Dependency(typeof(AppDelegate))]
 namespace Cringebot.iOS
 {
     // The UIApplicationDelegate for the application. This class is responsible for launching the 
@@ -31,20 +33,29 @@ namespace Cringebot.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
-            Xamarin.Forms.Forms.Init();
+            Forms.Init();
 
             Corcav.Behaviors.Infrastructure.Init();
             Syncfusion.SfChart.XForms.iOS.Renderers.SfChartRenderer.Init();
-            UINavigationBar.Appearance.SetTitleTextAttributes(new UITextAttributes
-            {
-                Font = UIFont.FromName("Comic Sans MS", 26)
-            });
 
             LoadApplication(new App());
+
+            ApplyTheme(null);
+            MessagingCenter.Subscribe<SettingsViewModel>(this, SettingsViewModel.THEME_EVENT, ApplyTheme);
 
             UNUserNotificationCenter.Current.Delegate = new NotificationDelegate();
 
             return base.FinishedLaunching(app, options);
+        }
+
+        private static void ApplyTheme(SettingsViewModel vm)
+        {
+            var platformString = (OnPlatform<string>)Xamarin.Forms.Application.Current.Resources["styledFontShort"];
+            var fontName = (string)platformString.Platforms.First(p => p.Platform.First() == "iOS").Value;
+            UINavigationBar.Appearance.SetTitleTextAttributes(new UITextAttributes
+            {
+                Font = UIFont.FromName(fontName, 26)
+            });
         }
 
         public override void ApplicationSignificantTimeChange(UIApplication application)

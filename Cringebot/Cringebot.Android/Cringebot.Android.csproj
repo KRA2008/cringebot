@@ -72,6 +72,7 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mono.Android" />
+    <Reference Include="Mono.Android.Export" />
     <Reference Include="mscorlib" />
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.11.0.1\lib\netstandard2.0\Newtonsoft.Json.dll</HintPath>
@@ -160,8 +161,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomRenderers\FontablePickerRenderer.cs" />
-    <Compile Include="CustomRenderers\FontableTimePickerRenderer.cs" />
+    <Compile Include="CustomRenderers\ThemedPickerRenderer.cs" />
+    <Compile Include="CustomRenderers\ThemedTimePickerRenderer.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="PlatformSpecific\KeyboardHelper.cs" />
     <Compile Include="PlatformSpecific\NotificationCreationService.cs" />
@@ -172,6 +173,7 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\Comic-Sans-MS.ttf" />
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />

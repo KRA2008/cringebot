@@ -76,10 +76,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="CustomRenderers\EntryWithDoneButtonRenderer.cs" />
-    <Compile Include="CustomRenderers\FontablePickerRenderer.cs" />
-    <Compile Include="CustomRenderers\FontableTimePickerRenderer.cs" />
+    <Compile Include="CustomRenderers\ThemedPickerRenderer.cs" />
+    <Compile Include="CustomRenderers\ThemedTimePickerRenderer.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <None Include="app.config" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist">
       <SubType>Designer</SubType>

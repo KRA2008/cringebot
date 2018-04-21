@@ -10,94 +10,109 @@
              x:Class="Cringebot.Page.SettingsPage"
              Title="Settings">
     <ContentPage.Content>
-        <ScrollView>
-            <TableView Intent="Settings"
+        <TableView Intent="Settings"
                        HasUnevenRows="True">
-                <TableRoot>
-                    <TableSection Title="Notification Generation Interval">
-                        <ViewCell>
-                            <ViewCell.View>
-                                <StackLayout Padding="15">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="55"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-                                        <Label Grid.Row="0"
+            <TableRoot>
+                <TableSection Title="Theme">
+                    <ViewCell>
+                        <ViewCell.View>
+                            <StackLayout Padding="15">
+                                <Button Text="Cringe"
+                                            Command="{Binding SetTheme}"
+                                            CommandParameter="0"/>
+                                <Button Text="Pink"
+                                            Command="{Binding SetTheme}"
+                                            CommandParameter="1"/>
+                                <Button Text="Brown"
+                                            Command="{Binding SetTheme}"
+                                            CommandParameter="2"/>
+                            </StackLayout>
+                        </ViewCell.View>
+                    </ViewCell>
+                </TableSection>
+                <TableSection Title="Notification Generation Interval">
+                    <ViewCell>
+                        <ViewCell.View>
+                            <StackLayout Padding="15">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="55"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0"
                                                Grid.Column="0"
                                                Text="Minimum"
                                                HorizontalOptions="EndAndExpand"
                                                VerticalTextAlignment="Center"/>
-                                        <Picker Grid.Row="0"
+                                    <Picker Grid.Row="0"
                                                 Grid.Column="1"
                                                 ItemsSource="{Binding MinHoursChoices}"
                                                 SelectedItem="{Binding MinHours}"/>
-                                        <Label Grid.Row="0"
+                                    <Label Grid.Row="0"
                                                Grid.Column="2"
                                                Text="Hours"
                                                VerticalTextAlignment="Center"/>
-                                        <Label Grid.Row="1"
+                                    <Label Grid.Row="1"
                                                Grid.Column="0"
                                                Text="Maximum"
                                                HorizontalOptions="EndAndExpand"
                                                VerticalTextAlignment="Center"/>
-                                        <Picker Grid.Row="1"
+                                    <Picker Grid.Row="1"
                                                Grid.Column="1"
                                                ItemsSource="{Binding MaxHoursChoices}"
                                                SelectedItem="{Binding MaxHours}"/>
-                                        <Label Grid.Row="1" 
+                                    <Label Grid.Row="1" 
                                                Grid.Column="2"
                                                Text="Hours"
                                                VerticalTextAlignment="Center"/>
-                                    </Grid>
-                                    <Label Text="{Binding GenerationIntervalExplanation}"/>
-                                </StackLayout>
-                            </ViewCell.View>
-                        </ViewCell>
-                    </TableSection>
-                    <TableSection Title="Do Not Disturb">
-                        <ViewCell>
-                            <ViewCell.View>
-                                <StackLayout Padding="15">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition/>
-                                            <RowDefinition/>
-                                        </Grid.RowDefinitions>
-                                        <Label Grid.Row="0" 
+                                </Grid>
+                                <Label Text="{Binding GenerationIntervalExplanation}"/>
+                            </StackLayout>
+                        </ViewCell.View>
+                    </ViewCell>
+                </TableSection>
+                <TableSection Title="Do Not Disturb">
+                    <ViewCell>
+                        <ViewCell.View>
+                            <StackLayout Padding="15">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0" 
                                                Grid.Column="0"
                                                Text="Begin"
                                                HorizontalOptions="EndAndExpand"
                                                VerticalTextAlignment="Center"/>
-                                        <TimePicker Grid.Row="0"
+                                    <TimePicker Grid.Row="0"
                                                     Grid.Column="1"
                                                     Time="{Binding Settings.DoNotDisturbStartTime}"/>
-                                        <Label Grid.Row="1" 
+                                    <Label Grid.Row="1" 
                                                Grid.Column="0" 
                                                Text="End"
                                                HorizontalOptions="EndAndExpand"
                                                VerticalTextAlignment="Center"/>
-                                        <TimePicker Grid.Row="1" 
+                                    <TimePicker Grid.Row="1" 
                                                     Grid.Column="1" 
                                                     Time="{Binding Settings.DoNotDisturbStopTime}"/>
-                                    </Grid>
-                                    <Label Text="{Binding DoNotDisturbExplanation}"/>
-                                </StackLayout>
-                            </ViewCell.View>
-                        </ViewCell>
-                    </TableSection>
-                </TableRoot>
-            </TableView>
-        </ScrollView>
+                                </Grid>
+                                <Label Text="{Binding DoNotDisturbExplanation}"/>
+                            </StackLayout>
+                        </ViewCell.View>
+                    </ViewCell>
+                </TableSection>
+            </TableRoot>
+        </TableView>
     </ContentPage.Content>
 </fresh:FreshBaseContentPage>
