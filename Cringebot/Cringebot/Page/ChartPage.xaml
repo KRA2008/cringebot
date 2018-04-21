@@ -27,7 +27,8 @@
         <StackLayout Padding="0"
                      Spacing="5">
             <Label Text="No data. Please add data."
-                   IsVisible="{Binding IsDataPresent, Converter={vc:NotConverter}}"/>
+                   IsVisible="{Binding IsDataPresent, Converter={vc:NotConverter}}"
+                   Margin="15"/>
             <sfChart:SfChart HorizontalOptions="FillAndExpand"
                              VerticalOptions="FillAndExpand"
                              Margin="5,15,15,0"

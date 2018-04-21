@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Cringebot.Model;
+using Cringebot.Services;
 using Cringebot.ViewModel;
 using Cringebot.Wrappers;
 using Moq;
@@ -14,6 +15,7 @@ namespace Cringebot.Tests.ViewModel
         private SettingsViewModel _viewModel;
         private Settings _settings;
         private Mock<INotificationManager> _notificationManager;
+        private Mock<IThemeService> _themeService;
 
         private const double RAPID_FIRE_TIME_HOURS = 0.005;
 
@@ -22,7 +24,8 @@ namespace Cringebot.Tests.ViewModel
         {
             _settings = new Settings();
             _notificationManager = new Mock<INotificationManager>();
-            _viewModel = new SettingsViewModel(_notificationManager.Object);
+            _themeService = new Mock<IThemeService>();
+            _viewModel = new SettingsViewModel(_notificationManager.Object, _themeService.Object);
         }
 
         public sealed class InitMethod : SettingsViewModelTests
@@ -74,6 +77,25 @@ namespace Cringebot.Tests.ViewModel
                         vm.MaxHours == 97.255 &&
                         vm.MinHours == 77)
                     .Should().Be.True();
+            }
+
+            [Test]
+            public void ShouldSetThemes()
+            {
+                //arrange
+                const string EXPECTED_THEME_1 = "hi";
+                const string EXPECTED_THEME_2 = "hello";
+                _themeService.Setup(t => t.GetThemes()).Returns(new[]
+                {
+                    EXPECTED_THEME_1,
+                    EXPECTED_THEME_2
+                });
+
+                //act
+                _viewModel.Init(_settings);
+
+                //assert
+                _viewModel.ThemeNames.Should().Have.SameSequenceAs(EXPECTED_THEME_1, EXPECTED_THEME_2);
             }
         }
 
@@ -272,6 +294,22 @@ namespace Cringebot.Tests.ViewModel
                     s.GenerationMaxInterval.Seconds == 18 &&
                     s.GenerationMinInterval.Days == 0 &&
                     s.GenerationMinInterval.Hours == 0);
+            }
+        }
+
+        public sealed class SetThemeCommandProperty : SettingsViewModelTests
+        {
+            [Test]
+            public void ShouldSetTheme()
+            {
+                //arrange
+                const string EXPECTED_THEME = "whatever!";
+
+                //act
+                _viewModel.SetTheme.Execute(EXPECTED_THEME);
+
+                //assert
+                _themeService.Verify(t => t.ApplyTheme(EXPECTED_THEME));
             }
         }
     }

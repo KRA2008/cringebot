@@ -2,20 +2,16 @@
 <Application xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Cringebot.App" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" d1p1:Ignorable="d" xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006">
     <Application.Resources>
         <ResourceDictionary>
-            <x:String x:Key="styledFontShort">
-                Comic Sans MS.ttf
-            </x:String>
-            <x:String x:Key="styledFontLong">
-                Comic Sans MS.ttf#Comic Sans MS
-            </x:String>
-            <Color x:Key="styledTextColor">Black</Color>
-            <Color x:Key="styledPlaceholderColor">DimGray</Color>
-            <Color x:Key="styledNavBarColor">Red</Color>
-            <Color x:Key="styledNavBarTextColor">Green</Color>
-            <Color x:Key="styledPageBackgroundColor">Turquoise</Color>
-            <Color x:Key="styledButtonBackgroundColor">Yellow</Color>
-            <Color x:Key="styledButtonTextColor">DeepPink</Color>
-            <x:Int32 x:Key="styledButtonCornerRadius">15</x:Int32>
+            <x:String x:Key="styledFontShort"/>
+            <x:String x:Key="styledFontLong"/>
+            <Color x:Key="styledTextColor"/>
+            <Color x:Key="styledPlaceholderColor"/>
+            <Color x:Key="styledNavBarColor"/>
+            <Color x:Key="styledNavBarTextColor"/>
+            <Color x:Key="styledPageBackgroundColor"/>
+            <Color x:Key="styledButtonBackgroundColor"/>
+            <Color x:Key="styledButtonTextColor"/>
+            <x:Int32 x:Key="styledButtonCornerRadius"/>
             <Style TargetType="Label">
                 <Setter Property="TextColor"
                         Value="{DynamicResource styledTextColor}"/>
@@ -62,7 +58,7 @@
             </Style>
             <Style TargetType="DatePicker">
                 <Setter Property="TextColor"
-                        Value="{DynamicResource styledTextColor}"/> <!-- doesn't seem to work -->
+                        Value="{DynamicResource styledTextColor}"/>
                 <Setter Property="BackgroundColor"
                         Value="{DynamicResource styledPageBackgroundColor}"/>
             </Style>

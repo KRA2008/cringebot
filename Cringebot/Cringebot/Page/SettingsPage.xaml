@@ -16,7 +16,8 @@
                 <TableSection Title="Theme">
                     <ViewCell>
                         <ViewCell.View>
-                            <StackLayout Padding="15">
+                            <StackLayout Padding="15"
+                                         Spacing="0">
                                 <!-- would be nice to use xlabs repeater view here but something's f'd with the .net standard setup and package management -->
                                 <Button Text="{Binding ThemeNames[0]}"
                                             Command="{Binding SetTheme}"
@@ -27,6 +28,9 @@
                                 <Button Text="{Binding ThemeNames[2]}"
                                         Command="{Binding SetTheme}"
                                         CommandParameter="{Binding ThemeNames[2]}"/>
+                                <Button Text="{Binding ThemeNames[3]}"
+                                        Command="{Binding SetTheme}"
+                                        CommandParameter="{Binding ThemeNames[3]}"/>
                             </StackLayout>
                         </ViewCell.View>
                     </ViewCell>

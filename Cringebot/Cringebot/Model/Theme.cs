@@ -5,9 +5,7 @@ namespace Cringebot.Model
     public class Theme
     {
         public string Name { get; set; }
-        public string AndroidFontLong { get; set; }
-        public string AndroidFontShort { get; set; }
-        public string iOSFont { get; set; }
+        public string Font { get; set; }
         public Color TextColor { get; set; }
         public Color PlaceholderColor { get; set; }
         public Color NavBarColor { get; set; }

@@ -29,13 +29,13 @@ namespace Cringebot
 
         protected override void OnStart()
         {
-            _themeService.ApplyTheme(_dataStore.LoadOrDefault(StorageWrapper.THEME_STORE_KEY,""));
+            _themeService.ApplyTheme(_dataStore.LoadOrDefault(StorageWrapper.THEME_STORE_KEY, ""));
         }
 
         protected override void OnSleep()
         {
             _mainViewModel.Save();
-            _dataStore.Save(StorageWrapper.THEME_STORE_KEY,_themeService.GetCurrentThemeName());
+            _dataStore.Save(StorageWrapper.THEME_STORE_KEY, _themeService.GetCurrentThemeName());
         }
 
         protected override void OnResume()

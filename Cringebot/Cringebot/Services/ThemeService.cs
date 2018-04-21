@@ -19,7 +19,7 @@ namespace Cringebot.Services
 
         private readonly IDeviceWrapper _deviceWrapper;
         private readonly IEnumerable<Theme> _themes;
-        private string _currentThemeName;
+        private static string _currentThemeName; // I have this registered as singleton but it appears to be instantiating multiple times anyway
 
         public ThemeService(IDeviceWrapper deviceWrapper)
         {
@@ -29,9 +29,7 @@ namespace Cringebot.Services
                 new Theme
                 {
                     Name = "Cringe",
-                    AndroidFontLong = "Comic Sans MS.ttf#Comic Sans MS",
-                    AndroidFontShort = "Comic Sans MS.ttf",
-                    iOSFont = "Comic Sans MS",
+                    Font = "Comic Sans MS",
                     TextColor = Color.Black,
                     PlaceholderColor = Color.DimGray,
                     NavBarColor = Color.Red,
@@ -39,26 +37,46 @@ namespace Cringebot.Services
                     PageBackgroundColor = Color.Turquoise,
                     ButtonBackgroundColor = Color.Yellow,
                     ButtonTextColor = Color.DeepPink,
-                    ButtonCornerRadius = 15
-                },
-                new Theme
-                {
-                    Name = "Mac & Cheese",
-                    iOSFont = "SBC Macaroni Regular",
-                    AndroidFontLong = "SBC Macaroni Regular.ttf#SBC Macaroni Regular",
-                    AndroidFontShort = "SBC Macaroni Regular.ttf",
-                    TextColor = Color.Orange,
-                    ButtonTextColor = Color.Orange,
-                    PageBackgroundColor = Color.Yellow,
-                    ButtonBackgroundColor = Color.OrangeRed
+                    ButtonCornerRadius = 10
                 },
                 new Theme
                 {
                     Name = "Goth",
+                    Font = "Plain Black",
+                    TextColor = Color.White,
+                    ButtonTextColor = Color.Red,
+                    PageBackgroundColor = Color.Black,
+                    ButtonBackgroundColor = Color.White,
+                    PlaceholderColor = Color.Red,
+                    NavBarColor = Color.DarkRed,
+                    NavBarTextColor = Color.Black,
+                    ButtonCornerRadius = 0
+                },
+                new Theme
+                {
+                    Name = "Emo",
+                    Font = "Emo",
                     TextColor = Color.DarkRed,
                     ButtonTextColor = Color.DarkRed,
                     PageBackgroundColor = Color.Black,
-                    ButtonBackgroundColor = Color.DimGray
+                    ButtonBackgroundColor = Color.White,
+                    PlaceholderColor = Color.Red,
+                    NavBarColor = Color.DarkRed,
+                    NavBarTextColor = Color.Black,
+                    ButtonCornerRadius = 0
+                },
+                new Theme
+                {
+                    Name = "Mac & Cheese",
+                    Font = "SBC Macaroni Regular",
+                    TextColor = Color.OrangeRed,
+                    ButtonTextColor = Color.Yellow,
+                    PageBackgroundColor = Color.Yellow,
+                    ButtonBackgroundColor = Color.Orange,
+                    NavBarColor = Color.Orange,
+                    NavBarTextColor = Color.Yellow,
+                    PlaceholderColor = Color.Orange,
+                    ButtonCornerRadius = 25
                 }
             };
         }
@@ -71,11 +89,15 @@ namespace Cringebot.Services
             var isiOS = _deviceWrapper.RuntimePlatform() == Device.iOS;
 
             Application.Current.Resources["styledTextColor"] = targetTheme.TextColor;
-            Application.Current.Resources["styledButtonTextColor"] = targetTheme.ButtonTextColor;
             Application.Current.Resources["styledPageBackgroundColor"] = targetTheme.PageBackgroundColor;
+            Application.Current.Resources["styledButtonCornerRadius"] = targetTheme.ButtonCornerRadius;
             Application.Current.Resources["styledButtonBackgroundColor"] = targetTheme.ButtonBackgroundColor;
-            Application.Current.Resources["styledFontShort"] = isiOS ? targetTheme.iOSFont : targetTheme.AndroidFontShort;
-            Application.Current.Resources["styledFontLong"] = isiOS ? targetTheme.iOSFont : targetTheme.AndroidFontLong;
+            Application.Current.Resources["styledButtonTextColor"] = targetTheme.ButtonTextColor;
+            Application.Current.Resources["styledPlaceholderColor"] = targetTheme.PlaceholderColor;
+            Application.Current.Resources["styledNavBarColor"] = targetTheme.NavBarColor;
+            Application.Current.Resources["styledNavBarTextColor"] = targetTheme.NavBarTextColor;
+            Application.Current.Resources["styledFontShort"] = isiOS ? targetTheme.Font : targetTheme.Font+".ttf";
+            Application.Current.Resources["styledFontLong"] = isiOS ? targetTheme.Font : targetTheme.Font + ".ttf#" + targetTheme.Font;
 
             MessagingCenter.Send(this, THEME_SET_MESSAGE);
         }

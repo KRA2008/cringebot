@@ -9,6 +9,8 @@ namespace Cringebot
     public class Bootstrapper
     {
         // ReSharper disable MemberCanBeMadeStatic.Global - if static, no instantiation, if no instantiation, no registrations!
+        private FreshNavigationContainer _navContainer;
+
         public App ResolveApp()
         {
             return FreshIOC.Container.Resolve<App>();
@@ -25,11 +27,16 @@ namespace Cringebot
         
         public Xamarin.Forms.Page GetStartingPage()
         {
-            return new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<MainViewModel>())
-            {
-                BarBackgroundColor = (Color)Application.Current.Resources["styledNavBarColor"],
-                BarTextColor = (Color)Application.Current.Resources["styledNavBarTextColor"]
-            };
+            MessagingCenter.Subscribe<ThemeService>(this, ThemeService.THEME_SET_MESSAGE, ApplyTheme);
+            _navContainer = new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<MainViewModel>());
+            ApplyTheme(null);
+            return _navContainer;
+        }
+
+        private void ApplyTheme(object obj)
+        {
+            _navContainer.BarBackgroundColor = (Color) Application.Current.Resources["styledNavBarColor"];
+            _navContainer.BarTextColor = (Color) Application.Current.Resources["styledNavBarTextColor"];
         }
         // ReSharper restore MemberCanBeMadeStatic.Global
     }

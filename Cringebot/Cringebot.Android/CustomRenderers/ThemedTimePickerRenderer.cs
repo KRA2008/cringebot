@@ -27,19 +27,19 @@ namespace Cringebot.Droid.CustomRenderers
             if (Control != null && !_initialized)
             {
                 ApplyTheme(null);
-                MessagingCenter.Subscribe<SettingsViewModel>(this, ThemeService.THEME_SET_MESSAGE, ApplyTheme);
+                MessagingCenter.Subscribe<ThemeService>(this, ThemeService.THEME_SET_MESSAGE, ApplyTheme);
                 MessagingCenter.Subscribe<SettingsViewModel>(this, SettingsViewModel.DESTROY_SETTINGS_MESSAGE, Unsubscribe);
                 _initialized = true;
             }
         }
 
-        private void Unsubscribe(SettingsViewModel vm)
+        private void Unsubscribe(object obj)
         {
-            MessagingCenter.Unsubscribe<SettingsViewModel>(this, ThemeService.THEME_SET_MESSAGE);
+            MessagingCenter.Unsubscribe<ThemeService>(this, ThemeService.THEME_SET_MESSAGE);
             MessagingCenter.Unsubscribe<SettingsViewModel>(this, SettingsViewModel.DESTROY_SETTINGS_MESSAGE);
         }
 
-        private void ApplyTheme(SettingsViewModel vm)
+        private void ApplyTheme(object obj)
         {
             var font = Application.Current.Resources["styledFontShort"];
             if (font != null)
