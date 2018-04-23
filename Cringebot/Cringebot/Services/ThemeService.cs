@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Cringebot.Model;
 using Cringebot.Wrappers;
@@ -19,10 +20,11 @@ namespace Cringebot.Services
 
         private readonly IDeviceWrapper _deviceWrapper;
         private readonly IEnumerable<Theme> _themes;
-        private static string _currentThemeName; // I have this registered as singleton but it appears to be instantiating multiple times anyway
+        private string _currentThemeName;
 
         public ThemeService(IDeviceWrapper deviceWrapper)
         {
+            Debug.WriteLine("XXX instantiated");
             _deviceWrapper = deviceWrapper;
             _themes = new[]
             {

@@ -17,6 +17,13 @@
                         Value="{DynamicResource styledTextColor}"/>
                 <Setter Property="FontFamily"
                         Value="{DynamicResource styledFontLong}"/>
+                <Setter Property="FontSize"
+                        Value="16"/>
+            </Style>
+            <Style TargetType="Label" 
+                   x:Key="header">
+                <Setter Property="FontSize"
+                        Value="18"/>
             </Style>
             <Style TargetType="Entry">
                 <Setter Property="TextColor"

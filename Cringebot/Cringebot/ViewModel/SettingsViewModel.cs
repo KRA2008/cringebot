@@ -16,9 +16,6 @@ namespace Cringebot.ViewModel
 
         private const double RAPID_FIRE_TIME_HOURS = 0.005;
         private const double MAX_HOURS = 999;
-
-        private readonly INotificationManager _notificationManager;
-        private readonly IThemeService _themeService;
         public Settings Settings { get; set; }
 
         public IList<double> MaxHoursChoices { get; set; }
@@ -34,6 +31,8 @@ namespace Cringebot.ViewModel
                                                        " and " + MaxHours + " hours in length.";
 
         public Command SetTheme { get; set; }
+        private readonly INotificationManager _notificationManager;
+        private readonly IThemeService _themeService;
 
         public SettingsViewModel(INotificationManager notificationManager, IThemeService themeService)
         {

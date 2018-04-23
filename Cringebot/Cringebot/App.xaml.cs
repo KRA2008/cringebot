@@ -13,12 +13,11 @@ namespace Cringebot
         private readonly IAppDataStore _dataStore;
         private readonly MainViewModel _mainViewModel;
 
-        public App(IThemeService themeService, IAppDataStore dataStore)
+        public App(IBootstrapper bootstrapper, IThemeService themeService, IAppDataStore dataStore)
         {
+            InitializeComponent();
             _themeService = themeService;
             _dataStore = dataStore;
-            InitializeComponent();
-            var bootstrapper = new Bootstrapper();
 
             var startingPage = bootstrapper.GetStartingPage();
 
