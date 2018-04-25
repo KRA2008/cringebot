@@ -31,7 +31,8 @@ namespace Cringebot.Services
                 new Theme
                 {
                     Name = "Cringe",
-                    Font = "Comic Sans MS",
+                    FontName = "ComicSansMS",
+                    FontFileName = "Comic Sans MS.ttf",
                     TextColor = Color.Black,
                     PlaceholderColor = Color.DimGray,
                     NavBarColor = Color.Red,
@@ -44,7 +45,8 @@ namespace Cringebot.Services
                 new Theme
                 {
                     Name = "Goth",
-                    Font = "Plain Black",
+                    FontName = "PlainBlack-Normal",
+                    FontFileName = "Plain Black.ttf",
                     TextColor = Color.White,
                     ButtonTextColor = Color.Red,
                     PageBackgroundColor = Color.Black,
@@ -57,7 +59,8 @@ namespace Cringebot.Services
                 new Theme
                 {
                     Name = "Emo",
-                    Font = "Emo",
+                    FontName = "Emo",
+                    FontFileName = "Emo.ttf",
                     TextColor = Color.DarkRed,
                     ButtonTextColor = Color.DarkRed,
                     PageBackgroundColor = Color.Black,
@@ -70,7 +73,8 @@ namespace Cringebot.Services
                 new Theme
                 {
                     Name = "Mac & Cheese",
-                    Font = "SBC Macaroni Regular",
+                    FontName = "SBCMacaroni",
+                    FontFileName = "SBC Macaroni Regular.ttf",
                     TextColor = Color.OrangeRed,
                     ButtonTextColor = Color.Yellow,
                     PageBackgroundColor = Color.Yellow,
@@ -98,8 +102,8 @@ namespace Cringebot.Services
             Application.Current.Resources["styledPlaceholderColor"] = targetTheme.PlaceholderColor;
             Application.Current.Resources["styledNavBarColor"] = targetTheme.NavBarColor;
             Application.Current.Resources["styledNavBarTextColor"] = targetTheme.NavBarTextColor;
-            Application.Current.Resources["styledFontShort"] = isiOS ? targetTheme.Font : targetTheme.Font+".ttf";
-            Application.Current.Resources["styledFontLong"] = isiOS ? targetTheme.Font : targetTheme.Font + ".ttf#" + targetTheme.Font;
+            Application.Current.Resources["styledFontShort"] = isiOS ? targetTheme.FontName : targetTheme.FontFileName;
+            Application.Current.Resources["styledFontLong"] = isiOS ? targetTheme.FontName : targetTheme.FontFileName + "#" + targetTheme.FontName;
 
             MessagingCenter.Send(this, THEME_SET_MESSAGE);
         }

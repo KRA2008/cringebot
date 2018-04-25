@@ -161,6 +161,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomRenderers\ThemedNavBarRenderer.cs" />
     <Compile Include="CustomRenderers\ThemedPickerRenderer.cs" />
     <Compile Include="CustomRenderers\ThemedTimePickerRenderer.cs" />
     <Compile Include="MainActivity.cs" />
@@ -173,10 +174,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <AndroidAsset Include="Assets\Comic Sans MS.ttf" />
-    <AndroidAsset Include="Assets\SBC Macaroni Regular.ttf" />
-    <AndroidAsset Include="Assets\Plain Black.ttf" />
-    <AndroidAsset Include="Assets\Emo.ttf" />
+    <AndroidAsset Include="Assets\Comic Sans MS.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="Assets\SBC Macaroni Regular.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="Assets\Plain Black.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="Assets\Emo.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AndroidAsset>
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />

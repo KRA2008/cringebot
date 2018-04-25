@@ -7,7 +7,6 @@ using UIKit;
 using Cringebot.iOS;
 using Cringebot.Services;
 using System.Linq;
-using Cringebot.ViewModel;
 using UserNotifications;
 using Xamarin.Forms;
 
@@ -41,33 +40,31 @@ namespace Cringebot.iOS
             var bootstrapper = new Bootstrapper();
             LoadApplication(bootstrapper.ResolveApp());
 
-            MessagingCenter.Subscribe<ThemeService>(this, ThemeService.THEME_SET_MESSAGE, ApplyTheme);
-
             UNUserNotificationCenter.Current.Delegate = new NotificationDelegate();
 
             return base.FinishedLaunching(app, options);
         }
 
-        private static void ApplyTheme(object obj)
-        {
-            var font = Xamarin.Forms.Application.Current.Resources["styledFontShort"];
-            if (font != null)
-            {
-                UINavigationBar.Appearance.SetTitleTextAttributes(new UITextAttributes
-                {
-                    Font = UIFont.FromName((string)font, 26)
-                });
-            }
-            //var backgroundColor = Xamarin.Forms.Application.Current.Resources["styledNavBarColor"];
-            //if (backgroundColor != null)
-            //{
-            //    var color = (Color) backgroundColor;
-            //    UINavigationBar.Appearance.BackgroundColor = UIColor.FromRGB((int) (color.R * 255), (int) (color.G * 255),
-            //        (int) (color.B * 255));
-            //    UINavigationBar.Appearance.BarTintColor = UIColor.FromRGB((int)(color.R * 255), (int)(color.G * 255),
-            //        (int)(color.B * 255));
-            //}
-        }
+        //private static void ApplyTheme(object obj)
+        //{
+        //    var font = Xamarin.Forms.Application.Current.Resources["styledFontShort"];
+        //    var textColor = Xamarin.Forms.Application.Current.Resources["styledNavBarColor"];
+        //    if (font != null && textColor != null)
+        //    {
+        //        var fontFromName = UIFont.FromName((string)font, 26);
+        //        if (fontFromName != null)
+        //        {
+        //            var currentAttributes = UINavigationBar.Appearance.GetTitleTextAttributes();
+        //            currentAttributes.Font = fontFromName;
+        //            var color = (Color)textColor;
+        //            currentAttributes.TextColor = UIColor.FromRGB((int)(color.R * 255), (int)(color.G * 255), (int)(color.B * 255));
+        //            Device.BeginInvokeOnMainThread(() =>
+        //            {
+        //                UINavigationBar.Appearance.SetTitleTextAttributes(currentAttributes);
+        //            });
+        //        }
+        //    }
+        //}
 
         public override void ApplicationSignificantTimeChange(UIApplication application)
         {

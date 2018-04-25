@@ -51,8 +51,9 @@
   <key>UIAppFonts</key>
   <array>
     <string>Fonts/Comic Sans MS.ttf</string>
-    <string>Fonts/SBC Macaroni Regular.ttf</string>
     <string>Fonts/Emo.ttf</string>
+    <string>Fonts/Plain Black.ttf</string>
+    <string>Fonts/SBC Macaroni Regular.ttf</string>
   </array>
 </dict>
 </plist>

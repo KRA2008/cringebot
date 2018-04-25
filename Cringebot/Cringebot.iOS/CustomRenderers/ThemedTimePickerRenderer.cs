@@ -42,13 +42,13 @@ namespace Cringebot.iOS.CustomRenderers
             if (backgroundColor != null)
             {
                 var color = (Color) backgroundColor;
-                Control.BackgroundColor = UIColor.FromRGB((int)(color.R * 255), (int)(color.G * 255), (int)(color.B * 255));
+                Control.BackgroundColor = color.ToUIColor();
             }
             var textColor = Xamarin.Forms.Application.Current.Resources["styledTextColor"];
             if (textColor != null)
             {
                 var color = (Color) textColor;
-                Control.TextColor = UIColor.FromRGB((int)(color.R * 255), (int)(color.G * 255), (int)(color.B * 255));
+                Control.TextColor = color.ToUIColor();
             }
         }
     }
