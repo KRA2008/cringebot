@@ -24,10 +24,15 @@ namespace Cringebot.iOS.CustomRenderers
 
         private static void ApplyTheme(object obj)
         {
+            UINavigationBar.Appearance.SetTitleTextAttributes(new UITextAttributes
+            {
+                Font = null
+            });
+
             var fontString = (string)Xamarin.Forms.Application.Current.Resources["styledFontShort"];
             var att = new UITextAttributes
             {
-                Font = UIFont.FromName(fontString, 24),
+                Font = UIFont.FromName(fontString, 24)
             };
             UINavigationBar.Appearance.SetTitleTextAttributes(att);
 

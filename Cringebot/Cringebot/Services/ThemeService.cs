@@ -24,12 +24,12 @@ namespace Cringebot.Services
 
         public ThemeService(IDeviceWrapper deviceWrapper)
         {
-            Debug.WriteLine("XXX instantiated");
             _deviceWrapper = deviceWrapper;
             _themes = new[]
             {
                 new Theme
                 {
+                    //TODO: add text sizes because different fonts have different needs
                     Name = "Cringe",
                     FontName = "ComicSansMS",
                     FontFileName = "Comic Sans MS.ttf",
@@ -59,8 +59,8 @@ namespace Cringebot.Services
                 new Theme
                 {
                     Name = "Emo",
-                    FontName = "Emo",
-                    FontFileName = "Emo.ttf",
+                    FontName = "rise up",
+                    FontFileName = "riseup.ttf",
                     TextColor = Color.DarkRed,
                     ButtonTextColor = Color.DarkRed,
                     PageBackgroundColor = Color.Black,
