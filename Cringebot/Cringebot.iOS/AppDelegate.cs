@@ -45,27 +45,6 @@ namespace Cringebot.iOS
             return base.FinishedLaunching(app, options);
         }
 
-        //private static void ApplyTheme(object obj)
-        //{
-        //    var font = Xamarin.Forms.Application.Current.Resources["styledFontShort"];
-        //    var textColor = Xamarin.Forms.Application.Current.Resources["styledNavBarColor"];
-        //    if (font != null && textColor != null)
-        //    {
-        //        var fontFromName = UIFont.FromName((string)font, 26);
-        //        if (fontFromName != null)
-        //        {
-        //            var currentAttributes = UINavigationBar.Appearance.GetTitleTextAttributes();
-        //            currentAttributes.Font = fontFromName;
-        //            var color = (Color)textColor;
-        //            currentAttributes.TextColor = UIColor.FromRGB((int)(color.R * 255), (int)(color.G * 255), (int)(color.B * 255));
-        //            Device.BeginInvokeOnMainThread(() =>
-        //            {
-        //                UINavigationBar.Appearance.SetTitleTextAttributes(currentAttributes);
-        //            });
-        //        }
-        //    }
-        //}
-
         public override void ApplicationSignificantTimeChange(UIApplication application)
         {
             if (_notificationsOn)

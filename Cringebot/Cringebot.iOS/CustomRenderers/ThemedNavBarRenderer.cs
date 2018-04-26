@@ -1,4 +1,6 @@
-﻿using Cringebot.iOS.CustomRenderers;
+﻿using System.Diagnostics;
+using System.Threading.Tasks;
+using Cringebot.iOS.CustomRenderers;
 using Cringebot.Services;
 using UIKit;
 using Xamarin.Forms;
@@ -22,19 +24,26 @@ namespace Cringebot.iOS.CustomRenderers
             }
         }
 
-        private static void ApplyTheme(object obj)
+        private void ApplyTheme(object obj)
         {
-            UINavigationBar.Appearance.SetTitleTextAttributes(new UITextAttributes
-            {
-                Font = null
-            });
-
+            //foreach (var familyName in UIFont.FamilyNames)
+            //{
+            //    Debug.WriteLine("### Family name: "+familyName);
+            //    foreach (var font in UIFont.FontNamesForFamilyName(familyName))
+            //    {
+            //        Debug.WriteLine("### Font name: "+font);
+            //    }
+            //}
+            
             var fontString = (string)Xamarin.Forms.Application.Current.Resources["styledFontShort"];
             var att = new UITextAttributes
             {
                 Font = UIFont.FromName(fontString, 24)
             };
-            UINavigationBar.Appearance.SetTitleTextAttributes(att);
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                UINavigationBar.Appearance.SetTitleTextAttributes(att);
+            });
 
             //var textColor = Xamarin.Forms.Application.Current.Resources["styledNavBarTextColor"];
             //var color = (Color)textColor;
