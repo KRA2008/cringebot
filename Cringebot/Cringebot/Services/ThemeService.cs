@@ -37,6 +37,7 @@ namespace Cringebot.Services
                     FontName = "ComicSansMS",
                     FontFileName = "Comic Sans MS.ttf",
                     TextColor = Color.SandyBrown,
+                    HighlightTextColor = Color.Yellow,
                     PlaceholderColor = Color.DeepPink,
                     NavBarColor = Color.Red,
                     NavBarTextColor = Color.Green,
@@ -55,6 +56,7 @@ namespace Cringebot.Services
                     FontName = "PlainBlack-Normal",
                     FontFileName = "Plain Black.ttf",
                     TextColor = Color.White,
+                    HighlightTextColor = Color.White,
                     ButtonTextColor = Color.Red,
                     PageBackgroundImageName = "",
                     PageBackgroundColor = Color.Black,
@@ -73,6 +75,7 @@ namespace Cringebot.Services
                     FontName = "SBCMacaroni",
                     FontFileName = "SBC Macaroni Regular.ttf",
                     TextColor = Color.OrangeRed,
+                    HighlightTextColor = Color.OrangeRed,
                     ButtonTextColor = Color.Yellow,
                     PageBackgroundColor = Color.Yellow,
                     PageBackgroundImageName = "",
@@ -91,6 +94,7 @@ namespace Cringebot.Services
                     FontName = "rise up",
                     FontFileName = "riseup.ttf",
                     TextColor = Color.DarkRed,
+                    HighlightTextColor = Color.DarkRed,
                     ButtonTextColor = Color.DarkRed,
                     PageBackgroundImageName = "",
                     PageBackgroundColor = Color.Black,
@@ -127,6 +131,7 @@ namespace Cringebot.Services
                     FontName = "TimesNewRomanPSMT",
                     FontFileName = "times.ttf",
                     TextColor = Color.Blue,
+                    HighlightTextColor = Color.Blue,
                     ButtonTextColor = Color.White,
                     PageBackgroundImageName = "stripes",
                     PageBackgroundColor = Color.Transparent,
@@ -145,6 +150,7 @@ namespace Cringebot.Services
                     FontName = "Condiment-Regular",
                     FontFileName = "Condiment.ttf",
                     TextColor = Color.Yellow,
+                    HighlightTextColor = Color.Yellow,
                     ButtonTextColor = Color.GreenYellow,
                     PageBackgroundImageName = "", //TODO: make this a picture of beef
                     PageBackgroundColor = Color.SaddleBrown,
@@ -177,6 +183,7 @@ namespace Cringebot.Services
             var isRandom = name == "Random";
 
             Application.Current.Resources["styledTextColor"] = isRandom ? GetRandomColor() : targetTheme.TextColor;
+            Application.Current.Resources["styledHighlightTextColor"] = isRandom ? GetRandomColor() : targetTheme.HighlightTextColor;
             Application.Current.Resources["styledChartColors"] = new ChartColorCollection
             {
                 isRandom ? GetRandomColor() : targetTheme.TextColor

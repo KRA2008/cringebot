@@ -11,6 +11,7 @@
             <x:String x:Key="styledFontShort"/>
             <x:String x:Key="styledFontLong"/>
             <Color x:Key="styledTextColor"/>
+            <Color x:Key="styledHighlightTextColor"/>
             <Color x:Key="styledPlaceholderColor"/>
             <Color x:Key="styledNavBarColor"/>
             <Color x:Key="styledNavBarTextColor"/>
@@ -34,6 +35,11 @@
                    x:Key="header">
                 <Setter Property="FontSize"
                         Value="{DynamicResource largestTextSize}"/>
+            </Style>
+            <Style TargetType="Label"
+                   x:Key="highlightText">
+                <Setter Property="TextColor"
+                        Value="{DynamicResource styledHighlightTextColor}"/>
             </Style>
             <Style TargetType="Entry">
                 <Setter Property="TextColor"
