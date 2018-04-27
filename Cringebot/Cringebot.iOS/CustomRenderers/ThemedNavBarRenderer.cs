@@ -24,30 +24,31 @@ namespace Cringebot.iOS.CustomRenderers
             }
         }
 
-        private void ApplyTheme(object obj)
+        private static void ApplyTheme(object obj)
         {
             //foreach (var familyName in UIFont.FamilyNames)
             //{
-            //    Debug.WriteLine("### Family name: "+familyName);
-            //    foreach (var font in UIFont.FontNamesForFamilyName(familyName))
+            //    Debug.WriteLine("### Family name: " + familyName);
+            //    foreach (var fontName in UIFont.FontNamesForFamilyName(familyName))
             //    {
-            //        Debug.WriteLine("### Font name: "+font);
+            //        Debug.WriteLine("### Font name: " + fontName);
             //    }
             //}
-            
-            var fontString = (string)Xamarin.Forms.Application.Current.Resources["styledFontShort"];
+
+            var font = Xamarin.Forms.Application.Current.Resources["styledFontShort"];
+            var textColor = Xamarin.Forms.Application.Current.Resources["styledNavBarTextColor"];
+            var barColor = Xamarin.Forms.Application.Current.Resources["styledNavBarColor"];
             var att = new UITextAttributes
             {
-                Font = UIFont.FromName(fontString, 24)
+                TextShadowColor = ((Color)barColor).ToUIColor(),
+                TextColor = ((Color)textColor).ToUIColor(),
+                Font = UIFont.FromName((string)font, 24),
+                TextShadowOffset = new UIOffset()
             };
-            Device.BeginInvokeOnMainThread(() =>
-            {
-                UINavigationBar.Appearance.SetTitleTextAttributes(att);
-            });
 
-            //var textColor = Xamarin.Forms.Application.Current.Resources["styledNavBarTextColor"];
-            //var color = (Color)textColor;
-            //UINavigationBar.Appearance.TintColor = Color.White.ToUIColor();
+            UINavigationBar.Appearance.SetTitleTextAttributes(att);
+
+            AppDelegate.Bootstrapper.ApplyTheme(null);
         }
     }
 }

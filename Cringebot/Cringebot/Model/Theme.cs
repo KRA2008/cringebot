@@ -12,8 +12,12 @@ namespace Cringebot.Model
         public Color NavBarColor { get; set; }
         public Color NavBarTextColor { get; set; }
         public Color PageBackgroundColor { get; set; }
+        public string PageBackgroundImageName { get; set; }
         public Color ButtonBackgroundColor { get; set; }
         public Color ButtonTextColor { get; set; }
         public int ButtonCornerRadius { get; set; }
+        public double SmallestTextSize { get; set; }
+        public double MediumestTextSize { get; set; }
+        public double LargestTextSize { get; set; }
     }
 }

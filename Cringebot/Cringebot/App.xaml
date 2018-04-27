@@ -1,5 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Application xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Cringebot.App" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" d1p1:Ignorable="d" xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006">
+<Application xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="Cringebot.App" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:sfChart="clr-namespace:Syncfusion.SfChart.XForms;assembly=Syncfusion.SfChart.XForms">
     <Application.Resources>
         <ResourceDictionary>
             <x:String x:Key="styledFontShort"/>
@@ -9,21 +15,25 @@
             <Color x:Key="styledNavBarColor"/>
             <Color x:Key="styledNavBarTextColor"/>
             <Color x:Key="styledPageBackgroundColor"/>
+            <x:String x:Key="styledPageBackgroundImageName"/>
             <Color x:Key="styledButtonBackgroundColor"/>
             <Color x:Key="styledButtonTextColor"/>
             <x:Int32 x:Key="styledButtonCornerRadius"/>
+            <x:Double x:Key="smallestTextSize"/>
+            <x:Double x:Key="mediumestTextSize"/>
+            <x:Double x:Key="largestTextSize"/>
             <Style TargetType="Label">
                 <Setter Property="TextColor"
                         Value="{DynamicResource styledTextColor}"/>
                 <Setter Property="FontFamily"
                         Value="{DynamicResource styledFontLong}"/>
                 <Setter Property="FontSize"
-                        Value="16"/>
+                        Value="{DynamicResource mediumestTextSize}"/>
             </Style>
             <Style TargetType="Label" 
                    x:Key="header">
                 <Setter Property="FontSize"
-                        Value="18"/>
+                        Value="{DynamicResource largestTextSize}"/>
             </Style>
             <Style TargetType="Entry">
                 <Setter Property="TextColor"
@@ -34,6 +44,8 @@
                         Value="{DynamicResource styledPageBackgroundColor}"/>
                 <Setter Property="PlaceholderColor"
                         Value="{DynamicResource styledPlaceholderColor}"/>
+                <Setter Property="FontSize"
+                        Value="{DynamicResource mediumestTextSize}"/>
             </Style>
             <Style TargetType="Button">
                 <Setter Property="TextColor"
@@ -46,11 +58,15 @@
                         Value="{DynamicResource styledButtonCornerRadius}"/>
                 <Setter Property="FontFamily"
                         Value="{DynamicResource styledFontLong}"/>
+                <Setter Property="FontSize"
+                        Value="{DynamicResource mediumestTextSize}"/>
             </Style>
             <Style TargetType="ContentPage"
                    ApplyToDerivedTypes="True">
                 <Setter Property="BackgroundColor"
                         Value="{DynamicResource styledPageBackgroundColor}"/>
+                <Setter Property="BackgroundImage"
+                        Value="{DynamicResource styledPageBackgroundImageName}"/>
             </Style>
             <Style TargetType="ListView"
                    ApplyToDerivedTypes="True">
@@ -69,10 +85,7 @@
                 <Setter Property="BackgroundColor"
                         Value="{DynamicResource styledPageBackgroundColor}"/>
             </Style>
-            <Style TargetType="TableView">
-                <Setter Property="BackgroundColor"
-                        Value="{DynamicResource styledPageBackgroundColor}"/>
-            </Style>
+            <sfChart:ChartColorCollection x:Key="styledChartColors"/>
         </ResourceDictionary>
     </Application.Resources>
-</Application> 
+</Application>    

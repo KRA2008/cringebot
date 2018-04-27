@@ -33,13 +33,43 @@
                              VerticalOptions="FillAndExpand"
                              Margin="5,15,15,0"
                              BackgroundColor="{DynamicResource styledPageBackgroundColor}">
+                <sfChart:SfChart.ColorModel>
+                    <sfChart:ChartColorModel Palette="Custom"
+                                             CustomBrushes="{StaticResource styledChartColors}"/>
+                </sfChart:SfChart.ColorModel>
                 <sfChart:SfChart.PrimaryAxis>
-                    <sfChart:CategoryAxis LabelRotationAngle="45"/>
+                    <sfChart:CategoryAxis LabelRotationAngle="45">
+                        <sfChart:CategoryAxis.AxisLineStyle>
+                            <sfChart:ChartLineStyle StrokeColor="{StaticResource styledTextColor}"/>
+                        </sfChart:CategoryAxis.AxisLineStyle>
+                        <sfChart:CategoryAxis.MajorTickStyle>
+                            <sfChart:ChartAxisTickStyle StrokeColor="{StaticResource styledTextColor}"/>
+                        </sfChart:CategoryAxis.MajorTickStyle>
+                        <sfChart:CategoryAxis.LabelStyle>
+                            <sfChart:ChartAxisLabelStyle TextColor="{StaticResource styledTextColor}"/>
+                        </sfChart:CategoryAxis.LabelStyle>
+                        <sfChart:CategoryAxis.ShowMajorGridLines>
+                            false
+                        </sfChart:CategoryAxis.ShowMajorGridLines>
+                    </sfChart:CategoryAxis>
                 </sfChart:SfChart.PrimaryAxis>
                 <sfChart:SfChart.SecondaryAxis>
                     <sfChart:NumericalAxis>
+                        <sfChart:NumericalAxis.MajorTickStyle>
+                            <sfChart:ChartAxisTickStyle StrokeColor="{StaticResource styledTextColor}"/>
+                        </sfChart:NumericalAxis.MajorTickStyle>
+                        <sfChart:NumericalAxis.MajorGridLineStyle>
+                            <sfChart:ChartLineStyle StrokeColor="{StaticResource styledTextColor}"/>
+                        </sfChart:NumericalAxis.MajorGridLineStyle>
+                        <sfChart:NumericalAxis.AxisLineStyle>
+                            <sfChart:ChartLineStyle StrokeColor="{StaticResource styledTextColor}"/>
+                        </sfChart:NumericalAxis.AxisLineStyle>
+                        <sfChart:NumericalAxis.LabelStyle>
+                            <sfChart:ChartAxisLabelStyle TextColor="{StaticResource styledTextColor}"/>
+                        </sfChart:NumericalAxis.LabelStyle>
                         <sfChart:NumericalAxis.Title>
-                            <sfChart:ChartAxisTitle Text="Occurrences"/>
+                            <sfChart:ChartAxisTitle Text="Occurrences"
+                                                    TextColor="{StaticResource styledTextColor}"/>
                         </sfChart:NumericalAxis.Title>
                     </sfChart:NumericalAxis>
                 </sfChart:SfChart.SecondaryAxis>

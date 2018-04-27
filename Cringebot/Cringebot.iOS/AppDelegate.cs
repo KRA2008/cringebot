@@ -19,6 +19,7 @@ namespace Cringebot.iOS
     [Register("AppDelegate")]
     public class AppDelegate : Xamarin.Forms.Platform.iOS.FormsApplicationDelegate, INotificationManager
     {
+        public static Bootstrapper Bootstrapper;
         private static IEnumerable<Memory> _memories;
         private static Settings _settings;
         private static bool _notificationsOn;
@@ -37,8 +38,8 @@ namespace Cringebot.iOS
             Corcav.Behaviors.Infrastructure.Init();
             Syncfusion.SfChart.XForms.iOS.Renderers.SfChartRenderer.Init();
 
-            var bootstrapper = new Bootstrapper();
-            LoadApplication(bootstrapper.ResolveApp());
+            Bootstrapper = new Bootstrapper();
+            LoadApplication(Bootstrapper.ResolveApp());
 
             UNUserNotificationCenter.Current.Delegate = new NotificationDelegate();
 

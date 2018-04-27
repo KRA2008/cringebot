@@ -101,7 +101,13 @@
     <BundleResource Include="Resources\Fonts\Emo.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </BundleResource>
-    <BundleResource Include="Resources\Fonts\riseup.ttf" />
+    <BundleResource Include="Resources\Fonts\riseup.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Fonts\times.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Fonts\Condiment.ttf" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default-568h%402x.png" />
@@ -210,6 +216,9 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\list%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\stripes.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

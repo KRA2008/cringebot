@@ -33,13 +33,16 @@ namespace Cringebot
         
         public Xamarin.Forms.Page GetStartingPage()
         {
-            MessagingCenter.Subscribe<ThemeService>(this, ThemeService.THEME_SET_MESSAGE, ApplyTheme);
             _navContainer = new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<MainViewModel>());
+            if (Device.RuntimePlatform == Device.Android)
+            {
+                MessagingCenter.Subscribe<ThemeService>(this, ThemeService.THEME_SET_MESSAGE, ApplyTheme);
+            }
             ApplyTheme(null);
             return _navContainer;
         }
 
-        private void ApplyTheme(object obj)
+        public void ApplyTheme(object obj)
         {
             _navContainer.BarBackgroundColor = (Color) Application.Current.Resources["styledNavBarColor"];
             _navContainer.BarTextColor = (Color) Application.Current.Resources["styledNavBarTextColor"];
