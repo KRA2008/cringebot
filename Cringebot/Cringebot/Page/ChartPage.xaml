@@ -10,8 +10,15 @@
                             xmlns:vc="clr-namespace:Cringebot.Page.ValueConverters;assembly=Cringebot"
                             d:DataContext="{d:DesignInstance Type=viewModel:ChartViewModel, IsDesignTimeCreatable=False}"
                             x:Class="Cringebot.Page.ChartPage"
-                            BackgroundColor="White"
                             Title="{Binding Title}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Button">
+                <Setter Property="FontSize"
+                        Value="12"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.ToolbarItems>
         <ToolbarItem Icon="list"
                      Command="{Binding ViewStatsCommand}"/>
@@ -20,17 +27,49 @@
         <StackLayout Padding="0"
                      Spacing="5">
             <Label Text="No data. Please add data."
-                   IsVisible="{Binding IsDataPresent, Converter={vc:NotConverter}}"/>
+                   IsVisible="{Binding IsDataPresent, Converter={vc:NotConverter}}"
+                   Margin="15"/>
             <sfChart:SfChart HorizontalOptions="FillAndExpand"
                              VerticalOptions="FillAndExpand"
-                             Margin="5,15,15,0">
+                             Margin="5,15,15,0"
+                             BackgroundColor="{DynamicResource styledPageBackgroundColor}">
+                <sfChart:SfChart.ColorModel>
+                    <sfChart:ChartColorModel Palette="Custom"
+                                             CustomBrushes="{StaticResource styledChartColors}"/>
+                </sfChart:SfChart.ColorModel>
                 <sfChart:SfChart.PrimaryAxis>
-                    <sfChart:CategoryAxis LabelRotationAngle="45"/>
+                    <sfChart:CategoryAxis LabelRotationAngle="45">
+                        <sfChart:CategoryAxis.AxisLineStyle>
+                            <sfChart:ChartLineStyle StrokeColor="{StaticResource styledTextColor}"/>
+                        </sfChart:CategoryAxis.AxisLineStyle>
+                        <sfChart:CategoryAxis.MajorTickStyle>
+                            <sfChart:ChartAxisTickStyle StrokeColor="{StaticResource styledTextColor}"/>
+                        </sfChart:CategoryAxis.MajorTickStyle>
+                        <sfChart:CategoryAxis.LabelStyle>
+                            <sfChart:ChartAxisLabelStyle TextColor="{StaticResource styledTextColor}"/>
+                        </sfChart:CategoryAxis.LabelStyle>
+                        <sfChart:CategoryAxis.ShowMajorGridLines>
+                            false
+                        </sfChart:CategoryAxis.ShowMajorGridLines>
+                    </sfChart:CategoryAxis>
                 </sfChart:SfChart.PrimaryAxis>
                 <sfChart:SfChart.SecondaryAxis>
                     <sfChart:NumericalAxis>
+                        <sfChart:NumericalAxis.MajorTickStyle>
+                            <sfChart:ChartAxisTickStyle StrokeColor="{StaticResource styledTextColor}"/>
+                        </sfChart:NumericalAxis.MajorTickStyle>
+                        <sfChart:NumericalAxis.MajorGridLineStyle>
+                            <sfChart:ChartLineStyle StrokeColor="{StaticResource styledTextColor}"/>
+                        </sfChart:NumericalAxis.MajorGridLineStyle>
+                        <sfChart:NumericalAxis.AxisLineStyle>
+                            <sfChart:ChartLineStyle StrokeColor="{StaticResource styledTextColor}"/>
+                        </sfChart:NumericalAxis.AxisLineStyle>
+                        <sfChart:NumericalAxis.LabelStyle>
+                            <sfChart:ChartAxisLabelStyle TextColor="{StaticResource styledTextColor}"/>
+                        </sfChart:NumericalAxis.LabelStyle>
                         <sfChart:NumericalAxis.Title>
-                            <sfChart:ChartAxisTitle Text="Occurrences"/>
+                            <sfChart:ChartAxisTitle Text="Occurrences"
+                                                    TextColor="{StaticResource styledTextColor}"/>
                         </sfChart:NumericalAxis.Title>
                     </sfChart:NumericalAxis>
                 </sfChart:SfChart.SecondaryAxis>

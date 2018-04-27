@@ -100,6 +100,7 @@
                          HorizontalOptions="CenterAndExpand"
                          Padding="15,0,15,15">
                 <Label Text="Simulate Intrusive Memory/Thoughts"
+                       FontSize="Small"
                        VerticalTextAlignment="Center"/>
                 <Switch IsToggled="{Binding Simulate}"/>
             </StackLayout>

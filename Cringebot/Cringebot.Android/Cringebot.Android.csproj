@@ -72,15 +72,16 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mono.Android" />
+    <Reference Include="Mono.Android.Export" />
     <Reference Include="mscorlib" />
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.11.0.1\lib\netstandard2.0\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.SfChart.XForms, Version=16.1451.0.24, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Syncfusion.Xamarin.SfChart.16.1.0.24\lib\MonoAndroid10\Syncfusion.SfChart.XForms.dll</HintPath>
+    <Reference Include="Syncfusion.SfChart.XForms, Version=16.1451.0.32, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Syncfusion.Xamarin.SfChart.16.1.0.32\lib\MonoAndroid10\Syncfusion.SfChart.XForms.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.SfChart.XForms.Android, Version=16.1451.0.24, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Syncfusion.Xamarin.SfChart.16.1.0.24\lib\MonoAndroid10\Syncfusion.SfChart.XForms.Android.dll</HintPath>
+    <Reference Include="Syncfusion.SfChart.XForms.Android, Version=16.1451.0.32, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Syncfusion.Xamarin.SfChart.16.1.0.32\lib\MonoAndroid10\Syncfusion.SfChart.XForms.Android.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -160,6 +161,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomRenderers\ThemedNavBarRenderer.cs" />
+    <Compile Include="CustomRenderers\ThemedPickerRenderer.cs" />
+    <Compile Include="CustomRenderers\ThemedTimePickerRenderer.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="PlatformSpecific\KeyboardHelper.cs" />
     <Compile Include="PlatformSpecific\NotificationCreationService.cs" />
@@ -169,6 +173,26 @@
     <Compile Include="SplashActivity.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
+    <AndroidAsset Include="Assets\Comic Sans MS.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="Assets\SBC Macaroni Regular.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="Assets\Plain Black.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="Assets\Emo.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="Assets\riseup.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="Assets\times.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="Assets\Condiment.ttf" />
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
@@ -282,6 +306,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxxhdpi\list.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\stripes.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

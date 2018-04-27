@@ -15,7 +15,8 @@ namespace Cringebot.Droid
             base.OnCreate(bundle);
 
             Xamarin.Forms.Forms.Init(this, bundle);
-            LoadApplication(new App());
+            var bootstrapper = new Bootstrapper();
+            LoadApplication(bootstrapper.ResolveApp());
         }
     }
 }

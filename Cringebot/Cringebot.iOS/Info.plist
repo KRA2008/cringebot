@@ -48,6 +48,16 @@
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Fonts/Comic Sans MS.ttf</string>
+		<string>Fonts/Emo.ttf</string>
+		<string>Fonts/Plain Black.ttf</string>
+		<string>Fonts/SBC Macaroni Regular.ttf</string>
+		<string>Fonts/riseup.ttf</string>
+		<string>Fonts/times.ttf</string>
+		<string>Fonts/Condiment.ttf</string>
+	</array>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

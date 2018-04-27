@@ -79,8 +79,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="CustomRenderers\EntryWithDoneButtonRenderer.cs" />
+    <Compile Include="CustomRenderers\ThemedNavBarRenderer.cs" />
+    <Compile Include="CustomRenderers\ThemedPickerRenderer.cs" />
+    <Compile Include="CustomRenderers\ThemedTimePickerRenderer.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <None Include="app.config" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist">
       <SubType>Designer</SubType>
@@ -88,6 +92,25 @@
     <Compile Include="PlatformSpecific\KeyboardHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
+    <BundleResource Include="Resources\Fonts\Comic Sans MS.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Fonts\SBC Macaroni Regular.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Fonts\Plain Black.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Fonts\Emo.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Fonts\riseup.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Fonts\times.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Fonts\Condiment.ttf" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default-568h%402x.png" />
@@ -121,11 +144,11 @@
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.11.0.1\lib\netstandard2.0\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.SfChart.XForms, Version=16.1451.0.24, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Syncfusion.Xamarin.SfChart.16.1.0.24\lib\Xamarin.iOS10\Syncfusion.SfChart.XForms.dll</HintPath>
+    <Reference Include="Syncfusion.SfChart.XForms, Version=16.1451.0.32, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Syncfusion.Xamarin.SfChart.16.1.0.32\lib\Xamarin.iOS10\Syncfusion.SfChart.XForms.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.SfChart.XForms.iOS, Version=16.1451.0.24, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Syncfusion.Xamarin.SfChart.16.1.0.24\lib\Xamarin.iOS10\Syncfusion.SfChart.XForms.iOS.dll</HintPath>
+    <Reference Include="Syncfusion.SfChart.XForms.iOS, Version=16.1451.0.32, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Syncfusion.Xamarin.SfChart.16.1.0.32\lib\Xamarin.iOS10\Syncfusion.SfChart.XForms.iOS.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.IO.Compression" />
@@ -202,6 +225,9 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\list%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\stripes.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

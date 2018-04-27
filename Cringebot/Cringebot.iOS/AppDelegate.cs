@@ -8,8 +8,9 @@ using Cringebot.iOS;
 using Cringebot.Services;
 using System.Linq;
 using UserNotifications;
+using Xamarin.Forms;
 
-[assembly: Xamarin.Forms.Dependency(typeof(AppDelegate))]
+[assembly: Dependency(typeof(AppDelegate))]
 namespace Cringebot.iOS
 {
     // The UIApplicationDelegate for the application. This class is responsible for launching the 
@@ -18,6 +19,7 @@ namespace Cringebot.iOS
     [Register("AppDelegate")]
     public class AppDelegate : Xamarin.Forms.Platform.iOS.FormsApplicationDelegate, INotificationManager
     {
+        public static Bootstrapper Bootstrapper;
         private static IEnumerable<Memory> _memories;
         private static Settings _settings;
         private static bool _notificationsOn;
@@ -32,12 +34,13 @@ namespace Cringebot.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
-            Xamarin.Forms.Forms.Init();
+            Forms.Init();
 
             Corcav.Behaviors.Infrastructure.Init();
             Syncfusion.SfChart.XForms.iOS.Renderers.SfChartRenderer.Init();
 
-            _app = new App();
+            Bootstrapper = new Bootstrapper();
+            _app = Bootstrapper.ResolveApp();
             LoadApplication(_app);
 
             UNUserNotificationCenter.Current.Delegate = new NotificationDelegate();
