@@ -739,5 +739,28 @@ namespace Cringebot.Tests.ViewModel
                     n.SetMemories(It.Is<IEnumerable<Memory>>(m => m.First().Description == EXPECTED_MEMORY)));
             }
         }
+
+        public class SearchResultCountProperty : MainViewModelTests
+        {
+            [Test]
+            public void ShouldGetSearchResultCountFromMemoryInput()
+            {
+                //arrange
+                _viewModel.MemoryInput = "blah";
+                _viewModel.AddMemoryCommand.Execute(null);
+                _viewModel.MemoryInput = "blah boo";
+                _viewModel.AddMemoryCommand.Execute(null);
+                _viewModel.MemoryInput = "blah boo bah";
+                _viewModel.AddMemoryCommand.Execute(null);
+
+                //act & assert
+                _viewModel.MemoryInput = "blah";
+                _viewModel.SearchResultCount.Should().Be.EqualTo(3);
+                _viewModel.MemoryInput = "boo";
+                _viewModel.SearchResultCount.Should().Be.EqualTo(2);
+                _viewModel.MemoryInput = "bah";
+                _viewModel.SearchResultCount.Should().Be.EqualTo(1);
+            }
+        }
     }
 }

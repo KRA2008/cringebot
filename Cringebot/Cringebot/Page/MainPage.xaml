@@ -22,16 +22,20 @@
     <ContentPage.Content>
         <StackLayout Padding="0" 
                      Spacing="15">
-            <Entry Placeholder="Search/Add Item..."
-                   Text="{Binding MemoryInput}"
-                   Margin="15,15,15,0">
-                <corcav:Interaction.Behaviors>
-                    <corcav:BehaviorCollection>
-                        <corcav:EventToCommand EventName="Completed" 
-                                               Command="{Binding AddMemoryCommand}"/>
-                    </corcav:BehaviorCollection>
-                </corcav:Interaction.Behaviors>
-            </Entry>
+            <StackLayout Orientation="Horizontal"
+                         Padding="15,15,15,0">
+                <Entry Placeholder="Search/Add Item..."
+                       Text="{Binding MemoryInput}"
+                       HorizontalOptions="FillAndExpand">
+                    <corcav:Interaction.Behaviors>
+                        <corcav:BehaviorCollection>
+                            <corcav:EventToCommand EventName="Completed" 
+                                                   Command="{Binding AddMemoryCommand}"/>
+                        </corcav:BehaviorCollection>
+                    </corcav:Interaction.Behaviors>
+                </Entry>
+                <Label Text="{Binding SearchResultCount}"/>
+            </StackLayout>
             <ce:DeselectListView ItemsSource="{Binding Memories}"
                                  VerticalOptions="FillAndExpand"
                                  Margin="0,0,0,0"

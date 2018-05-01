@@ -37,6 +37,17 @@ namespace Cringebot.ViewModel
             }
         }
 
+        [DependsOn(nameof(MemoryInput))]
+        public int SearchResultCount
+        {
+            get
+            {
+                return !string.IsNullOrEmpty(MemoryInput)
+                    ? _memories.Count(m => m.Description.ToLower().Contains(MemoryInput.ToLower()))
+                    : _memories.Count;
+            }
+        }
+
         public bool Simulate { get; set; }
         public bool LimitListVisibility { get; set; }
         public string MemoryInput { get; set; }
