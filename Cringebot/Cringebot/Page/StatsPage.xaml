@@ -28,9 +28,9 @@
                             <ViewCell.View>
                                 <StackLayout Orientation="Horizontal"
                                              Padding="15">
-                                    <Label Text="{Binding Description}"
+                                    <Label Text="{Binding Description, StringFormat='{0}:'}"
                                            VerticalTextAlignment="Center"/>
-                                    <Label Text="{Binding Number}"
+                                    <Label Text="{Binding Value}"
                                            VerticalTextAlignment="Center"/>
                                 </StackLayout>
                             </ViewCell.View>

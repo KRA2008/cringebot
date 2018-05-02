@@ -68,7 +68,7 @@
                             <sfChart:ChartAxisLabelStyle TextColor="{StaticResource styledTextColor}"/>
                         </sfChart:NumericalAxis.LabelStyle>
                         <sfChart:NumericalAxis.Title>
-                            <sfChart:ChartAxisTitle Text="Occurrences"
+                            <sfChart:ChartAxisTitle Text="Cringes"
                                                     TextColor="{StaticResource styledTextColor}"/>
                         </sfChart:NumericalAxis.Title>
                     </sfChart:NumericalAxis>

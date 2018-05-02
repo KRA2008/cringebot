@@ -45,32 +45,32 @@ namespace Cringebot.ViewModel
 
                     Statistics.Add(new MemoryStatistic
                     {
-                        Description = "total occurrences",
-                        Number = occurrences.Count
+                        Description = "total cringes",
+                        Value = occurrences.Count.ToString()
                     });
 
                     Statistics.Add(new MemoryStatistic
                     {
                         Description = "total days on Cringebot",
-                        Number = daysUsingCringebot
+                        Value = daysUsingCringebot.ToString()
                     });
 
                     Statistics.Add(new MemoryStatistic
                     {
-                        Description = "average occurrences per day",
-                        Number = Math.Round((double)occurrences.Count / daysUsingCringebot, 1)
+                        Description = "average cringes per day",
+                        Value = Math.Round((double)occurrences.Count / daysUsingCringebot, 1).ToString()
                     });
 
                     Statistics.Add(new MemoryStatistic
                     {
-                        Description = "most occurrences in single day",
-                        Number = occurrences.GroupBy(o => o.Date).OrderByDescending(d => d.Count()).First().Count()
+                        Description = "most cringes in single day",
+                        Value = occurrences.GroupBy(o => o.Date).OrderByDescending(d => d.Count()).First().Count().ToString()
                     });
 
                     Statistics.Add(new MemoryStatistic
                     {
-                        Description = "total days without occurrence",
-                        Number = daysUsingCringebot - occurrences.Select(d => d.Date).Distinct().Count()
+                        Description = "total days without cringe",
+                        Value = (daysUsingCringebot - occurrences.Select(d => d.Date).Distinct().Count()).ToString()
                     });
 
                     var contiguousDaysWithout = new List<int>();
@@ -81,9 +81,18 @@ namespace Cringebot.ViewModel
 
                     Statistics.Add(new MemoryStatistic
                     {
-                        Description = "most days without occurrence",
-                        Number = contiguousDaysWithout.Any() ? contiguousDaysWithout.Max() : 0
+                        Description = "most days without cringe",
+                        Value = (contiguousDaysWithout.Any() ? contiguousDaysWithout.Max() : 0).ToString()
                     });
+
+                    if (memories.Count() > 1)
+                    {
+                        Statistics.Add(new MemoryStatistic
+                        {
+                            Description = "cringiest",
+                            Value = memories.OrderByDescending(m => m.Occurrences.Count).First().Description
+                        });
+                    }
                 }
             }
         }

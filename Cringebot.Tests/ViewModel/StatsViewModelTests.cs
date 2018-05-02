@@ -53,7 +53,7 @@ namespace Cringebot.Tests.ViewModel
                 _viewModel.Init(memories);
 
                 //assert
-                _viewModel.Statistics.First(s => s.Description == "total occurrences").Number.Should().Be.EqualTo(3);
+                _viewModel.Statistics.First(s => s.Description == "total cringes").Value.Should().Be.EqualTo("3");
             }
 
             [Test]
@@ -88,8 +88,8 @@ namespace Cringebot.Tests.ViewModel
                 _viewModel.Init(memories);
 
                 //assert
-                _viewModel.Statistics.First(s => s.Description == "total days on Cringebot").Number.Should().Be
-                    .EqualTo(DAYS_SINCE+1);
+                _viewModel.Statistics.First(s => s.Description == "total days on Cringebot").Value.Should().Be
+                    .EqualTo((DAYS_SINCE+1).ToString());
             }
 
             [Test]
@@ -117,8 +117,8 @@ namespace Cringebot.Tests.ViewModel
                 _viewModel.Init(memories);
 
                 //assert
-                _viewModel.Statistics.First(s => s.Description == "average occurrences per day").Number.Should().Be
-                    .EqualTo(0.2);
+                _viewModel.Statistics.First(s => s.Description == "average cringes per day").Value.Should().Be
+                    .EqualTo("0.2");
             }
 
             [Test]
@@ -150,8 +150,8 @@ namespace Cringebot.Tests.ViewModel
                 _viewModel.Init(memories);
 
                 //assert
-                _viewModel.Statistics.First(s => s.Description == "most occurrences in single day").Number.Should().Be
-                    .EqualTo(3);
+                _viewModel.Statistics.First(s => s.Description == "most cringes in single day").Value.Should().Be
+                    .EqualTo("3");
             }
 
             [Test]
@@ -187,8 +187,8 @@ namespace Cringebot.Tests.ViewModel
                 _viewModel.Init(memories);
 
                 //assert
-                _viewModel.Statistics.First(s => s.Description == "total days without occurrence").Number.Should().Be
-                    .EqualTo(28);
+                _viewModel.Statistics.First(s => s.Description == "total days without cringe").Value.Should().Be
+                    .EqualTo("28");
             }
 
             [Test]
@@ -209,7 +209,7 @@ namespace Cringebot.Tests.ViewModel
                             today.AddDays(-10)
                         }
                     },
-                    new Memory()
+                    new Memory
                     {
                         Occurrences =
                         {
@@ -223,8 +223,8 @@ namespace Cringebot.Tests.ViewModel
                 _viewModel.Init(memories);
 
                 //assert
-                _viewModel.Statistics.First(s => s.Description == "most days without occurrence").Number.Should().Be
-                    .EqualTo(19);
+                _viewModel.Statistics.First(s => s.Description == "most days without cringe").Value.Should().Be
+                    .EqualTo("19");
             }
 
             [Test]
@@ -243,8 +243,59 @@ namespace Cringebot.Tests.ViewModel
                 _viewModel.Init(memories);
 
                 //assert
-                _viewModel.Statistics.First(s => s.Description == "most days without occurrence").Number.Should().Be
-                    .EqualTo(0);
+                _viewModel.Statistics.First(s => s.Description == "most days without cringe").Value.Should().Be
+                    .EqualTo("0");
+            }
+
+            [Test]
+            public void ShouldGetCringiestMemory()
+            {
+                //arrange
+                const string EXPECTED_CRINGIEST_DESCRIPTION = "the worst";
+                var memories = new[]
+                {
+                    new Memory
+                    {
+                        Description = "not bad",
+                        Occurrences = { new DateTime()}
+                    },
+                    new Memory
+                    {
+                        Description = EXPECTED_CRINGIEST_DESCRIPTION,
+                        Occurrences = { new DateTime(), new DateTime()}
+                    },
+                    new Memory
+                    {
+                        Description = "easy"
+                    }
+                };
+
+                //act
+                _viewModel.Init(memories);
+
+                //assert
+                _viewModel.Statistics.First(s => s.Description == "cringiest").Value.Should().Be
+                    .EqualTo(EXPECTED_CRINGIEST_DESCRIPTION);
+            }
+
+            [Test]
+            public void ShouldExcludeCringiestIfOnlyOneMemory()
+            {
+                //arrange
+                var memories = new[]
+                {
+                    new Memory
+                    {
+                        Description = "not bad",
+                        Occurrences = { new DateTime()}
+                    }
+                };
+
+                //act
+                _viewModel.Init(memories);
+
+                //assert
+                _viewModel.Statistics.FirstOrDefault(s => s.Description == "cringiest").Should().Be.Null();
             }
 
             [Test]
