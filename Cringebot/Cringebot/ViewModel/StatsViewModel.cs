@@ -64,7 +64,7 @@ namespace Cringebot.ViewModel
                     Statistics.Add(new MemoryStatistic
                     {
                         Description = "most occurrences in single day",
-                        Number = memories.OrderByDescending(m => m.Occurrences.Count).First().Occurrences.Count
+                        Number = occurrences.GroupBy(o => o.Date).OrderByDescending(d => d.Count()).First().Count()
                     });
 
                     Statistics.Add(new MemoryStatistic

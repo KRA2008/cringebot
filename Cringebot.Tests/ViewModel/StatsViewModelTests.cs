@@ -129,11 +129,20 @@ namespace Cringebot.Tests.ViewModel
                 {
                     new Memory
                     {
-                        Occurrences = {new DateTime(), new DateTime(), new DateTime()}
+                        Occurrences = {
+                            new DateTime(1,1,1,1,1,1,1),
+                            new DateTime(2,2,2,2,2,2,2),
+                            new DateTime(3,3,3,3,3,3,3)}
                     },
                     new Memory
                     {
-                        Occurrences = {new DateTime(), new DateTime(), new DateTime(), new DateTime()}
+                        Occurrences =
+                        {
+                            new DateTime(2,2,2,2,2,2,2),
+                            new DateTime(1,1,1,1,1,1,1),
+                            new DateTime(4,4,4,4,4,4,4),
+                            new DateTime(1,1,1,1,1,1,1)
+                        }
                     }
                 };
 
@@ -142,7 +151,7 @@ namespace Cringebot.Tests.ViewModel
 
                 //assert
                 _viewModel.Statistics.First(s => s.Description == "most occurrences in single day").Number.Should().Be
-                    .EqualTo(4);
+                    .EqualTo(3);
             }
 
             [Test]
