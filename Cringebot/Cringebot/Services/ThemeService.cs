@@ -5,6 +5,7 @@ using Cringebot.Model;
 using Cringebot.Wrappers;
 using Syncfusion.SfChart.XForms;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 
 namespace Cringebot.Services
 {
@@ -18,6 +19,7 @@ namespace Cringebot.Services
     public class ThemeService : IThemeService
     {
         public const string THEME_SET_MESSAGE = "themeSet";
+        private const double REQUIRED_LUMINANCE_DIFFERENCE = 0.2;
 
         private readonly IDeviceWrapper _deviceWrapper;
         private readonly IEnumerable<Theme> _themes;
@@ -36,15 +38,6 @@ namespace Cringebot.Services
                     Name = "Cringe",
                     FontName = "ComicSansMS",
                     FontFileName = "Comic Sans MS.ttf",
-                    TextColor = Color.SandyBrown,
-                    HighlightTextColor = Color.Yellow,
-                    PlaceholderColor = Color.DeepPink,
-                    NavBarColor = Color.Red,
-                    NavBarTextColor = Color.Green,
-                    PageBackgroundImageName = "",
-                    PageBackgroundColor = Color.DarkBlue,
-                    ButtonBackgroundColor = Color.Purple,
-                    ButtonTextColor = Color.DeepPink,
                     ButtonCornerRadius = 12,
                     SmallestTextSize = 14,
                     MediumestTextSize = 16,
@@ -56,7 +49,6 @@ namespace Cringebot.Services
                     FontName = "PlainBlack-Normal",
                     FontFileName = "Plain Black.ttf",
                     TextColor = Color.White,
-                    HighlightTextColor = Color.White,
                     ButtonTextColor = Color.Red,
                     PageBackgroundImageName = "",
                     PageBackgroundColor = Color.Black,
@@ -75,7 +67,6 @@ namespace Cringebot.Services
                     FontName = "SBCMacaroni",
                     FontFileName = "SBC Macaroni Regular.ttf",
                     TextColor = Color.OrangeRed,
-                    HighlightTextColor = Color.OrangeRed,
                     ButtonTextColor = Color.Yellow,
                     PageBackgroundColor = Color.Yellow,
                     PageBackgroundImageName = "",
@@ -94,7 +85,6 @@ namespace Cringebot.Services
                     FontName = "rise up",
                     FontFileName = "riseup.ttf",
                     TextColor = Color.DarkRed,
-                    HighlightTextColor = Color.DarkRed,
                     ButtonTextColor = Color.DarkRed,
                     PageBackgroundImageName = "",
                     PageBackgroundColor = Color.Black,
@@ -131,7 +121,6 @@ namespace Cringebot.Services
                     FontName = "TimesNewRomanPSMT",
                     FontFileName = "times.ttf",
                     TextColor = Color.Blue,
-                    HighlightTextColor = Color.Blue,
                     ButtonTextColor = Color.White,
                     PageBackgroundImageName = "stripes",
                     PageBackgroundColor = Color.Transparent,
@@ -150,7 +139,6 @@ namespace Cringebot.Services
                     FontName = "Condiment-Regular",
                     FontFileName = "Condiment.ttf",
                     TextColor = Color.Yellow,
-                    HighlightTextColor = Color.Yellow,
                     ButtonTextColor = Color.GreenYellow,
                     PageBackgroundImageName = "", //TODO: make this a picture of beef
                     PageBackgroundColor = Color.SaddleBrown,
@@ -159,14 +147,6 @@ namespace Cringebot.Services
                     NavBarColor = Color.Red,
                     NavBarTextColor = Color.Yellow,
                     ButtonCornerRadius = 25,
-                    SmallestTextSize = 18,
-                    MediumestTextSize = 20,
-                    LargestTextSize = 22
-                },
-                new Theme
-                {
-                    Name = "Random",
-                    ButtonCornerRadius = 0,
                     SmallestTextSize = 18,
                     MediumestTextSize = 20,
                     LargestTextSize = 22
@@ -180,33 +160,71 @@ namespace Cringebot.Services
 
             _currentThemeName = targetTheme.Name;
             var isiOS = _deviceWrapper.RuntimePlatform() == Device.iOS;
-            var isRandom = name == "Random";
+            var isCringe = _themes.IndexOf(targetTheme) == 0;
 
-            Application.Current.Resources["styledTextColor"] = isRandom ? GetRandomColor() : targetTheme.TextColor;
-            Application.Current.Resources["styledHighlightTextColor"] = isRandom ? GetRandomColor() : targetTheme.HighlightTextColor;
+            var textColor = isCringe ? GetRandomColor() : targetTheme.TextColor;
+            var backgroundColor = isCringe ? GetRandomColor() : targetTheme.PageBackgroundColor;
+            var placeholderColor = isCringe ? GetRandomColor() : targetTheme.PlaceholderColor;
+            if (isCringe)
+            {
+                LoopUntilLuminanceDifferenceSatisfied(ref backgroundColor, ref textColor);
+                LoopUntilLuminanceDifferenceSatisfied(ref backgroundColor, ref placeholderColor);
+            }
+
+            Application.Current.Resources["styledPageBackgroundColor"] = backgroundColor;
+            Application.Current.Resources["styledTextColor"] = textColor;
             Application.Current.Resources["styledChartColors"] = new ChartColorCollection
             {
-                isRandom ? GetRandomColor() : targetTheme.TextColor
+                textColor
             };
-            Application.Current.Resources["styledPageBackgroundImageName"] = targetTheme.PageBackgroundImageName;
-            Application.Current.Resources["styledPageBackgroundColor"] = isRandom ? GetRandomColor() : targetTheme.PageBackgroundColor;
-            Application.Current.Resources["styledButtonBackgroundColor"] = isRandom ? GetRandomColor() : targetTheme.ButtonBackgroundColor;
-            Application.Current.Resources["styledButtonTextColor"] = isRandom ? GetRandomColor() : targetTheme.ButtonTextColor;
-            Application.Current.Resources["styledPlaceholderColor"] = isRandom ? GetRandomColor() : targetTheme.PlaceholderColor;
-            Application.Current.Resources["styledNavBarColor"] = isRandom ? GetRandomColor() : targetTheme.NavBarColor;
-            Application.Current.Resources["styledNavBarTextColor"] = isRandom ? GetRandomColor() : targetTheme.NavBarTextColor;
+            Application.Current.Resources["styledPlaceholderColor"] = placeholderColor;
+
+            var buttonColor = isCringe ? GetRandomColor() : targetTheme.ButtonBackgroundColor;
+            var buttonTextColor = isCringe ? GetRandomColor() : targetTheme.ButtonTextColor;
+            if (isCringe)
+            {
+                LoopUntilLuminanceDifferenceSatisfied(ref buttonColor, ref buttonTextColor);
+            }
+
+            Application.Current.Resources["styledButtonBackgroundColor"] = buttonColor;
+            Application.Current.Resources["styledButtonTextColor"] = buttonTextColor;
+
+            var navBarColor = isCringe ? GetRandomColor() : targetTheme.NavBarColor;
+            var navBarTextColor = isCringe ? GetRandomColor() : targetTheme.NavBarTextColor;
+            if (isCringe)
+            {
+                LoopUntilLuminanceDifferenceSatisfied(ref navBarColor, ref navBarTextColor);
+            }
+
+            Application.Current.Resources["styledNavBarColor"] = navBarColor;
+            Application.Current.Resources["styledNavBarTextColor"] = navBarTextColor;
 
             Application.Current.Resources["styledButtonCornerRadius"] = targetTheme.ButtonCornerRadius;
-
-            var fontTargetTheme = isRandom ? _themes.ElementAt(_random.Next(0, _themes.Count()-1)) : targetTheme;
-            Application.Current.Resources["styledFontShort"] = isiOS ? fontTargetTheme.FontName : fontTargetTheme.FontFileName;
-            Application.Current.Resources["styledFontLong"] = isiOS ? fontTargetTheme.FontName : fontTargetTheme.FontFileName + "#" + fontTargetTheme.FontName;
+            
+            Application.Current.Resources["styledFontShort"] = isiOS ? targetTheme.FontName : targetTheme.FontFileName;
+            Application.Current.Resources["styledFontLong"] = isiOS ? targetTheme.FontName : targetTheme.FontFileName + "#" + targetTheme.FontName;
 
             Application.Current.Resources["smallestTextSize"] = targetTheme.SmallestTextSize;
             Application.Current.Resources["mediumestTextSize"] = targetTheme.MediumestTextSize;
             Application.Current.Resources["largestTextSize"] = targetTheme.LargestTextSize;
 
+            Application.Current.Resources["styledPageBackgroundImageName"] = targetTheme.PageBackgroundImageName;
+
             MessagingCenter.Send(this, THEME_SET_MESSAGE);
+        }
+
+        private void LoopUntilLuminanceDifferenceSatisfied(ref Color colorA, ref Color colorB)
+        {
+            var luminanceA = GetLuminance(colorA);
+            while (Math.Abs(GetLuminance(colorB) - luminanceA) < REQUIRED_LUMINANCE_DIFFERENCE)
+            {
+                colorB = GetRandomColor();
+            }
+        }
+
+        private static double GetLuminance(Color color)
+        {
+            return Math.Sqrt(0.299 * Math.Pow(color.R, 2) + 0.587 * Math.Pow(color.G, 2) + 0.114 * Math.Pow(color.B, 2));
         }
 
         private Color GetRandomColor()

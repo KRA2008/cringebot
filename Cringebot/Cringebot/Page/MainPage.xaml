@@ -97,7 +97,6 @@
                          HorizontalOptions="CenterAndExpand"
                          Padding="15,0,15,0">
                 <Label Text="Limit List Visibility"
-                       Style="{DynamicResource highlightText}"
                        VerticalTextAlignment="Center"/>
                 <Switch IsToggled="{Binding LimitListVisibility}"/>
             </StackLayout>
@@ -105,7 +104,6 @@
                          HorizontalOptions="CenterAndExpand"
                          Padding="15,0,15,15">
                 <Label Text="Simulate Intrusive Memory/Thoughts"
-                       Style="{DynamicResource highlightText}"
                        FontSize="Small"
                        VerticalTextAlignment="Center"/>
                 <Switch IsToggled="{Binding Simulate}"/>

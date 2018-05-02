@@ -36,11 +36,6 @@
                 <Setter Property="FontSize"
                         Value="{DynamicResource largestTextSize}"/>
             </Style>
-            <Style TargetType="Label"
-                   x:Key="highlightText">
-                <Setter Property="TextColor"
-                        Value="{DynamicResource styledHighlightTextColor}"/>
-            </Style>
             <Style TargetType="Entry">
                 <Setter Property="TextColor"
                         Value="{DynamicResource styledTextColor}"/>

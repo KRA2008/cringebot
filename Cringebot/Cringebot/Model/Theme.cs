@@ -8,7 +8,6 @@ namespace Cringebot.Model
         public string FontName { get; set; }
         public string FontFileName { get; set; }
         public Color TextColor { get; set; }
-        public Color HighlightTextColor { get; set; }
         public Color PlaceholderColor { get; set; }
         public Color NavBarColor { get; set; }
         public Color NavBarTextColor { get; set; }
