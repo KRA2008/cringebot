@@ -8,6 +8,8 @@
              xmlns:sfChart="clr-namespace:Syncfusion.SfChart.XForms;assembly=Syncfusion.SfChart.XForms">
     <Application.Resources>
         <ResourceDictionary>
+            <x:String x:Key="addImageName"/>
+            <x:String x:Key="deleteImageName"/>
             <x:String x:Key="styledFontShort"/>
             <x:String x:Key="styledFontLong"/>
             <Color x:Key="styledTextColor"/>

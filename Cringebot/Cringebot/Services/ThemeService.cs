@@ -20,6 +20,10 @@ namespace Cringebot.Services
     {
         public const string THEME_SET_MESSAGE = "themeSet";
         private const double REQUIRED_LUMINANCE_DIFFERENCE = 0.2;
+        private const string BLACK_ADD_NAME = "add";
+        private const string WHITE_ADD_NAME = "addwhite";
+        private const string BLACK_DELETE_NAME = "clear";
+        private const string WHITE_DELETE_NAME = "clearwhite";
 
         private readonly IDeviceWrapper _deviceWrapper;
         private readonly IEnumerable<Theme> _themes;
@@ -28,7 +32,6 @@ namespace Cringebot.Services
 
         public ThemeService(IDeviceWrapper deviceWrapper)
         {
-            //TODO: change icons white and black?
             _random = new Random();
             _deviceWrapper = deviceWrapper;
             _themes = new[]
@@ -41,7 +44,9 @@ namespace Cringebot.Services
                     ButtonCornerRadius = 12,
                     SmallestTextSize = 14,
                     MediumestTextSize = 16,
-                    LargestTextSize = 18
+                    LargestTextSize = 18,
+                    AddImageName = BLACK_ADD_NAME,
+                    DeleteImageName = BLACK_DELETE_NAME
                 },
                 new Theme
                 {
@@ -60,7 +65,9 @@ namespace Cringebot.Services
                     ButtonCornerRadius = 0,
                     SmallestTextSize = 18,
                     MediumestTextSize = 20,
-                    LargestTextSize = 22
+                    LargestTextSize = 22,
+                    AddImageName = WHITE_ADD_NAME,
+                    DeleteImageName = WHITE_DELETE_NAME
                 },
                 new Theme
                 {
@@ -79,7 +86,9 @@ namespace Cringebot.Services
                     ButtonCornerRadius = 25,
                     SmallestTextSize = 16,
                     MediumestTextSize = 18,
-                    LargestTextSize = 20
+                    LargestTextSize = 20,
+                    AddImageName = BLACK_ADD_NAME,
+                    DeleteImageName = BLACK_DELETE_NAME
                 },
                 new Theme
                 {
@@ -98,7 +107,9 @@ namespace Cringebot.Services
                     ButtonCornerRadius = 0,
                     SmallestTextSize = 14,
                     MediumestTextSize = 16,
-                    LargestTextSize = 18
+                    LargestTextSize = 18,
+                    AddImageName = WHITE_ADD_NAME,
+                    DeleteImageName = WHITE_DELETE_NAME
                 },
                 new Theme
                 {
@@ -117,7 +128,9 @@ namespace Cringebot.Services
                     ButtonCornerRadius = 0,
                     SmallestTextSize = 14,
                     MediumestTextSize = 16,
-                    LargestTextSize = 18
+                    LargestTextSize = 18,
+                    AddImageName = BLACK_ADD_NAME,
+                    DeleteImageName = BLACK_DELETE_NAME
                 },
                 new Theme
                 {
@@ -136,7 +149,9 @@ namespace Cringebot.Services
                     ButtonCornerRadius = 0,
                     SmallestTextSize = 16,
                     MediumestTextSize = 18,
-                    LargestTextSize = 20
+                    LargestTextSize = 20,
+                    AddImageName = BLACK_ADD_NAME,
+                    DeleteImageName = BLACK_DELETE_NAME
                 },
                 new Theme
                 {
@@ -155,7 +170,9 @@ namespace Cringebot.Services
                     ButtonCornerRadius = 25,
                     SmallestTextSize = 18,
                     MediumestTextSize = 20,
-                    LargestTextSize = 22
+                    LargestTextSize = 22,
+                    AddImageName = BLACK_ADD_NAME,
+                    DeleteImageName = BLACK_DELETE_NAME
                 }
             };
         }
@@ -218,6 +235,9 @@ namespace Cringebot.Services
             Application.Current.Resources["largestTextSize"] = targetTheme.LargestTextSize;
 
             Application.Current.Resources["styledPageBackgroundImageName"] = targetTheme.PageBackgroundImageName;
+
+            Application.Current.Resources["addImageName"] = targetTheme.AddImageName;
+            Application.Current.Resources["deleteImageName"] = targetTheme.DeleteImageName;
 
             MessagingCenter.Send(this, THEME_SET_MESSAGE);
         }

@@ -84,7 +84,7 @@
                                         <Label Text="{Binding Occurrences.Count}"
                                                VerticalOptions="CenterAndExpand">
                                         </Label>
-                                        <Image Source="add"
+                                        <Image Source="{DynamicResource addImageName}"
                                                VerticalOptions="CenterAndExpand"/>
                                     </StackLayout>
                                 </Grid>
