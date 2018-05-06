@@ -27,7 +27,6 @@ namespace Cringebot
             FreshIOC.Container.Register(DependencyService.Get<INotificationManager>());
             FreshIOC.Container.Register<IDeviceWrapper, DeviceWrapper>().AsSingleton();
             FreshIOC.Container.Register(DependencyService.Get<IKeyboardHelper>());
-            FreshIOC.Container.Register<IFileImportStore, FileImportStore>();
             FreshIOC.Container.Register<IThemeService, ThemeService>().AsSingleton();
             FreshIOC.Container.Register<IBootstrapper>(this);
         }

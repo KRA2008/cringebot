@@ -44,9 +44,7 @@ namespace Cringebot.Services
                     ButtonCornerRadius = 12,
                     SmallestTextSize = 14,
                     MediumestTextSize = 16,
-                    LargestTextSize = 18,
-                    AddImageName = BLACK_ADD_NAME,
-                    DeleteImageName = BLACK_DELETE_NAME
+                    LargestTextSize = 18
                 },
                 new Theme
                 {
@@ -65,9 +63,7 @@ namespace Cringebot.Services
                     ButtonCornerRadius = 0,
                     SmallestTextSize = 18,
                     MediumestTextSize = 20,
-                    LargestTextSize = 22,
-                    AddImageName = WHITE_ADD_NAME,
-                    DeleteImageName = WHITE_DELETE_NAME
+                    LargestTextSize = 22
                 },
                 new Theme
                 {
@@ -86,9 +82,7 @@ namespace Cringebot.Services
                     ButtonCornerRadius = 25,
                     SmallestTextSize = 16,
                     MediumestTextSize = 18,
-                    LargestTextSize = 20,
-                    AddImageName = BLACK_ADD_NAME,
-                    DeleteImageName = BLACK_DELETE_NAME
+                    LargestTextSize = 20
                 },
                 new Theme
                 {
@@ -107,9 +101,7 @@ namespace Cringebot.Services
                     ButtonCornerRadius = 0,
                     SmallestTextSize = 14,
                     MediumestTextSize = 16,
-                    LargestTextSize = 18,
-                    AddImageName = WHITE_ADD_NAME,
-                    DeleteImageName = WHITE_DELETE_NAME
+                    LargestTextSize = 18
                 },
                 new Theme
                 {
@@ -128,9 +120,7 @@ namespace Cringebot.Services
                     ButtonCornerRadius = 0,
                     SmallestTextSize = 14,
                     MediumestTextSize = 16,
-                    LargestTextSize = 18,
-                    AddImageName = BLACK_ADD_NAME,
-                    DeleteImageName = BLACK_DELETE_NAME
+                    LargestTextSize = 18
                 },
                 new Theme
                 {
@@ -149,9 +139,7 @@ namespace Cringebot.Services
                     ButtonCornerRadius = 0,
                     SmallestTextSize = 16,
                     MediumestTextSize = 18,
-                    LargestTextSize = 20,
-                    AddImageName = BLACK_ADD_NAME,
-                    DeleteImageName = BLACK_DELETE_NAME
+                    LargestTextSize = 20
                 },
                 new Theme
                 {
@@ -170,9 +158,7 @@ namespace Cringebot.Services
                     ButtonCornerRadius = 25,
                     SmallestTextSize = 18,
                     MediumestTextSize = 20,
-                    LargestTextSize = 22,
-                    AddImageName = BLACK_ADD_NAME,
-                    DeleteImageName = BLACK_DELETE_NAME
+                    LargestTextSize = 22
                 }
             };
         }
@@ -236,8 +222,16 @@ namespace Cringebot.Services
 
             Application.Current.Resources["styledPageBackgroundImageName"] = targetTheme.PageBackgroundImageName;
 
-            Application.Current.Resources["addImageName"] = targetTheme.AddImageName;
-            Application.Current.Resources["deleteImageName"] = targetTheme.DeleteImageName;
+            if (Math.Abs(GetLuminance(backgroundColor) - GetLuminance(Color.Black)) < REQUIRED_LUMINANCE_DIFFERENCE)
+            {
+                Application.Current.Resources["addImageName"] = WHITE_ADD_NAME;
+                Application.Current.Resources["deleteImageName"] = WHITE_DELETE_NAME;
+            }
+            else
+            {
+                Application.Current.Resources["addImageName"] = BLACK_ADD_NAME;
+                Application.Current.Resources["deleteImageName"] = BLACK_DELETE_NAME;
+            }
 
             MessagingCenter.Send(this, THEME_SET_MESSAGE);
         }

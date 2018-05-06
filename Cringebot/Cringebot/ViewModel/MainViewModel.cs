@@ -36,8 +36,7 @@ namespace Cringebot.ViewModel
                 return new ObservableCollection<Memory>(filtered.OrderBy(m => m.Description));
             }
         }
-
-        [DependsOn(nameof(MemoryInput))]
+        
         public int SearchResultCount
         {
             get
@@ -63,14 +62,12 @@ namespace Cringebot.ViewModel
 
         private readonly IAppProperties _properties;
         private readonly INotificationManager _notificationManager;
-        private readonly IFileImportStore _fileImportStore;
 
         public MainViewModel(IAppProperties properties, INotificationManager notificationManager,
-            IKeyboardHelper keyboardHelper, IFileImportStore fileImportStore)
+            IKeyboardHelper keyboardHelper)
         {
             _properties = properties;
             _notificationManager = notificationManager;
-            _fileImportStore = fileImportStore;
             _memories = new List<Memory>();
 
             AddMemoryCommand = new Command(() =>
@@ -161,6 +158,7 @@ namespace Cringebot.ViewModel
             var memoryToRemove = (Memory)returnedData;
             _memories.Remove(memoryToRemove);
             RaisePropertyChanged(nameof(Memories));
+            RaisePropertyChanged(nameof(SearchResultCount));
 
             _notificationManager.SetMemories(_memories);
         }

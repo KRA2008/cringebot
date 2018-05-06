@@ -20,7 +20,5 @@ namespace Cringebot.Model
         public double SmallestTextSize { get; set; }
         public double MediumestTextSize { get; set; }
         public double LargestTextSize { get; set; }
-        public string AddImageName { get; set; }
-        public string DeleteImageName { get; set; }
     }
 }

@@ -33,7 +33,7 @@ namespace Cringebot.Tests.ViewModel
             _dataStore.Setup(d => d.LoadOrDefault(PropertiesWrapper.LIMIT_LIST_STORE_KEY, It.IsAny<bool>())).Returns(false);
             _dataStore.Setup(d => d.LoadOrDefault(PropertiesWrapper.MEMORY_LIST_STORE_KEY, It.IsAny<List<Memory>>())).Returns(new List<Memory>());
             _keyboardHelper = new Mock<IKeyboardHelper>();
-            _viewModel = new MainViewModel(_dataStore.Object, _notificationManager.Object, _keyboardHelper.Object, null);
+            _viewModel = new MainViewModel(_dataStore.Object, _notificationManager.Object, _keyboardHelper.Object);
             _viewModel.Init(null);
         }
 
@@ -267,6 +267,26 @@ namespace Cringebot.Tests.ViewModel
                 _viewModel.PropertyChanged += (sender, args) =>
                 {
                     if (args.PropertyName == nameof(_viewModel.Memories))
+                    {
+                        eventRaised = true;
+                    }
+                };
+
+                //act
+                _viewModel.ReverseInit(new Memory());
+
+                //assert
+                eventRaised.Should().Be.True();
+            }
+
+            [Test]
+            public void ShouldRaisePropertyChangedOnSearchResultCount()
+            {
+                //arrange
+                var eventRaised = false;
+                _viewModel.PropertyChanged += (sender, args) =>
+                {
+                    if (args.PropertyName == nameof(_viewModel.SearchResultCount))
                     {
                         eventRaised = true;
                     }
