@@ -20,7 +20,7 @@ namespace Cringebot.Services
     {
         public const string TOOLS_SHOULD_BE_BLACK_CHANGED = "toolsBlackChanged";
         public const string THEME_SET_MESSAGE = "themeSet";
-        public const double REQUIRED_LUMINANCE_DIFFERENCE = 0.2;
+        private const double REQUIRED_LUMINANCE_DIFFERENCE = 0.2;
         private const string BLACK_ADD_NAME = "add";
         private const string WHITE_ADD_NAME = "addwhite";
         private const string BLACK_DELETE_NAME = "clear";
