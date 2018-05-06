@@ -34,7 +34,8 @@
                         </corcav:BehaviorCollection>
                     </corcav:Interaction.Behaviors>
                 </Entry>
-                <Label Text="{Binding SearchResultCount}"/>
+                <Label Text="{Binding SearchResultCount}"
+                       VerticalTextAlignment="Center"/>
             </StackLayout>
             <ce:DeselectListView ItemsSource="{Binding Memories}"
                                  VerticalOptions="FillAndExpand"
