@@ -25,6 +25,7 @@
             <x:Double x:Key="smallestTextSize"/>
             <x:Double x:Key="mediumestTextSize"/>
             <x:Double x:Key="largestTextSize"/>
+            <x:String x:Key="statListIconName"/>
             <Style TargetType="Label">
                 <Setter Property="TextColor"
                         Value="{DynamicResource styledTextColor}"/>

@@ -9,6 +9,7 @@ using Xamarin.Forms;
 using System;
 using System.Linq;
 using System.Net;
+using Cringebot.Services;
 
 namespace Cringebot.ViewModel
 {
@@ -70,6 +71,8 @@ namespace Cringebot.ViewModel
             _notificationManager = notificationManager;
             _memories = new List<Memory>();
 
+            MessagingCenter.Subscribe<ThemeService,bool>(this, ThemeService.TOOLS_SHOULD_BE_BLACK_CHANGED, SetToolbarIcons);
+
             AddMemoryCommand = new Command(() =>
             {
                 if (string.IsNullOrWhiteSpace(MemoryInput)) return;
@@ -129,6 +132,32 @@ namespace Cringebot.ViewModel
                     notificationManager.StopNotifications();
                 }
             };
+        }
+
+        private void SetToolbarIcons(ThemeService obj, bool blackItems)
+        {
+            while (CurrentPage.ToolbarItems.Count > 0)
+            {
+                CurrentPage.ToolbarItems.RemoveAt(0);
+            }
+
+            var colorSuffix = Device.RuntimePlatform == Device.Android && blackItems ? "black" : "";
+
+            CurrentPage.ToolbarItems.Add(new ToolbarItem
+            {
+                Icon = "gear"+colorSuffix,
+                Command = ViewSettingsCommand
+            });
+            CurrentPage.ToolbarItems.Add(new ToolbarItem
+            {
+                Icon = "help" + colorSuffix,
+                Command = ViewHelpCommand
+            });
+            CurrentPage.ToolbarItems.Add(new ToolbarItem
+            {
+                Icon = "chart" + colorSuffix,
+                Command = ViewGraphCommand
+            });
         }
 
         public async Task ViewDetails(Memory memory) //grrrrr, switch to AsyncCommand

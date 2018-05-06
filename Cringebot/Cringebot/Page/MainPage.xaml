@@ -11,14 +11,6 @@
              d:DataContext="{d:DesignInstance Type=viewModel:MainViewModel, IsDesignTimeCreatable=False}"
              x:Class="Cringebot.Page.MainPage"
              Title="Cringebot">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Icon="gear"
-                     Command="{Binding ViewSettingsCommand}"/>
-        <ToolbarItem Text="?"
-                     Command="{Binding ViewHelpCommand}"/>
-        <ToolbarItem Icon="chart"
-                     Command="{Binding ViewGraphCommand}"/>
-    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout Padding="0" 
                      Spacing="15">

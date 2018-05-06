@@ -18,12 +18,15 @@ namespace Cringebot.Services
 
     public class ThemeService : IThemeService
     {
+        public const string TOOLS_SHOULD_BE_BLACK_CHANGED = "toolsBlackChanged";
         public const string THEME_SET_MESSAGE = "themeSet";
-        private const double REQUIRED_LUMINANCE_DIFFERENCE = 0.2;
+        public const double REQUIRED_LUMINANCE_DIFFERENCE = 0.2;
         private const string BLACK_ADD_NAME = "add";
         private const string WHITE_ADD_NAME = "addwhite";
         private const string BLACK_DELETE_NAME = "clear";
         private const string WHITE_DELETE_NAME = "clearwhite";
+        private const string WHITE_LIST_NAME = "list";
+        private const string BLACK_LIST_NAME = "listblack";
 
         private readonly IDeviceWrapper _deviceWrapper;
         private readonly IEnumerable<Theme> _themes;
@@ -233,7 +236,23 @@ namespace Cringebot.Services
                 Application.Current.Resources["deleteImageName"] = BLACK_DELETE_NAME;
             }
 
+            if (Math.Abs(GetLuminance(navBarColor) - GetLuminance(Color.Black)) < REQUIRED_LUMINANCE_DIFFERENCE)
+            {
+                MessagingCenter.Send(this, TOOLS_SHOULD_BE_BLACK_CHANGED, false);
+                Application.Current.Resources["statListIconName"] = WHITE_LIST_NAME;
+            }
+            else
+            {
+                MessagingCenter.Send(this, TOOLS_SHOULD_BE_BLACK_CHANGED, true);
+                Application.Current.Resources["statListIconName"] = BLACK_LIST_NAME;
+            }
+
             MessagingCenter.Send(this, THEME_SET_MESSAGE);
+        }
+
+        private static double GetLuminance(Color color)
+        {
+            return Math.Sqrt(0.299 * Math.Pow(color.R, 2) + 0.587 * Math.Pow(color.G, 2) + 0.114 * Math.Pow(color.B, 2));
         }
 
         private void LoopUntilLuminanceDifferenceSatisfied(ref Color colorA, ref Color colorB)
@@ -243,11 +262,6 @@ namespace Cringebot.Services
             {
                 colorB = GetRandomColor();
             }
-        }
-
-        private static double GetLuminance(Color color)
-        {
-            return Math.Sqrt(0.299 * Math.Pow(color.R, 2) + 0.587 * Math.Pow(color.G, 2) + 0.114 * Math.Pow(color.B, 2));
         }
 
         private Color GetRandomColor()

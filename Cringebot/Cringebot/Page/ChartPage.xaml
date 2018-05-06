@@ -20,7 +20,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Icon="list"
+        <ToolbarItem Icon="{DynamicResource statListIconName}"
                      Command="{Binding ViewStatsCommand}"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>

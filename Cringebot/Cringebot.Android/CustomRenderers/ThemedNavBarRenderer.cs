@@ -6,6 +6,7 @@ using Cringebot.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Xamarin.Forms.Platform.Android.AppCompat;
+using Color = Xamarin.Forms.Color;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
 
 [assembly: ExportRenderer(typeof(NavigationPage), typeof(ThemedNavBarRenderer))]
@@ -60,6 +61,7 @@ namespace Cringebot.Droid.CustomRenderers
                 var fontString = (string) Application.Current.Resources["styledFontShort"];
                 var font = Typeface.CreateFromAsset(_context.ApplicationContext.Assets, fontString);
                 _textView.Typeface = font;
+                _toolbar.SetSubtitleTextColor(Color.Red.ToAndroid());
             }
         }
     }

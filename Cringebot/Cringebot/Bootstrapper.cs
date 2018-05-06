@@ -46,6 +46,7 @@ namespace Cringebot
         {
             _navContainer.BarBackgroundColor = (Color) Application.Current.Resources["styledNavBarColor"];
             _navContainer.BarTextColor = (Color) Application.Current.Resources["styledNavBarTextColor"];
+            _navContainer.BackgroundColor = (Color) Application.Current.Resources["styledPageBackgroundColor"]; // on Android this is the color during the animated page switch
         }
         // ReSharper restore MemberCanBeMadeStatic.Global
     }

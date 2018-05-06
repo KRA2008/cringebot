@@ -247,6 +247,15 @@
   <ItemGroup>
     <BundleResource Include="Resources\clearwhite%403x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\help%401x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\help%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\help%403x.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
