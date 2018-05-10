@@ -21,33 +21,17 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>MinimumOSVersion</key>
-	<string>8.0</string>
+	<string>7.0</string>
 	<key>CFBundleDisplayName</key>
 	<string>Cringebot</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.kra2008.cringebot</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
-	<key>CFBundleIconFiles</key>
-	<array>
-		<string>Icon-60@2x</string>
-		<string>Icon-60@3x</string>
-		<string>Icon-76</string>
-		<string>Icon-76@2x</string>
-		<string>Default</string>
-		<string>Default@2x</string>
-		<string>Default-568h@2x</string>
-		<string>Default-Portrait</string>
-		<string>Default-Portrait@2x</string>
-		<string>Icon-Small-40</string>
-		<string>Icon-Small-40@2x</string>
-		<string>Icon-Small-40@3x</string>
-		<string>Icon-Small</string>
-		<string>Icon-Small@2x</string>
-		<string>Icon-Small@3x</string>
-	</array>
+	<string>1.5</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
+  <key>UIPrerenderedIcon</key>
+  <false/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Fonts/Comic Sans MS.ttf</string>
@@ -58,6 +42,8 @@
 		<string>Fonts/times.ttf</string>
 		<string>Fonts/Condiment.ttf</string>
 	</array>
+  <key>CFBundleIconFiles</key>
+  <array/>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -69,5 +55,13 @@
 			</array>
 		</dict>
 	</array>
+	<key>XSLaunchImageAssets</key>
+	<string>Resources/Assets.xcassets/LaunchImages.launchimage</string>
+	<key>XSAppIconAssets</key>
+	<string>Resources/Assets.xcassets/AppIcons.appiconset</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>UIMainStoryboardFile</key>
+	<string>LaunchScreen</string>
 </dict>
 </plist>
