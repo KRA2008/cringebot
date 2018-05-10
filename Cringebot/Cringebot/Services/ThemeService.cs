@@ -225,7 +225,7 @@ namespace Cringebot.Services
 
             Application.Current.Resources["styledPageBackgroundImageName"] = targetTheme.PageBackgroundImageName;
 
-            if (Math.Abs(GetLuminance(backgroundColor) - GetLuminance(Color.Black)) < REQUIRED_LUMINANCE_DIFFERENCE)
+            if (!isiOS && Math.Abs(GetLuminance(backgroundColor) - GetLuminance(Color.Black)) < REQUIRED_LUMINANCE_DIFFERENCE)
             {
                 Application.Current.Resources["addImageName"] = WHITE_ADD_NAME;
                 Application.Current.Resources["deleteImageName"] = WHITE_DELETE_NAME;
@@ -236,7 +236,7 @@ namespace Cringebot.Services
                 Application.Current.Resources["deleteImageName"] = BLACK_DELETE_NAME;
             }
 
-            if (Math.Abs(GetLuminance(navBarColor) - GetLuminance(Color.Black)) < REQUIRED_LUMINANCE_DIFFERENCE)
+            if (isiOS || Math.Abs(GetLuminance(navBarColor) - GetLuminance(Color.Black)) < REQUIRED_LUMINANCE_DIFFERENCE)
             {
                 MessagingCenter.Send(this, TOOLS_SHOULD_BE_BLACK_CHANGED, false);
                 Application.Current.Resources["statListIconName"] = WHITE_LIST_NAME;
