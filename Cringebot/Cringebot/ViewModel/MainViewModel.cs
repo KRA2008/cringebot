@@ -52,6 +52,8 @@ namespace Cringebot.ViewModel
         public bool LimitListVisibility { get; set; }
         public string MemoryInput { get; set; }
 
+        public bool CringeFlashTrigger { get; set; }
+
         public Command AddMemoryCommand { get; }
         public Command AddOccurrenceCommand { get; }
         public Command ViewDetailsCommand { get; }
@@ -88,6 +90,8 @@ namespace Cringebot.ViewModel
                 MemoryInput = null;
 
                 notificationManager.SetMemories(_memories);
+
+                CringeFlashTrigger = !CringeFlashTrigger;
             });
 
             AddOccurrenceCommand = new Command(arg => 
@@ -96,6 +100,7 @@ namespace Cringebot.ViewModel
                 memory.Occurrences.Insert(0, SystemTime.Now());
                 MemoryInput = "";
                 keyboardHelper.HideKeyboard();
+                CringeFlashTrigger = !CringeFlashTrigger;
             });
 
             ViewDetailsCommand = new Command(async args => 

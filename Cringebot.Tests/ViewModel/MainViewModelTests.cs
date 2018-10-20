@@ -397,6 +397,20 @@ namespace Cringebot.Tests.ViewModel
                 //assert
                 eventRaised.Should().Be.True();
             }
+
+            [Test, Theory]
+            public void Should_trigger_cringe_flash(bool currentTriggerState)
+            {
+                //arrange
+                _viewModel.CringeFlashTrigger = currentTriggerState;
+
+                //act
+                _viewModel.MemoryInput = "hi";
+                _viewModel.AddMemoryCommand.Execute(null);
+
+                //assert
+                _viewModel.CringeFlashTrigger.Should().Be.EqualTo(!currentTriggerState);
+            }
         }
 
         public class AddOccurrenceCommand : MainViewModelTests
@@ -443,6 +457,19 @@ namespace Cringebot.Tests.ViewModel
 
                 //assert
                 _keyboardHelper.Verify(h => h.HideKeyboard());
+            }
+
+            [Test, Theory]
+            public void Should_trigger_cringe_flash(bool currentTriggerState)
+            {
+                //arrange
+                _viewModel.CringeFlashTrigger = currentTriggerState;
+
+                //act
+                _viewModel.AddOccurrenceCommand.Execute(new Memory());
+
+                //assert
+                _viewModel.CringeFlashTrigger.Should().Be.EqualTo(!currentTriggerState);
             }
         }
 

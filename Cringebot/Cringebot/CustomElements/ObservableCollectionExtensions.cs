@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Cringebot.Page.CustomElements
+namespace Cringebot.CustomElements
 {
     public static class ObservableCollectionExtensions
     {

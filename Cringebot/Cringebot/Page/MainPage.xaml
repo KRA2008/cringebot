@@ -7,99 +7,114 @@
              xmlns:fresh="clr-namespace:FreshMvvm;assembly=FreshMvvm"
              xmlns:corcav="clr-namespace:Corcav.Behaviors;assembly=Corcav.Behaviors"
              xmlns:viewModel="clr-namespace:Cringebot.ViewModel;assembly=Cringebot"
-             xmlns:ce="clr-namespace:Cringebot.Page.CustomElements;assembly=Cringebot"
+                            xmlns:ce="clr-namespace:Cringebot.CustomElements;assembly=Cringebot"
              d:DataContext="{d:DesignInstance Type=viewModel:MainViewModel, IsDesignTimeCreatable=False}"
              x:Class="Cringebot.Page.MainPage"
              Title="Cringebot">
     <ContentPage.Content>
-        <StackLayout Padding="0" 
-                     Spacing="15">
-            <StackLayout Orientation="Horizontal"
-                         Padding="15,15,15,0">
-                <Entry Placeholder="Search/Add Item..."
-                       Text="{Binding MemoryInput}"
-                       HorizontalOptions="FillAndExpand">
+        <AbsoluteLayout>
+            <StackLayout AbsoluteLayout.LayoutFlags="All"
+                         AbsoluteLayout.LayoutBounds="0,0,1,1"
+                         Padding="0" 
+                         Spacing="15">
+                <StackLayout Orientation="Horizontal"
+                             Padding="15,15,15,0">
+                    <Entry Placeholder="Search/Add Item..."
+                           Text="{Binding MemoryInput}"
+                           HorizontalOptions="FillAndExpand">
+                        <corcav:Interaction.Behaviors>
+                            <corcav:BehaviorCollection>
+                                <corcav:EventToCommand EventName="Completed" 
+                                                       Command="{Binding AddMemoryCommand}"/>
+                            </corcav:BehaviorCollection>
+                        </corcav:Interaction.Behaviors>
+                    </Entry>
+                    <Label Text="{Binding SearchResultCount}"
+                           VerticalTextAlignment="Center"/>
+                </StackLayout>
+                <ce:DeselectListView ItemsSource="{Binding Memories}"
+                                                 VerticalOptions="FillAndExpand"
+                                                 Margin="0,0,0,0"
+                                                 x:Name="MemoryList">
+                    <x:Arguments>
+                        <ListViewCachingStrategy>RecycleElement</ListViewCachingStrategy>
+                    </x:Arguments>
                     <corcav:Interaction.Behaviors>
                         <corcav:BehaviorCollection>
-                            <corcav:EventToCommand EventName="Completed" 
-                                                   Command="{Binding AddMemoryCommand}"/>
+                            <corcav:EventToCommand EventName="ItemTapped"
+                                                   Command="{Binding ViewDetailsCommand}"
+                                                   PassEventArgument="True"/>
                         </corcav:BehaviorCollection>
                     </corcav:Interaction.Behaviors>
-                </Entry>
-                <Label Text="{Binding SearchResultCount}"
-                       VerticalTextAlignment="Center"/>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <Grid HorizontalOptions="FillAndExpand"
+                                          VerticalOptions="FillAndExpand"
+                                          Margin="15,0,0,0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Text="{Binding Description}"
+                                               VerticalOptions="CenterAndExpand"
+                                               Grid.Row="0"
+                                               Grid.Column="0"/>
+                                        <StackLayout Orientation="Horizontal"
+                                                     Grid.Row="0"
+                                                     Grid.Column="1"
+                                                     VerticalOptions="Fill"
+                                                     Padding="15,0,15,0">
+                                            <StackLayout.GestureRecognizers>
+                                                <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                                                <TapGestureRecognizer Command="{Binding Source={x:Reference MemoryList}, Path=BindingContext.AddOccurrenceCommand}"
+                                                                      CommandParameter="{Binding}"/>
+                                            </StackLayout.GestureRecognizers>
+                                            <Label Text="{Binding Occurrences.Count}"
+                                                   VerticalOptions="CenterAndExpand">
+                                            </Label>
+                                            <Image Source="{DynamicResource addImageName}"
+                                                   VerticalOptions="CenterAndExpand"/>
+                                        </StackLayout>
+                                    </Grid>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ce:DeselectListView>
+                <StackLayout Orientation="Horizontal"
+                             HorizontalOptions="CenterAndExpand"
+                             Padding="15,0,15,0">
+                    <Label Text="Limit List Visibility"
+                           Style="{DynamicResource highlightText}"
+                           VerticalTextAlignment="Center"/>
+                    <Switch IsToggled="{Binding LimitListVisibility}"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal"
+                             HorizontalOptions="CenterAndExpand"
+                             Padding="15,0,15,15">
+                    <Label Text="Simulate Intrusive Memory/Thoughts"
+                           Style="{DynamicResource highlightText}"
+                           FontSize="Small"
+                           VerticalTextAlignment="Center"/>
+                    <Switch IsToggled="{Binding Simulate}"/>
+                </StackLayout>
             </StackLayout>
-            <ce:DeselectListView ItemsSource="{Binding Memories}"
-                                 VerticalOptions="FillAndExpand"
-                                 Margin="0,0,0,0"
-                                 x:Name="MemoryList">
-                <x:Arguments>
-                    <ListViewCachingStrategy>RecycleElement</ListViewCachingStrategy>
-                </x:Arguments>
-                <corcav:Interaction.Behaviors>
-                    <corcav:BehaviorCollection>
-                        <corcav:EventToCommand EventName="ItemTapped"
-                                               Command="{Binding ViewDetailsCommand}"
-                                               PassEventArgument="True"/>
-                    </corcav:BehaviorCollection>
-                </corcav:Interaction.Behaviors>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <ViewCell.View>
-                                <Grid HorizontalOptions="FillAndExpand"
-                                      VerticalOptions="FillAndExpand"
-                                      Margin="15,0,0,0">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Label Text="{Binding Description}"
-                                           VerticalOptions="CenterAndExpand"
-                                           Grid.Row="0"
-                                           Grid.Column="0"/>
-                                    <StackLayout Orientation="Horizontal"
-                                                 Grid.Row="0"
-                                                 Grid.Column="1"
-                                                 VerticalOptions="Fill"
-                                                 Padding="15,0,15,0">
-                                        <StackLayout.GestureRecognizers>
-                                            <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
-                                            <TapGestureRecognizer Command="{Binding Source={x:Reference MemoryList}, Path=BindingContext.AddOccurrenceCommand}"
-                                                                  CommandParameter="{Binding}"/>
-                                        </StackLayout.GestureRecognizers>
-                                        <Label Text="{Binding Occurrences.Count}"
-                                               VerticalOptions="CenterAndExpand">
-                                        </Label>
-                                        <Image Source="{DynamicResource addImageName}"
-                                               VerticalOptions="CenterAndExpand"/>
-                                    </StackLayout>
-                                </Grid>
-                            </ViewCell.View>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ce:DeselectListView>
-            <StackLayout Orientation="Horizontal"
-                         HorizontalOptions="CenterAndExpand"
-                         Padding="15,0,15,0">
-                <Label Text="Limit List Visibility"
-                       Style="{DynamicResource highlightText}"
-                       VerticalTextAlignment="Center"/>
-                <Switch IsToggled="{Binding LimitListVisibility}"/>
-            </StackLayout>
-            <StackLayout Orientation="Horizontal"
-                         HorizontalOptions="CenterAndExpand"
-                         Padding="15,0,15,15">
-                <Label Text="Simulate Intrusive Memory/Thoughts"
-                       Style="{DynamicResource highlightText}"
-                       FontSize="Small"
-                       VerticalTextAlignment="Center"/>
-                <Switch IsToggled="{Binding Simulate}"/>
-            </StackLayout>
-        </StackLayout>
+            <Image AbsoluteLayout.LayoutFlags="All" 
+                   AbsoluteLayout.LayoutBounds="0,0,1,1" 
+                   Source="white"
+                   Margin="50">
+                <Image.Behaviors>
+                    <ce:FadeInAndOutBehavior Trigger="{Binding CringeFlashTrigger}"
+                                             InTimeMs="0"
+                                             OutTimeMs="500"
+                                             VisibleTimeMs="0"/>
+                </Image.Behaviors>
+            </Image>
+        </AbsoluteLayout>
     </ContentPage.Content>
 </fresh:FreshBaseContentPage>

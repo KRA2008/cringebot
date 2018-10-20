@@ -1,6 +1,6 @@
 ﻿using Xamarin.Forms;
 
-namespace Cringebot.Page.CustomElements
+namespace Cringebot.CustomElements
 {
     public class DeselectListView : ListView
     {

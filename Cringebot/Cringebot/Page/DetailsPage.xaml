@@ -5,8 +5,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              xmlns:fresh="clr-namespace:FreshMvvm;assembly=FreshMvvm"
-             xmlns:ce="clr-namespace:Cringebot.Page.CustomElements;assembly=Cringebot"
-             xmlns:viewModel="clr-namespace:Cringebot.ViewModel;assembly=Cringebot"
+                            xmlns:viewModel="clr-namespace:Cringebot.ViewModel;assembly=Cringebot"
+             xmlns:customElements="clr-namespace:Cringebot.CustomElements;assembly=Cringebot"
              d:DataContext="{d:DesignInstance Type=viewModel:DetailsViewModel, IsDesignTimeCreatable=False}"
              x:Class="Cringebot.Page.DetailsPage"
              Title="Item/Occurrences">
@@ -23,7 +23,7 @@
                 <Label Text="{Binding Memory.Occurrences.Count}"
                        VerticalTextAlignment="Center"/>
             </StackLayout>
-            <ce:DeselectListView ItemsSource="{Binding Memory.Occurrences}"
+            <customElements:DeselectListView ItemsSource="{Binding Memory.Occurrences}"
                                  x:Name="OccurrenceList"
                                  VerticalOptions="FillAndExpand">
                 <x:Arguments>
@@ -59,7 +59,7 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-            </ce:DeselectListView>
+            </customElements:DeselectListView>
             <Button Text="Delete"
                     Command="{Binding DeleteMemoryCommand}"
                     HorizontalOptions="CenterAndExpand"/>

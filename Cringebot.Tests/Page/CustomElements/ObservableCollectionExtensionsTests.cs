@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Cringebot.Page.CustomElements;
+using Cringebot.CustomElements;
 using NUnit.Framework;
 using SharpTestsEx;
 

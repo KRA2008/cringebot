@@ -6,8 +6,8 @@
                             mc:Ignorable="d"
                             xmlns:fresh="clr-namespace:FreshMvvm;assembly=FreshMvvm"
                             xmlns:viewModel="clr-namespace:Cringebot.ViewModel;assembly=Cringebot"
-                            xmlns:ce="clr-namespace:Cringebot.Page.CustomElements;assembly=Cringebot"
                             xmlns:vc="clr-namespace:Cringebot.Page.ValueConverters;assembly=Cringebot"
+                            xmlns:customElements="clr-namespace:Cringebot.CustomElements;assembly=Cringebot"
                             d:DataContext="{d:DesignInstance Type=viewModel:StatsViewModel, IsDesignTimeCreatable=False}"
                             x:Class="Cringebot.Page.StatsPage"
                             Title="{Binding Title}">
@@ -17,7 +17,7 @@
             <Label Margin="15"
                    Text="No data. Please add data."
                    IsVisible="{Binding IsDataPresent, Converter={vc:NotConverter}}"/>
-            <ce:DeselectListView ItemsSource="{Binding Statistics}"
+            <customElements:DeselectListView ItemsSource="{Binding Statistics}"
                                  HasUnevenRows="True">
                 <x:Arguments>
                     <ListViewCachingStrategy>RecycleElement</ListViewCachingStrategy>
@@ -37,7 +37,7 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-            </ce:DeselectListView>
+            </customElements:DeselectListView>
         </StackLayout>
     </ContentPage.Content>
 </fresh:FreshBaseContentPage>
