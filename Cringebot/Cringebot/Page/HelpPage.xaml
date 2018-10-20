@@ -21,10 +21,11 @@
                     <Label Text="Cringebot helps you to see that you are the Cringebot."/>
                     <Label Text="How do I use Cringebot?"
                            Style="{StaticResource header}"/>
-                    <Label Text="Enter recurrent negative thoughts and cringy memories in the text box to add them to the list. Rest assured your list is completely private - Cringebot does not even request internet access."/>
+                    <Label Text="Enter recurrent negative thoughts and cringy memories in the text box to add them to the list. Rest assured your list is completely private - Cringebot does not even request internet access so it has no way to send any information anywhere else."/>
                     <Label Text="As you go about your life, each time you experience a negative thought or recall a cringy memory click the plus icon on the right of that item to mark an occurrence."/>
-                    <Label Text="Limit list visibility by flipping the switch. Cringebot will only show your search results if there is exactly one matching result in order to minimize the chances of accidentally reading other items while adding and tracking."/>
-                    <Label Text="Activate simulation mode by flipping the switch. Cringebot will send you random notifications about items in the list."/>
+                    <Label Text="Limit list visibility by flipping the switch on the bottom of the list page. Cringebot will only show your search results if there is exactly one matching result in order to minimize the chances of accidentally reading other items while adding and tracking."/>
+                    <Label Text="Activate simulation mode by flipping the other switch on the bottom of the list page. Cringebot will then simulate the experience of involuntary recall by sending you notifications about items in the list at random intervals."/>
+                    <Label Text="Once you've collected some data, press the graph button on the top right to see your cringes over time."/>
                     <Label Text="By tracking occurrences, Cringebot helps you to be more aware of how much these occurrences affect your daily life. By simulating, Cringebot helps you to realize the absurdity of the phenomena and perhaps build up a psychological tolerance. Simulation could also be used by people who don't experience such things so they can better understand people who do."/>
                     <Label Text="(I am not a doctor. Cringebot is not therapy.)"/>
                 </StackLayout>

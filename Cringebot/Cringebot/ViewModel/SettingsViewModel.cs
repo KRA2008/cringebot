@@ -25,9 +25,9 @@ namespace Cringebot.ViewModel
 
         public ObservableCollection<string> ThemeNames { get; set; }
 
-        public string DoNotDisturbExplanation => "You will receive no notifications between " + DateTime.Today.Add(Settings.DoNotDisturbStartTime).ToString("t") +
+        public string DoNotDisturbExplanation => "When simulation mode is turned on, you will receive no notifications between " + DateTime.Today.Add(Settings.DoNotDisturbStartTime).ToString("t") +
                                                  " and " + DateTime.Today.Add(Settings.DoNotDisturbStopTime).ToString("t") + ".";
-        public string GenerationIntervalExplanation => "Notifications will be generated at random intervals between " + MinHours +
+        public string GenerationIntervalExplanation => "When simulation mode is turned on, notifications will be generated at random intervals between " + MinHours +
                                                        " and " + MaxHours + " hours in length.";
 
         public Command SetTheme { get; set; }
