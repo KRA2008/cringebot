@@ -61,16 +61,13 @@
                                            VerticalOptions="CenterAndExpand"
                                            Grid.Row="0"
                                            Grid.Column="0"/>
-                                    <!-- ReSharper disable Xaml.InvalidType - the converter is real, don't know why it's complaining-->
-                                    <!-- ReSharper disable Xaml.BindingWithContextNotResolved - binding context logic is beyong ReSharper -->
                                     <StackLayout Orientation="Horizontal"
                                                  Grid.Row="0"
                                                  Grid.Column="1"
                                                  VerticalOptions="Fill"
                                                  Padding="15,0,15,0">
-                                        <!-- ReSharper restore Xaml.BindingWithContextNotResolved -->
-                                        <!-- ReSharper restore Xaml.InvalidType -->
                                         <StackLayout.GestureRecognizers>
+                                            <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
                                             <TapGestureRecognizer Command="{Binding Source={x:Reference MemoryList}, Path=BindingContext.AddOccurrenceCommand}"
                                                                   CommandParameter="{Binding}"/>
                                         </StackLayout.GestureRecognizers>

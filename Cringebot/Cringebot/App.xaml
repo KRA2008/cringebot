@@ -94,6 +94,15 @@
                 <Setter Property="BackgroundColor"
                         Value="{DynamicResource styledPageBackgroundColor}"/>
             </Style>
+            <Style TargetType="NavigationPage"
+                   ApplyToDerivedTypes="True">
+                <Setter Property="BarTextColor"
+                        Value="{DynamicResource styledNavBarTextColor}"/>
+                <Setter Property="BackgroundColor"
+                        Value="{DynamicResource styledPageBackgroundColor}"/>
+                <Setter Property="BarBackgroundColor"
+                        Value="{DynamicResource styledNavBarColor}"/>
+            </Style>
             <sfChart:ChartColorCollection x:Key="styledChartColors"/>
         </ResourceDictionary>
     </Application.Resources>

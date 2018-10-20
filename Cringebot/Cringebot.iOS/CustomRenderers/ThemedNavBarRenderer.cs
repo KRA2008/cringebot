@@ -26,29 +26,13 @@ namespace Cringebot.iOS.CustomRenderers
 
         private static void ApplyTheme(object obj)
         {
-            //foreach (var familyName in UIFont.FamilyNames)
-            //{
-            //    Debug.WriteLine("### Family name: " + familyName);
-            //    foreach (var fontName in UIFont.FontNamesForFamilyName(familyName))
-            //    {
-            //        Debug.WriteLine("### Font name: " + fontName);
-            //    }
-            //}
-
             var font = Xamarin.Forms.Application.Current.Resources["styledFontShort"];
-            var textColor = Xamarin.Forms.Application.Current.Resources["styledNavBarTextColor"];
-            var barColor = Xamarin.Forms.Application.Current.Resources["styledNavBarColor"];
             var att = new UITextAttributes
             {
-                TextShadowColor = ((Color)barColor).ToUIColor(),
-                TextColor = ((Color)textColor).ToUIColor(),
-                Font = UIFont.FromName((string)font, 24),
-                TextShadowOffset = new UIOffset()
+                Font = UIFont.FromName((string)font, 24)
             };
 
             UINavigationBar.Appearance.SetTitleTextAttributes(att);
-
-            AppDelegate.Bootstrapper.ApplyTheme(null);
         }
     }
 }

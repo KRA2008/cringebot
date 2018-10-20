@@ -34,20 +34,7 @@ namespace Cringebot
         public Xamarin.Forms.Page GetStartingPage()
         {
             _navContainer = new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<MainViewModel>());
-            if (Device.RuntimePlatform == Device.Android)
-            {
-                MessagingCenter.Subscribe<ThemeService>(this, ThemeService.THEME_SET_MESSAGE, ApplyTheme);
-            }
-            ApplyTheme(null);
             return _navContainer;
         }
-
-        public void ApplyTheme(object obj)
-        {
-            _navContainer.BarBackgroundColor = (Color) Application.Current.Resources["styledNavBarColor"];
-            _navContainer.BarTextColor = (Color) Application.Current.Resources["styledNavBarTextColor"];
-            _navContainer.BackgroundColor = (Color) Application.Current.Resources["styledPageBackgroundColor"]; // on Android this is the color during the animated page switch
-        }
-        // ReSharper restore MemberCanBeMadeStatic.Global
     }
 }
