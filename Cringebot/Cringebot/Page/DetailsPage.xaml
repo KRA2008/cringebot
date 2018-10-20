@@ -41,9 +41,9 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <!--<Label Text="{Binding ., StringFormat='{0:ddd, MMM d,} \'{0:yy, h:mm tt}'}"
+                                    <Label Text="{Binding ., StringFormat='{0:ddd, MMM d,} \'{0:yy, h:mm tt}'}"
                                            VerticalOptions="CenterAndExpand"
-                                           Grid.Column="0"/>-->
+                                           Grid.Column="0"/>
                                     <Image Source="{DynamicResource deleteImageName}"
                                            Grid.Column="1"
                                            HorizontalOptions="EndAndExpand"
