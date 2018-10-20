@@ -52,7 +52,8 @@
                                 <ViewCell.View>
                                     <Grid HorizontalOptions="FillAndExpand"
                                           VerticalOptions="FillAndExpand"
-                                          Margin="15,0,0,0">
+                                          Margin="15,0,0,0"
+                                          ColumnSpacing="10">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="*"/>
                                         </Grid.RowDefinitions>
@@ -68,15 +69,14 @@
                                                      Grid.Row="0"
                                                      Grid.Column="1"
                                                      VerticalOptions="Fill"
-                                                     Padding="15,0,15,0">
+                                                     Padding="0,0,15,0">
                                             <StackLayout.GestureRecognizers>
                                                 <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
                                                 <TapGestureRecognizer Command="{Binding Source={x:Reference MemoryList}, Path=BindingContext.AddOccurrenceCommand}"
                                                                       CommandParameter="{Binding}"/>
                                             </StackLayout.GestureRecognizers>
                                             <Label Text="{Binding Occurrences.Count}"
-                                                   VerticalOptions="CenterAndExpand">
-                                            </Label>
+                                                   VerticalOptions="CenterAndExpand"/>
                                             <Image Source="{DynamicResource addImageName}"
                                                    VerticalOptions="CenterAndExpand"/>
                                         </StackLayout>
