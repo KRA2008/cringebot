@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Cringebot.Model;
-using Cringebot.Services;
 using Cringebot.Wrappers;
 using Cringebot.ViewModel;
 using FreshMvvm;
@@ -808,6 +807,40 @@ namespace Cringebot.Tests.ViewModel
                 _viewModel.SearchResultCount.Should().Be.EqualTo(2);
                 _viewModel.MemoryInput = "bah";
                 _viewModel.SearchResultCount.Should().Be.EqualTo(1);
+            }
+        }
+
+        public class ViewIsAppearingMethod : MainViewModelTests
+        {
+            [Test]
+            public async Task Should_go_to_help_page_if_first_opening_ever()
+            {
+                //arrange
+                var coreMethods = new Mock<IPageModelCoreMethods>();
+                _viewModel.CoreMethods = coreMethods.Object;
+                _dataStore.Setup(d => d.LoadOrDefault(PropertiesWrapper.HAS_OPENED_BEFORE, false)).Returns(false);
+
+                //act
+                await _viewModel.ViewIsAppearing();
+
+                //assert
+                coreMethods.Verify(c => c.PushPageModel<HelpViewModel>(true, false, true));
+                _dataStore.Verify(d => d.Save(PropertiesWrapper.HAS_OPENED_BEFORE, true));
+            }
+
+            [Test]
+            public async Task Should_NOT_go_to_help_page_if_NOT_first_opening_ever()
+            {
+                //arrange
+                var coreMethods = new Mock<IPageModelCoreMethods>();
+                _viewModel.CoreMethods = coreMethods.Object;
+                _dataStore.Setup(d => d.LoadOrDefault(PropertiesWrapper.HAS_OPENED_BEFORE, false)).Returns(true);
+
+                //act
+                await _viewModel.ViewIsAppearing();
+
+                //assert
+                coreMethods.Verify(c => c.PushPageModel<HelpViewModel>(true, false, true), Times.Never);
             }
         }
     }

@@ -239,5 +239,22 @@ namespace Cringebot.ViewModel
             _properties.Save(PropertiesWrapper.MEMORY_LIST_STORE_KEY, _memories);
             _properties.Save(PropertiesWrapper.SETTINGS_STORE_KEY, _settings);
         }
+
+        protected override async void ViewIsAppearing(object sender, EventArgs e)
+        {
+            base.ViewIsAppearing(sender, e);
+            await Task.Delay(100);
+            await ViewIsAppearing();
+        }
+
+        public async Task ViewIsAppearing() // for testing
+        {
+            var openedBefore = _properties.LoadOrDefault(PropertiesWrapper.HAS_OPENED_BEFORE, false);
+            if (!openedBefore)
+            {
+                await CoreMethods.PushPageModel<HelpViewModel>(true,false);
+                _properties.Save(PropertiesWrapper.HAS_OPENED_BEFORE, true);
+            }
+        }
     }
 }
