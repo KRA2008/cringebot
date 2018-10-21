@@ -61,8 +61,7 @@
                 </ListView.ItemTemplate>
             </customElements:DeselectListView>
             <Button Text="Delete"
-                    Command="{Binding DeleteMemoryCommand}"
-                    HorizontalOptions="CenterAndExpand"/>
+                    Command="{Binding DeleteMemoryCommand}"/>
         </StackLayout>
     </ContentPage.Content>
 </fresh:FreshBaseContentPage>
