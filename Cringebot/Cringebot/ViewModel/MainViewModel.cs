@@ -182,18 +182,28 @@ namespace Cringebot.ViewModel
 
         public async Task ViewSettings()
         {
-            await CoreMethods.PushPageModel<SettingsViewModel>(_settings);
+            await CoreMethods.PushPageModel<SettingsViewModel>(new SettingsPushPackage{
+                Settings = _settings,
+                Memories = _memories
+            });
         }
 
         public override void ReverseInit(object returnedData)
         {
             base.ReverseInit(returnedData);
 
-            var memoryToRemove = (Memory)returnedData;
-            _memories.Remove(memoryToRemove);
+            if (returnedData is SettingsPushPackage pushPackage)
+            {
+                _memories = pushPackage.Memories;
+            }
+            else
+            {
+                var memoryToRemove = (Memory)returnedData;
+                _memories.Remove(memoryToRemove);
+            }
+
             RaisePropertyChanged(nameof(Memories));
             RaisePropertyChanged(nameof(SearchResultCount));
-
             _notificationManager.SetMemories(_memories);
         }
 

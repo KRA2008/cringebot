@@ -56,6 +56,16 @@
                 <Setter Property="FontSize"
                         Value="{DynamicResource mediumestTextSize}"/>
             </Style>
+            <Style TargetType="Editor">
+                <Setter Property="TextColor"
+                        Value="{DynamicResource styledTextColor}"/>
+                <Setter Property="FontFamily"
+                        Value="{DynamicResource styledFontLong}"/>
+                <Setter Property="PlaceholderColor"
+                        Value="{DynamicResource styledPlaceholderColor}"/>
+                <Setter Property="FontSize"
+                        Value="{DynamicResource mediumestTextSize}"/>
+            </Style>
             <Style TargetType="Button">
                 <Setter Property="TextColor"
                         Value="{DynamicResource styledButtonTextColor}"/>

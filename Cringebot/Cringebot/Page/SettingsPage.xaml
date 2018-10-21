@@ -142,6 +142,12 @@
                                 CommandParameter="{Binding ThemeNames[6]}"/>
                     </StackLayout>
                 </StackLayout>
+                <BoxView HeightRequest="1"
+                         HorizontalOptions="FillAndExpand"
+                         Color="{DynamicResource styledTextColor}"/>
+                <Button Margin="{DynamicResource padding}"
+                        Text="Import/Export"
+                        Command="{Binding ViewImportExportCommand}"/>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
