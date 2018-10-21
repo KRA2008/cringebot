@@ -24,6 +24,7 @@ namespace Cringebot
         public Bootstrapper()
         {
             FreshIOC.Container.Register<IAppProperties, PropertiesWrapper>();
+            FreshIOC.Container.Register<ICsvParserService, CsvParserService>().AsSingleton();
             FreshIOC.Container.Register(DependencyService.Get<INotificationManager>());
             FreshIOC.Container.Register<IDeviceWrapper, DeviceWrapper>().AsSingleton();
             FreshIOC.Container.Register(DependencyService.Get<IKeyboardHelper>());

@@ -209,7 +209,26 @@ namespace Cringebot.Tests.ViewModel
         public class ReverseInitMethod : MainViewModelTests
         {
             [Test]
-            public void ShouldRemovePassedMemoryFromList()
+            public void ShouldSetMemoriesToPassedMemories()
+            {
+                //arrange
+                var memories = new List<Memory>
+                {
+                    new Memory()
+                };
+
+                //act
+                _viewModel.ReverseInit(new SettingsPushPackage
+                {
+                    Memories = memories
+                });
+
+                //assert
+                _viewModel.Memories.SequenceEqual(memories).Should().Be.True();
+            }
+
+            [Test]
+            public void ShouldRemovePassedMemoryFromListIfPassedMemory()
             {
                 //arrange
                 const string TARGET_MEMORY_DESCRIPTION = "something to delete";
@@ -232,7 +251,7 @@ namespace Cringebot.Tests.ViewModel
             }
 
             [Theory]
-            public void ShouldUpdateNotificationMemoryList(bool limitListVisibility)
+            public void ShouldUpdateNotificationMemoryListIfPassedMemory(bool limitListVisibility)
             {
                 //arrange
                 const string MEM1 = "blah";
@@ -259,44 +278,47 @@ namespace Cringebot.Tests.ViewModel
                 memoryArray.SingleOrDefault(m => m.Description == MEM2).Should().Not.Be.Null();
             }
 
-            [Test]
-            public void ShouldRaisePropertyChangedOnMemories()
+            public class PropertyChangedTests : ReverseInitMethod
             {
-                //arrange
-                var eventRaised = false;
-                _viewModel.PropertyChanged += (sender, args) =>
+                [TestCase("Memories", true)]
+                [TestCase("Memories", false)]
+                [TestCase("SearchResultCount", true)]
+                [TestCase("SearchResultCount", false)]
+                public void ShouldRaisePropertyChangedOnMemories(string propertyName, bool isMemory)
                 {
-                    if (args.PropertyName == nameof(_viewModel.Memories))
+                    //arrange
+                    var eventRaised = false;
+                    _viewModel.PropertyChanged += (sender, args) =>
                     {
-                        eventRaised = true;
+                        if (args.PropertyName == propertyName)
+                        {
+                            eventRaised = true;
+                        }
+                    };
+
+                    //act
+                    if (isMemory)
+                    {
+                        ReverseInitMemory();
                     }
-                };
+                    else
+                    {
+                        ReverseInitPackage();
+                    }
 
-                //act
-                _viewModel.ReverseInit(new Memory());
+                    //assert
+                    eventRaised.Should().Be.True();
+                }
 
-                //assert
-                eventRaised.Should().Be.True();
-            }
-
-            [Test]
-            public void ShouldRaisePropertyChangedOnSearchResultCount()
-            {
-                //arrange
-                var eventRaised = false;
-                _viewModel.PropertyChanged += (sender, args) =>
+                private void ReverseInitMemory()
                 {
-                    if (args.PropertyName == nameof(_viewModel.SearchResultCount))
-                    {
-                        eventRaised = true;
-                    }
-                };
+                    _viewModel.ReverseInit(new Memory());
+                }
 
-                //act
-                _viewModel.ReverseInit(new Memory());
-
-                //assert
-                eventRaised.Should().Be.True();
+                private void ReverseInitPackage()
+                {
+                    _viewModel.ReverseInit(new SettingsPushPackage());
+                }
             }
         }
 
@@ -730,7 +752,12 @@ namespace Cringebot.Tests.ViewModel
                 await _viewModel.ViewSettings();
 
                 //assert
-                coreMethods.Verify(c => c.PushPageModel<SettingsViewModel>(_settings, false, true));
+                coreMethods.Verify(c =>
+                    c.PushPageModel<SettingsViewModel>(It.Is<SettingsPushPackage>(s => 
+                            s.Settings == _settings &&
+                            s.Memories.SequenceEqual(_viewModel.Memories)
+                            ), false,
+                        true));
             }
         }
 

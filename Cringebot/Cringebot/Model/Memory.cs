@@ -8,7 +8,7 @@ namespace Cringebot.Model
     public class Memory
     {
         public string Description { get; set; }
-        public ObservableCollection<DateTime> Occurrences { get; }
+        public ObservableCollection<DateTime> Occurrences { get; set; }
 
         public Memory()
         {

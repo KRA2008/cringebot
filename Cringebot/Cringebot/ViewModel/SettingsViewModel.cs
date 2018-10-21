@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using Cringebot.Model;
 using Cringebot.Services;
 using Cringebot.Wrappers;
@@ -17,6 +18,7 @@ namespace Cringebot.ViewModel
         private const double RAPID_FIRE_TIME_HOURS = 0.005;
         private const double MAX_HOURS = 999;
         public Settings Settings { get; set; }
+        public List<Memory> Memories { get; set; }
 
         public IList<double> MaxHoursChoices { get; set; }
         public IList<double> MinHoursChoices { get; set; }
@@ -29,8 +31,10 @@ namespace Cringebot.ViewModel
                                                  " and " + DateTime.Today.Add(Settings.DoNotDisturbStopTime).ToString("t") + ".";
         public string GenerationIntervalExplanation => "When simulation mode is turned on, notifications will be generated at random intervals between " + MinHours +
                                                        " and " + MaxHours + " hours in length.";
-
         public Command SetTheme { get; set; }
+
+        public Command ViewImportExportCommand { get; set; }
+
         private readonly INotificationManager _notificationManager;
         private readonly IThemeService _themeService;
 
@@ -39,6 +43,16 @@ namespace Cringebot.ViewModel
             _notificationManager = notificationManager;
             _themeService = themeService;
             SetTheme = new Command(SetThemeMethod);
+
+            ViewImportExportCommand = new Command(async () =>
+            {
+                await NavigateToImportExportAsync(); 
+            });
+        }
+
+        public async Task NavigateToImportExportAsync()
+        {
+            await CoreMethods.PushPageModel<ImportExportViewModel>(Memories);
         }
 
         private void SetThemeMethod(object obj)
@@ -50,7 +64,9 @@ namespace Cringebot.ViewModel
         public override void Init(object initData)
         {
             base.Init(initData);
-            Settings = (Settings) initData;
+            var package = (SettingsPushPackage) initData;
+            Settings = package.Settings;
+            Memories = package.Memories;
             Settings.PropertyChanged += OnSettingsPropertyChanged;
             PropertyChanged += OnPropertyChanged;
 
@@ -66,6 +82,17 @@ namespace Cringebot.ViewModel
             MinHours = GetHoursFromTimeSpan(Settings.GenerationMinInterval);
 
             ThemeNames = new ObservableCollection<string>(_themeService.GetThemes());
+        }
+
+        public override async void ReverseInit(object returnedData)
+        {
+            base.ReverseInit(returnedData);
+            await PopBack(returnedData);
+        }
+
+        public async Task PopBack(object returnedData)
+        {
+            await CoreMethods.PopPageModel(returnedData);
         }
 
         private static double GetHoursFromTimeSpan(TimeSpan timeSpan)
