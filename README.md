@@ -1,5 +1,8 @@
 # Cringebot
 
+iOS: https://itunes.apple.com/us/app/cringebot/id1341267948
+Android: https://play.google.com/store/apps/details?id=com.kra2008.Cringebot
+
 Cringebot explores the tendency many people have to make themselves cringe by remembering embarrassing events in their past and to generate recurrent negative thoughts. I hope that by using Cringebot, users will become more aware of these tendencies and will be more empowered to live happier lives.
 
 Cringebot helps you to see that you are the Cringebot.
