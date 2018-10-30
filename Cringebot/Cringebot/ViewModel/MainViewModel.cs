@@ -131,12 +131,21 @@ namespace Cringebot.ViewModel
                 if(Simulate)
                 {
                     notificationManager.StartNotifications(_memories, _settings);
+                    ShowSimulationExplanation();
                 }
                 else
                 {
                     notificationManager.StopNotifications();
                 }
             };
+        }
+
+        private async void ShowSimulationExplanation()
+        {
+            await CoreMethods.DisplayAlert(
+                "Simulation Mode Activated",
+                "Cringebot will now simulate the experience of involuntary recall by sending you notifications about items in the list at random intervals.",
+                "OK");
         }
 
         private void SetToolbarIcons(ThemeService obj, bool blackItems)
@@ -182,10 +191,12 @@ namespace Cringebot.ViewModel
 
         public async Task ViewSettings()
         {
-            await CoreMethods.PushPageModel<SettingsViewModel>(new SettingsPushPackage{
-                Settings = _settings,
-                Memories = _memories
-            });
+            await CoreMethods.PushPageModel<SettingsViewModel>(
+                new SettingsPushPackage
+                {
+                    Settings = _settings,
+                    Memories = _memories
+                });
         }
 
         public override void ReverseInit(object returnedData)

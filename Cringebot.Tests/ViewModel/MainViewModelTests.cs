@@ -20,6 +20,7 @@ namespace Cringebot.Tests.ViewModel
         private Mock<IAppProperties> _dataStore;
         private Mock<INotificationManager> _notificationManager;
         private Mock<IKeyboardHelper> _keyboardHelper;
+        private Mock<IPageModelCoreMethods> _coreMethods;
 
         [SetUp]
         public void SetupViewModel()
@@ -33,7 +34,11 @@ namespace Cringebot.Tests.ViewModel
             _dataStore.Setup(d => d.LoadOrDefault(PropertiesWrapper.LIMIT_LIST_STORE_KEY, It.IsAny<bool>())).Returns(false);
             _dataStore.Setup(d => d.LoadOrDefault(PropertiesWrapper.MEMORY_LIST_STORE_KEY, It.IsAny<List<Memory>>())).Returns(new List<Memory>());
             _keyboardHelper = new Mock<IKeyboardHelper>();
-            _viewModel = new MainViewModel(_dataStore.Object, _notificationManager.Object, _keyboardHelper.Object);
+            _coreMethods = new Mock<IPageModelCoreMethods>();
+            _viewModel = new MainViewModel(_dataStore.Object, _notificationManager.Object, _keyboardHelper.Object)
+            {
+                CoreMethods = _coreMethods.Object
+            };
             _viewModel.Init(null);
         }
 
