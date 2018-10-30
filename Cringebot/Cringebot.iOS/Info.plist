@@ -27,7 +27,7 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.kra2008.cringebot</string>
 	<key>CFBundleVersion</key>
-	<string>1.6</string>
+	<string>1.7</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
   <key>UIPrerenderedIcon</key>
@@ -60,7 +60,7 @@
 	<key>XSAppIconAssets</key>
 	<string>Resources/Assets.xcassets/AppIcons.appiconset</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.1</string>
 	<key>UIMainStoryboardFile</key>
 	<string>LaunchScreen</string>
 </dict>
