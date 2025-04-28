@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<fresh:FreshBaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+                            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                            mc:Ignorable="d"
+                            xmlns:fresh="clr-namespace:FreshMvvm;assembly=FreshMvvm"
+                            xmlns:vm="clr-namespace:Cringebot.ViewModel;assembly=Cringebot"
+                            d:DataContext="{d:DesignInstance Type=vm:ImportExportViewModel, IsDesignTimeCreatable=False}"
+                            x:Class="Cringebot.Page.ImportExportPage"
+                            Title="Import/Export">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Thickness x:Key="padding">10</Thickness>
+            <x:Double x:Key="spacing">10</x:Double>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Padding="{StaticResource padding}"
+                     Spacing="{StaticResource spacing}">
+            <Editor Text="{Binding ImportExportText}"
+                    HeightRequest="75"
+                    BackgroundColor="White"/>
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Import"
+                        HorizontalOptions="CenterAndExpand"
+                        Command="{Binding ImportCommand}"/>
+                <Button Text="Export"
+                        HorizontalOptions="CenterAndExpand"
+                        Command="{Binding ExportCommand}"/>
+            </StackLayout>
+            <Label Text="To import: paste CSV in the space, with each line formatted as &quot;item name,ISO 8601 datetime of occurence&quot; (or just an item name alone on each line) and click Import."/>
+            <Label Text="To export: press the Export button and the space will be filled with your data in the previously described CSV format which you can copy out. (Remember to select all first)"/>
+        </StackLayout>
+    </ContentPage.Content>
+</fresh:FreshBaseContentPage>
