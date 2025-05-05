@@ -1,11 +1,9 @@
-﻿using Cringebot.iOS.CustomRenderers;
-using Cringebot.Services;
+﻿using Cringebot.Services;
 using Cringebot.ViewModel;
+using Microsoft.Maui.Controls.Compatibility.Platform.iOS;
+using Microsoft.Maui.Controls.Platform;
 using UIKit;
-using Xamarin.Forms;
-using Xamarin.Forms.Platform.iOS;
 
-[assembly: ExportRenderer(typeof(TimePicker), typeof(ThemedTimePickerRenderer))]
 namespace Cringebot.iOS.CustomRenderers
 {
     public class ThemedTimePickerRenderer : TimePickerRenderer
@@ -33,23 +31,24 @@ namespace Cringebot.iOS.CustomRenderers
 
         private void ApplyTheme(object obj)
         {
-            var font = Xamarin.Forms.Application.Current.Resources["styledFontShort"];
-            if (font != null)
-            {
-                Control.Font = UIFont.FromName((string)font, 16);
-            }
-            var backgroundColor = Xamarin.Forms.Application.Current.Resources["styledPageBackgroundColor"];
-            if (backgroundColor != null)
-            {
-                var color = (Color) backgroundColor;
-                Control.BackgroundColor = color.ToUIColor();
-            }
-            var textColor = Xamarin.Forms.Application.Current.Resources["styledTextColor"];
-            if (textColor != null)
-            {
-                var color = (Color) textColor;
-                Control.TextColor = color.ToUIColor();
-            }
+            //TODO
+            //var font = Xamarin.Forms.Application.Current.Resources["styledFontShort"];
+            //if (font != null)
+            //{
+            //    Control.Font = UIFont.FromName((string)font, 16);
+            //}
+            //var backgroundColor = Xamarin.Forms.Application.Current.Resources["styledPageBackgroundColor"];
+            //if (backgroundColor != null)
+            //{
+            //    var color = (Color) backgroundColor;
+            //    Control.BackgroundColor = color.ToUIColor();
+            //}
+            //var textColor = Xamarin.Forms.Application.Current.Resources["styledTextColor"];
+            //if (textColor != null)
+            //{
+            //    var color = (Color) textColor;
+            //    Control.TextColor = color.ToUIColor();
+            //}
         }
     }
 }

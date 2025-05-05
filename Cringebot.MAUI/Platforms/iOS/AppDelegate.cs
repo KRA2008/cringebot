@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using Cringebot.Model;
+﻿using Cringebot.Model;
 using Cringebot.Wrappers;
 using Foundation;
 using UIKit;
 using Cringebot.iOS;
 using Cringebot.Services;
-using System.Linq;
 using UserNotifications;
-using Xamarin.Forms;
 
 [assembly: Dependency(typeof(AppDelegate))]
 namespace Cringebot.iOS
@@ -17,9 +13,8 @@ namespace Cringebot.iOS
     // User Interface of the application, as well as listening (and optionally responding) to 
     // application events from iOS.
     [Register("AppDelegate")]
-    public class AppDelegate : Xamarin.Forms.Platform.iOS.FormsApplicationDelegate, INotificationManager
+    public class AppDelegate : MauiUIApplicationDelegate, INotificationManager
     {
-        public static Bootstrapper Bootstrapper;
         private static IEnumerable<Memory> _memories;
         private static Settings _settings;
         private static bool _notificationsOn;
@@ -32,23 +27,15 @@ namespace Cringebot.iOS
         //
         // You have 17 seconds to return from this method, or iOS will terminate your application.
         //
+        protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
-            Forms.Init();
-
-            Corcav.Behaviors.Infrastructure.Init();
-            Syncfusion.SfChart.XForms.iOS.Renderers.SfChartRenderer.Init();
-
-            Bootstrapper = new Bootstrapper();
-            _app = Bootstrapper.ResolveApp();
-            LoadApplication(_app);
-
             UNUserNotificationCenter.Current.Delegate = new NotificationDelegate();
-
             return base.FinishedLaunching(app, options);
         }
 
-        public override bool OpenUrl(UIApplication application, NSUrl url, string sourceApplication, NSObject annotation)
+        public override bool OpenUrl(UIApplication application, NSUrl url, NSDictionary dict)
         {
             _app.Import(url.Query);
             return true;

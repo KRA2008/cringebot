@@ -1,10 +1,8 @@
 ﻿using CoreGraphics;
-using Cringebot.iOS.CustomRenderers;
+using Microsoft.Maui.Controls.Compatibility.Platform.iOS;
+using Microsoft.Maui.Controls.Platform;
 using UIKit;
-using Xamarin.Forms;
-using Xamarin.Forms.Platform.iOS;
 
-[assembly: ExportRenderer(typeof(Entry), typeof(EntryWithDoneButtonRenderer))]
 namespace Cringebot.iOS.CustomRenderers
 {
     public class EntryWithDoneButtonRenderer : EntryRenderer

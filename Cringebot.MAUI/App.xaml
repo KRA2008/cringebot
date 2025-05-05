@@ -4,8 +4,7 @@
              x:Class="Cringebot.App" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:xForms="clr-namespace:Syncfusion.SfChart.XForms;assembly=Syncfusion.SfChart.XForms">
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
     <Application.Resources>
         <ResourceDictionary>
             <x:String x:Key="addImageName"/>
@@ -84,7 +83,7 @@
                    ApplyToDerivedTypes="True">
                 <Setter Property="BackgroundColor"
                         Value="{DynamicResource styledPageBackgroundColor}"/>
-                <Setter Property="BackgroundImage"
+                <Setter Property="BackgroundImageSource"
                         Value="{DynamicResource styledPageBackgroundImageName}"/>
             </Style>
             <Style TargetType="ListView"
@@ -113,7 +112,7 @@
                 <Setter Property="BarBackgroundColor"
                         Value="{DynamicResource styledNavBarColor}"/>
             </Style>
-            <xForms:ChartColorCollection x:Key="styledChartColors"/>
+            <!--<ChartColorCollection x:Key="styledChartColors"/>-->
         </ResourceDictionary>
     </Application.Resources>
 </Application>    

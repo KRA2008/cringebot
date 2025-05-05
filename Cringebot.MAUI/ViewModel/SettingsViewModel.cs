@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Threading.Tasks;
 using Cringebot.Model;
 using Cringebot.Services;
 using Cringebot.Wrappers;
-using FreshMvvm;
-using Xamarin.Forms;
+using FreshMvvm.Maui;
 
 namespace Cringebot.ViewModel
 {

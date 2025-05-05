@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Collections.ObjectModel;
 using Cringebot.Model;
 using Cringebot.Wrappers;
-using FreshMvvm;
+using FreshMvvm.Maui;
 
 namespace Cringebot.ViewModel
 {

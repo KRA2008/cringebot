@@ -1,8 +1,6 @@
-﻿using Cringebot.iOS.PlatformSpecific;
-using Cringebot.Wrappers;
+﻿using Cringebot.Wrappers;
 using UIKit;
 
-[assembly: Xamarin.Forms.Dependency(typeof(KeyboardHelper))]
 namespace Cringebot.iOS.PlatformSpecific
 {
     public class KeyboardHelper : IKeyboardHelper

@@ -1,6 +1,4 @@
-﻿using Xamarin.Forms;
-
-namespace Cringebot.Model
+﻿namespace Cringebot.Model
 {
     public class Theme
     {

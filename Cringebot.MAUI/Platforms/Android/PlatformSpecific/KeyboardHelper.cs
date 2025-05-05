@@ -3,7 +3,7 @@ using Android.Content;
 using Android.Views.InputMethods;
 using Cringebot.Droid.PlatformSpecific;
 using Cringebot.Wrappers;
-using Xamarin.Forms;
+using Application = Android.App.Application;
 
 [assembly: Dependency(typeof(KeyboardHelper))]
 namespace Cringebot.Droid.PlatformSpecific
@@ -12,7 +12,7 @@ namespace Cringebot.Droid.PlatformSpecific
     {
         public void HideKeyboard()
         {
-            var context = Forms.Context;
+            var context = Application.Context;
             if (context.GetSystemService(Context.InputMethodService) is InputMethodManager inputMethodManager && context is Activity)
             {
                 var activity = (Activity) context;

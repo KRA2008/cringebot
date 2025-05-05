@@ -1,8 +1,5 @@
 ﻿using Cringebot.Model;
-using FreshMvvm;
-using System;
-using System.Threading.Tasks;
-using Xamarin.Forms;
+using FreshMvvm.Maui;
 
 namespace Cringebot.ViewModel
 {

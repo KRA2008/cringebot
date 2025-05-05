@@ -1,13 +1,11 @@
 ﻿using Android.Content;
 using Android.Graphics;
-using Cringebot.Droid.CustomRenderers;
 using Cringebot.Services;
 using Cringebot.ViewModel;
-using Xamarin.Forms;
-using Xamarin.Forms.Platform.Android;
-using Color = Xamarin.Forms.Color;
+using Microsoft.Maui.Controls.Platform;
+using Microsoft.Maui.Controls.Compatibility.Platform.Android;
+using Color = Microsoft.Maui.Graphics.Color;
 
-[assembly: ExportRenderer(typeof(TimePicker), typeof(ThemedTimePickerRenderer))]
 namespace Cringebot.Droid.CustomRenderers
 {
     public class ThemedTimePickerRenderer : TimePickerRenderer
@@ -50,7 +48,7 @@ namespace Cringebot.Droid.CustomRenderers
             if (textColor != null)
             {
                 var color = (Color) textColor;
-                Control.SetTextColor(Android.Graphics.Color.Rgb((int)(color.R * 255), (int)(color.G * 255), (int)(color.B * 255)));
+                Control.SetTextColor(Android.Graphics.Color.Rgb((int)(color.Red * 255), (int)(color.Green * 255), (int)(color.Blue * 255)));
             }
         }
     }

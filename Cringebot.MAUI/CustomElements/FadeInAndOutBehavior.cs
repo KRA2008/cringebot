@@ -1,8 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Xamarin.Forms;
-
-namespace Cringebot.CustomElements
+﻿namespace Cringebot.CustomElements
 {
     // ReSharper disable once UnusedMember.Global
     public sealed class FadeInAndOutBehavior : Behavior<VisualElement>

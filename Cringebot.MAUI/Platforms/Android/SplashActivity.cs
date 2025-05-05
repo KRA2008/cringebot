@@ -1,5 +1,8 @@
-﻿using Android.App;
+﻿using System.Diagnostics;
+using Android.App;
 using Android.Content;
+using Cringebot.MAUI;
+using Activity = Android.App.Activity;
 
 namespace Cringebot.Droid
 {
@@ -9,7 +12,7 @@ namespace Cringebot.Droid
         protected override void OnResume()
         {
             base.OnResume();
-            StartActivity(new Intent(Application.Context, typeof(MainActivity)));
+            StartActivity(new Intent(MainApplication.Context, typeof(MainActivity)));
         }
 
         public override void OnBackPressed() { }

@@ -1,19 +1,16 @@
-﻿using System;
-using Xamarin.Forms;
-
-namespace Cringebot.Wrappers
+﻿namespace Cringebot.Wrappers
 {
     public interface IDeviceWrapper
     {
-        void OpenUri(string uri);
+        Task OpenUri(string uri);
         string RuntimePlatform();
     }
 
     public class DeviceWrapper : IDeviceWrapper
     {
-        public void OpenUri(string uri)
+        public async Task OpenUri(string uri)
         {
-            Device.OpenUri(new Uri(uri));
+            await Browser.OpenAsync(uri);
         }
 
         public string RuntimePlatform()

@@ -1,14 +1,11 @@
 ﻿using Android.App;
 using Android.Content;
 using Cringebot.Wrappers;
-using Cringebot.Droid.PlatformSpecific;
 using Android.OS;
 using Cringebot.Model;
-using System.Collections.Generic;
 using Cringebot.Services;
-using System.Linq;
+using Application = Android.App.Application;
 
-[assembly: Xamarin.Forms.Dependency(typeof(MyNotificationManager))]
 namespace Cringebot.Droid.PlatformSpecific
 {
     [BroadcastReceiver(Enabled = true, Exported = false)]

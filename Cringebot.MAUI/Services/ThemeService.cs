@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Cringebot.Model;
+﻿using Cringebot.Model;
 using Cringebot.Wrappers;
-using Syncfusion.SfChart.XForms;
-using Xamarin.Forms;
-using Xamarin.Forms.Internals;
 
 namespace Cringebot.Services
 {
@@ -29,7 +23,7 @@ namespace Cringebot.Services
         private const string BLACK_LIST_NAME = "listblack";
 
         private readonly IDeviceWrapper _deviceWrapper;
-        private readonly IEnumerable<Theme> _themes;
+        private readonly Theme[] _themes;
         private string _currentThemeName;
         private readonly Random _random;
 
@@ -54,15 +48,16 @@ namespace Cringebot.Services
                     Name = "Goth",
                     FontName = "PlainBlack-Normal",
                     FontFileName = "Plain Black.ttf",
-                    TextColor = Color.White,
-                    HighlightTextColor = Color.White,
-                    ButtonTextColor = Color.Red,
-                    PageBackgroundImageName = "",
-                    PageBackgroundColor = Color.Black,
-                    ButtonBackgroundColor = Color.White,
-                    PlaceholderColor = Color.Red,
-                    NavBarColor = Color.DarkRed,
-                    NavBarTextColor = Color.Black,
+                    //TODO
+                    //TextColor = Color.White,
+                    //HighlightTextColor = Color.White,
+                    //ButtonTextColor = Color.Red,
+                    //PageBackgroundImageName = "",
+                    //PageBackgroundColor = Color.Black,
+                    //ButtonBackgroundColor = Color.White,
+                    //PlaceholderColor = Color.Red,
+                    //NavBarColor = Color.DarkRed,
+                    //NavBarTextColor = Color.Black,
                     ButtonCornerRadius = 0,
                     SmallestTextSize = 18,
                     MediumestTextSize = 20,
@@ -73,15 +68,15 @@ namespace Cringebot.Services
                     Name = "Mac & Cheese",
                     FontName = "SBCMacaroni",
                     FontFileName = "SBC Macaroni Regular.ttf",
-                    TextColor = Color.OrangeRed,
-                    HighlightTextColor = Color.OrangeRed,
-                    ButtonTextColor = Color.Yellow,
-                    PageBackgroundColor = Color.Yellow,
-                    PageBackgroundImageName = "",
-                    ButtonBackgroundColor = Color.Orange,
-                    NavBarColor = Color.Orange,
-                    NavBarTextColor = Color.Yellow,
-                    PlaceholderColor = Color.Orange,
+                    //TextColor = Color.OrangeRed,
+                    //HighlightTextColor = Color.OrangeRed,
+                    //ButtonTextColor = Color.Yellow,
+                    //PageBackgroundColor = Color.Yellow,
+                    //PageBackgroundImageName = "",
+                    //ButtonBackgroundColor = Color.Orange,
+                    //NavBarColor = Color.Orange,
+                    //NavBarTextColor = Color.Yellow,
+                    //PlaceholderColor = Color.Orange,
                     ButtonCornerRadius = 25,
                     SmallestTextSize = 16,
                     MediumestTextSize = 18,
@@ -92,15 +87,15 @@ namespace Cringebot.Services
                     Name = "Emo",
                     FontName = "rise up",
                     FontFileName = "riseup.ttf",
-                    TextColor = Color.DarkRed,
-                    HighlightTextColor = Color.DarkRed,
-                    ButtonTextColor = Color.DarkRed,
-                    PageBackgroundImageName = "",
-                    PageBackgroundColor = Color.Black,
-                    ButtonBackgroundColor = Color.White,
-                    PlaceholderColor = Color.Red,
-                    NavBarColor = Color.DarkRed,
-                    NavBarTextColor = Color.Black,
+                    //TextColor = Color.DarkRed,
+                    //HighlightTextColor = Color.DarkRed,
+                    //ButtonTextColor = Color.DarkRed,
+                    //PageBackgroundImageName = "",
+                    //PageBackgroundColor = Color.Black,
+                    //ButtonBackgroundColor = Color.White,
+                    //PlaceholderColor = Color.Red,
+                    //NavBarColor = Color.DarkRed,
+                    //NavBarTextColor = Color.Black,
                     ButtonCornerRadius = 0,
                     SmallestTextSize = 14,
                     MediumestTextSize = 16,
@@ -111,15 +106,15 @@ namespace Cringebot.Services
                     Name = "Black and White",
                     FontName = "TimesNewRomanPSMT",
                     FontFileName = "times.ttf",
-                    TextColor = Color.Black,
-                    HighlightTextColor = Color.Black,
-                    PageBackgroundImageName = "",
-                    PageBackgroundColor = Color.White,
-                    ButtonTextColor = Color.White,
-                    ButtonBackgroundColor = Color.DimGray,
-                    PlaceholderColor = Color.Gray,
-                    NavBarColor = Color.Black,
-                    NavBarTextColor = Color.White,
+                    //TextColor = Color.Black,
+                    //HighlightTextColor = Color.Black,
+                    //PageBackgroundImageName = "",
+                    //PageBackgroundColor = Color.White,
+                    //ButtonTextColor = Color.White,
+                    //ButtonBackgroundColor = Color.DimGray,
+                    //PlaceholderColor = Color.Gray,
+                    //NavBarColor = Color.Black,
+                    //NavBarTextColor = Color.White,
                     ButtonCornerRadius = 0,
                     SmallestTextSize = 14,
                     MediumestTextSize = 16,
@@ -130,15 +125,15 @@ namespace Cringebot.Services
                     Name = "America",
                     FontName = "TimesNewRomanPSMT",
                     FontFileName = "times.ttf",
-                    TextColor = Color.Blue,
-                    HighlightTextColor = Color.Blue,
-                    ButtonTextColor = Color.White,
-                    PageBackgroundImageName = "stripes",
-                    PageBackgroundColor = Color.Transparent,
-                    ButtonBackgroundColor = Color.Blue,
-                    PlaceholderColor = Color.CornflowerBlue,
-                    NavBarColor = Color.Blue,
-                    NavBarTextColor = Color.White,
+                    //TextColor = Color.Blue,
+                    //HighlightTextColor = Color.Blue,
+                    //ButtonTextColor = Color.White,
+                    //PageBackgroundImageName = "stripes",
+                    //PageBackgroundColor = Color.Transparent,
+                    //ButtonBackgroundColor = Color.Blue,
+                    //PlaceholderColor = Color.CornflowerBlue,
+                    //NavBarColor = Color.Blue,
+                    //NavBarTextColor = Color.White,
                     ButtonCornerRadius = 0,
                     SmallestTextSize = 16,
                     MediumestTextSize = 18,
@@ -149,15 +144,15 @@ namespace Cringebot.Services
                     Name = "Burger",
                     FontName = "Condiment-Regular",
                     FontFileName = "Condiment.ttf",
-                    TextColor = Color.Yellow,
-                    HighlightTextColor = Color.Yellow,
-                    ButtonTextColor = Color.GreenYellow,
-                    PageBackgroundImageName = "", //TODO: make this a picture of beef
-                    PageBackgroundColor = Color.SaddleBrown,
-                    ButtonBackgroundColor = Color.Green,
-                    PlaceholderColor = Color.Green,
-                    NavBarColor = Color.Red,
-                    NavBarTextColor = Color.Yellow,
+                    //TextColor = Color.Yellow,
+                    //HighlightTextColor = Color.Yellow,
+                    //ButtonTextColor = Color.GreenYellow,
+                    //PageBackgroundImageName = "", //TODO: make this a picture of beef
+                    //PageBackgroundColor = Color.SaddleBrown,
+                    //ButtonBackgroundColor = Color.Green,
+                    //PlaceholderColor = Color.Green,
+                    //NavBarColor = Color.Red,
+                    //NavBarTextColor = Color.Yellow,
                     ButtonCornerRadius = 25,
                     SmallestTextSize = 18,
                     MediumestTextSize = 20,
@@ -172,7 +167,7 @@ namespace Cringebot.Services
 
             _currentThemeName = targetTheme.Name;
             var isiOS = _deviceWrapper.RuntimePlatform() == Device.iOS;
-            var isCringe = _themes.IndexOf(targetTheme) == 0;
+            var isCringe = Array.IndexOf(_themes, targetTheme) == 0;
 
             var textColor = isCringe ? GetRandomColor() : targetTheme.TextColor;
             var backgroundColor = isCringe ? GetRandomColor() : targetTheme.PageBackgroundColor;
@@ -187,10 +182,11 @@ namespace Cringebot.Services
 
             Application.Current.Resources["styledPageBackgroundColor"] = backgroundColor;
             Application.Current.Resources["styledTextColor"] = textColor;
-            Application.Current.Resources["styledChartColors"] = new ChartColorCollection
-            {
-                textColor
-            };
+            //TODO
+            //Application.Current.Resources["styledChartColors"] = new ChartColorCollection
+            //{
+            //    textColor
+            //};
             Application.Current.Resources["styledPlaceholderColor"] = placeholderColor;
             Application.Current.Resources["styledHighlightTextColor"] = highlightColor;
 
@@ -225,7 +221,7 @@ namespace Cringebot.Services
 
             Application.Current.Resources["styledPageBackgroundImageName"] = targetTheme.PageBackgroundImageName;
 
-            if (!isiOS && Math.Abs(GetLuminance(backgroundColor) - GetLuminance(Color.Black)) < REQUIRED_LUMINANCE_DIFFERENCE)
+            if (!isiOS && Math.Abs(GetLuminance(backgroundColor) - GetLuminance(Color.FromRgb(0,0,0))) < REQUIRED_LUMINANCE_DIFFERENCE)
             {
                 Application.Current.Resources["addImageName"] = WHITE_ADD_NAME;
                 Application.Current.Resources["deleteImageName"] = WHITE_DELETE_NAME;
@@ -236,7 +232,7 @@ namespace Cringebot.Services
                 Application.Current.Resources["deleteImageName"] = BLACK_DELETE_NAME;
             }
 
-            if (isiOS || Math.Abs(GetLuminance(navBarColor) - GetLuminance(Color.Black)) < REQUIRED_LUMINANCE_DIFFERENCE)
+            if (isiOS || Math.Abs(GetLuminance(navBarColor) - GetLuminance(Color.FromRgb(0, 0, 0))) < REQUIRED_LUMINANCE_DIFFERENCE)
             {
                 MessagingCenter.Send(this, TOOLS_SHOULD_BE_BLACK_CHANGED, false);
                 Application.Current.Resources["statListIconName"] = WHITE_LIST_NAME;
@@ -252,7 +248,7 @@ namespace Cringebot.Services
 
         private static double GetLuminance(Color color)
         {
-            return Math.Sqrt(0.299 * Math.Pow(color.R, 2) + 0.587 * Math.Pow(color.G, 2) + 0.114 * Math.Pow(color.B, 2));
+            return Math.Sqrt(0.299 * Math.Pow(color.Red, 2) + 0.587 * Math.Pow(color.Green, 2) + 0.114 * Math.Pow(color.Blue, 2));
         }
 
         private void LoopUntilLuminanceDifferenceSatisfied(ref Color colorA, ref Color colorB)

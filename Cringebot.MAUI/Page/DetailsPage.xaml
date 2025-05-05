@@ -1,17 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<fresh:FreshBaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<fresh:FreshBaseContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             xmlns:fresh="clr-namespace:FreshMvvm;assembly=FreshMvvm"
-                            xmlns:viewModel="clr-namespace:Cringebot.ViewModel;assembly=Cringebot"
-             xmlns:customElements="clr-namespace:Cringebot.CustomElements;assembly=Cringebot"
-             d:DataContext="{d:DesignInstance Type=viewModel:DetailsViewModel, IsDesignTimeCreatable=False}"
+             xmlns:fresh="clr-namespace:FreshMvvm.Maui;assembly=FreshMvvm.Maui"
+             xmlns:viewModel="clr-namespace:Cringebot.ViewModel;assembly=Cringebot.MAUI"
+             xmlns:customElements="clr-namespace:Cringebot.CustomElements;assembly=Cringebot.MAUI"
+             x:DataType="viewModel:DetailsViewModel"
              x:Class="Cringebot.Page.DetailsPage"
              Title="Item/Occurrences">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Icon="chart"
+        <ToolbarItem IconImageSource="chart"
                      Command="{Binding ViewGraphCommand}"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
@@ -23,13 +20,10 @@
                 <Label Text="{Binding Memory.Occurrences.Count}"
                        VerticalTextAlignment="Center"/>
             </StackLayout>
-            <customElements:DeselectListView ItemsSource="{Binding Memory.Occurrences}"
+            <CollectionView ItemsSource="{Binding Memory.Occurrences}"
                                  x:Name="OccurrenceList"
                                  VerticalOptions="FillAndExpand">
-                <x:Arguments>
-                    <ListViewCachingStrategy>RecycleElement</ListViewCachingStrategy>
-                </x:Arguments>
-                <ListView.ItemTemplate>
+                <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <ViewCell.View>
@@ -58,8 +52,8 @@
                             </ViewCell.View>
                         </ViewCell>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </customElements:DeselectListView>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
             <Button Text="Delete"
                     Command="{Binding DeleteMemoryCommand}"/>
         </StackLayout>

@@ -5,7 +5,7 @@
           android:versionName="1.2" 
           package="com.kra2008.Cringebot" 
           android:installLocation="auto">
-	<uses-sdk android:minSdkVersion="15" 
+	<uses-sdk android:minSdkVersion="21" 
 	          android:targetSdkVersion="28" />
 	<uses-permission android:name="android.permission.VIBRATE" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />

@@ -1,15 +1,10 @@
 ﻿using Cringebot.Model;
 using Cringebot.Wrappers;
-using FreshMvvm;
 using PropertyChanged;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using Xamarin.Forms;
-using System;
-using System.Linq;
 using System.Net;
 using Cringebot.Services;
+using FreshMvvm.Maui;
 
 namespace Cringebot.ViewModel
 {
@@ -63,10 +58,10 @@ namespace Cringebot.ViewModel
 
         private Settings _settings;
 
-        private readonly IAppProperties _properties;
+        private readonly IPersistentStorage _properties;
         private readonly INotificationManager _notificationManager;
 
-        public MainViewModel(IAppProperties properties, INotificationManager notificationManager,
+        public MainViewModel(IPersistentStorage properties, INotificationManager notificationManager,
             IKeyboardHelper keyboardHelper)
         {
             _properties = properties;
@@ -159,17 +154,17 @@ namespace Cringebot.ViewModel
 
             CurrentPage.ToolbarItems.Add(new ToolbarItem
             {
-                Icon = "gear"+colorSuffix,
+                IconImageSource = "gear"+colorSuffix,
                 Command = ViewSettingsCommand
             });
             CurrentPage.ToolbarItems.Add(new ToolbarItem
             {
-                Icon = "help" + colorSuffix,
+                IconImageSource = "help" + colorSuffix,
                 Command = ViewHelpCommand
             });
             CurrentPage.ToolbarItems.Add(new ToolbarItem
             {
-                Icon = "chart" + colorSuffix,
+                IconImageSource = "chart" + colorSuffix,
                 Command = ViewGraphCommand
             });
         }
@@ -222,10 +217,10 @@ namespace Cringebot.ViewModel
         {
             base.Init(initData);
 
-            Simulate = _properties.LoadOrDefault(PropertiesWrapper.SIMULATE_STORE_KEY, false);
-            LimitListVisibility = _properties.LoadOrDefault(PropertiesWrapper.LIMIT_LIST_STORE_KEY, false);
-            _memories = _properties.LoadOrDefault(PropertiesWrapper.MEMORY_LIST_STORE_KEY, new List<Memory>());
-            _settings = _properties.LoadOrDefault(PropertiesWrapper.SETTINGS_STORE_KEY, new Settings());
+            Simulate = _properties.LoadOrDefault(PersistentStorage.SIMULATE_STORE_KEY, false);
+            LimitListVisibility = _properties.LoadOrDefault(PersistentStorage.LIMIT_LIST_STORE_KEY, false);
+            _memories = _properties.LoadOrDefault(PersistentStorage.MEMORY_LIST_STORE_KEY, new List<Memory>());
+            _settings = _properties.LoadOrDefault(PersistentStorage.SETTINGS_STORE_KEY, new Settings());
 
             if (Simulate)
             {
@@ -255,10 +250,10 @@ namespace Cringebot.ViewModel
 
         public void Save()
         {
-            _properties.Save(PropertiesWrapper.LIMIT_LIST_STORE_KEY, LimitListVisibility);
-            _properties.Save(PropertiesWrapper.SIMULATE_STORE_KEY, Simulate);
-            _properties.Save(PropertiesWrapper.MEMORY_LIST_STORE_KEY, _memories);
-            _properties.Save(PropertiesWrapper.SETTINGS_STORE_KEY, _settings);
+            _properties.Save(PersistentStorage.LIMIT_LIST_STORE_KEY, LimitListVisibility);
+            _properties.Save(PersistentStorage.SIMULATE_STORE_KEY, Simulate);
+            _properties.Save(PersistentStorage.MEMORY_LIST_STORE_KEY, _memories);
+            _properties.Save(PersistentStorage.SETTINGS_STORE_KEY, _settings);
         }
 
         protected override async void ViewIsAppearing(object sender, EventArgs e)
@@ -270,11 +265,11 @@ namespace Cringebot.ViewModel
 
         public async Task ViewIsAppearing() // for testing
         {
-            var openedBefore = _properties.LoadOrDefault(PropertiesWrapper.HAS_OPENED_BEFORE, false);
+            var openedBefore = _properties.LoadOrDefault(PersistentStorage.HAS_OPENED_BEFORE, false);
             if (!openedBefore)
             {
                 await CoreMethods.PushPageModel<HelpViewModel>(true,false);
-                _properties.Save(PropertiesWrapper.HAS_OPENED_BEFORE, true);
+                _properties.Save(PersistentStorage.HAS_OPENED_BEFORE, true);
             }
         }
     }

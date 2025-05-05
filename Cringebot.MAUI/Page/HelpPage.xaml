@@ -1,12 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<fresh:FreshBaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<fresh:FreshBaseContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                            mc:Ignorable="d"
-                            xmlns:fresh="clr-namespace:FreshMvvm;assembly=FreshMvvm"
-                            xmlns:viewModel="clr-namespace:Cringebot.ViewModel;assembly=Cringebot"
-                            d:DataContext="{d:DesignInstance Type=viewModel:HelpViewModel, IsDesignTimeCreatable=False}"
+                            xmlns:fresh="clr-namespace:FreshMvvm.Maui;assembly=FreshMvvm.Maui"
+                            xmlns:viewModel="clr-namespace:Cringebot.ViewModel;assembly=Cringebot.MAUI"
+                            x:DataType="viewModel:HelpViewModel"
                             x:Class="Cringebot.Page.HelpPage"
                             Title="Help">
     <ContentPage.Content>

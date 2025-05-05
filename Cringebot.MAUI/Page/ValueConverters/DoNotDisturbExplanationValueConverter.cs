@@ -1,8 +1,5 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using Cringebot.Model;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace Cringebot.Page.ValueConverters
 {

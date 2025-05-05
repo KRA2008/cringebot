@@ -1,28 +1,29 @@
 ﻿using Cringebot.Services;
 using Cringebot.ViewModel;
 using Cringebot.Wrappers;
-using FreshMvvm;
+using FreshMvvm.Maui;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace Cringebot
 {
-    public partial class App
+    public partial class App : Application
     {
         private readonly IThemeService _themeService;
-        private readonly IAppProperties _dataStore;
-        private readonly MainViewModel _mainViewModel;
-
-        public App(IBootstrapper bootstrapper, IThemeService themeService, IAppProperties dataStore)
+        private readonly IPersistentStorage _dataStore;
+        private MainViewModel _mainViewModel;
+        
+        public App(IThemeService themeService, IPersistentStorage dataStore)
         {
             InitializeComponent();
             _themeService = themeService;
             _dataStore = dataStore;
+        }
 
-            var startingPage = bootstrapper.GetStartingPage();
-
-            _mainViewModel = (MainViewModel)((FreshBaseContentPage)((FreshNavigationContainer)startingPage).CurrentPage).BindingContext;
-
-            MainPage = startingPage;
+        protected override Window CreateWindow(IActivationState? activationState)
+        {
+            var mainWindow = FreshPageModelResolver.ResolvePageModel<MainViewModel>();
+            _mainViewModel = (MainViewModel)mainWindow.BindingContext;
+            return new Window(mainWindow);
         }
 
         public void Import(string import)
@@ -30,19 +31,19 @@ namespace Cringebot
             _mainViewModel.Import(import);
         }
 
-        protected override void OnStart()
-        {
-            _themeService.ApplyTheme(_dataStore.LoadOrDefault(PropertiesWrapper.THEME_STORE_KEY, ""));
-        }
+        //protected override void OnStart()
+        //{
+        //    _themeService.ApplyTheme(_dataStore.LoadOrDefault(PersistentStorage.THEME_STORE_KEY, ""));
+        //}
 
-        protected override void OnSleep()
-        {
-            _mainViewModel.Save();
-            _dataStore.Save(PropertiesWrapper.THEME_STORE_KEY, _themeService.GetCurrentThemeName());
-        }
+        //protected override void OnSleep()
+        //{
+        //    _mainViewModel.Save();
+        //    _dataStore.Save(PersistentStorage.THEME_STORE_KEY, _themeService.GetCurrentThemeName());
+        //}
 
-        protected override void OnResume()
-        {
-        }
+        //protected override void OnResume()
+        //{
+        //}
     }
 }

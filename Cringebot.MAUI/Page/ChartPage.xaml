@@ -1,14 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<fresh:FreshBaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<fresh:FreshBaseContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                            xmlns:fresh="clr-namespace:FreshMvvm.Maui;assembly=FreshMvvm.Maui"
                             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                            mc:Ignorable="d"
-                            xmlns:fresh="clr-namespace:FreshMvvm;assembly=FreshMvvm"
-                            xmlns:viewModel="clr-namespace:Cringebot.ViewModel;assembly=Cringebot"
-                            xmlns:sfChart="clr-namespace:Syncfusion.SfChart.XForms;assembly=Syncfusion.SfChart.XForms"
-                            xmlns:vc="clr-namespace:Cringebot.Page.ValueConverters;assembly=Cringebot"
-                            d:DataContext="{d:DesignInstance Type=viewModel:ChartViewModel, IsDesignTimeCreatable=False}"
+                            xmlns:viewModel="clr-namespace:Cringebot.ViewModel;assembly=Cringebot.MAUI"
+                            xmlns:vc="clr-namespace:Cringebot.Page.ValueConverters;assembly=Cringebot.MAUI"
+                            x:DataType="viewModel:ChartViewModel"
                             x:Class="Cringebot.Page.ChartPage"
                             Title="{Binding Title}">
     <ContentPage.Resources>
@@ -20,7 +16,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Icon="{DynamicResource statListIconName}"
+        <ToolbarItem IconImageSource="{DynamicResource statListIconName}"
                      Command="{Binding ViewStatsCommand}"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
@@ -29,14 +25,14 @@
             <Label Text="No data. Please add data."
                    IsVisible="{Binding IsDataPresent, Converter={vc:NotConverter}}"
                    Margin="15"/>
-            <sfChart:SfChart HorizontalOptions="FillAndExpand"
+            <!--<SfChart HorizontalOptions="FillAndExpand"
                              VerticalOptions="FillAndExpand"
                              Margin="5,15,15,0"
                              BackgroundColor="{DynamicResource styledPageBackgroundColor}">
-                <sfChart:SfChart.ColorModel>
-                    <sfChart:ChartColorModel Palette="Custom"
+                <SfChart.ColorModel>
+                    <ChartColorModel Palette="Custom"
                                              CustomBrushes="{StaticResource styledChartColors}"/>
-                </sfChart:SfChart.ColorModel>
+                </SfChart.ColorModel>
                 <sfChart:SfChart.PrimaryAxis>
                     <sfChart:CategoryAxis LabelRotationAngle="45">
                         <sfChart:CategoryAxis.AxisLineStyle>
@@ -76,7 +72,7 @@
                 <sfChart:SfChart.Series>
                     <sfChart:ColumnSeries ItemsSource="{Binding Data}"/>
                 </sfChart:SfChart.Series>
-            </sfChart:SfChart>
+            </SfChart>-->
             <StackLayout Orientation="Horizontal"
                          Padding="15,0,15,0">
                 <Button Command="{Binding SetLast7DaysCommand}"

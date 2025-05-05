@@ -1,8 +1,5 @@
-﻿using System;
-using System.Threading.Tasks;
-using Cringebot.Wrappers;
-using FreshMvvm;
-using Xamarin.Forms;
+﻿using Cringebot.Wrappers;
+using FreshMvvm.Maui;
 
 namespace Cringebot.ViewModel
 {

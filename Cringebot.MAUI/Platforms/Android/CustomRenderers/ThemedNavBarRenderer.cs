@@ -1,15 +1,13 @@
 ﻿using Android.Content;
 using Android.Graphics;
+using Android.Views;
 using Android.Widget;
-using Cringebot.Droid.CustomRenderers;
 using Cringebot.Services;
-using Xamarin.Forms;
-using Xamarin.Forms.Platform.Android;
-using Xamarin.Forms.Platform.Android.AppCompat;
-using Color = Xamarin.Forms.Color;
-using Toolbar = Android.Support.V7.Widget.Toolbar;
+using Microsoft.Maui.Controls.Compatibility.Platform.Android;
+using Microsoft.Maui.Controls.Compatibility.Platform.Android.AppCompat;
+using Microsoft.Maui.Controls.Platform;
+using Toolbar = AndroidX.AppCompat.Widget.Toolbar;
 
-[assembly: ExportRenderer(typeof(NavigationPage), typeof(ThemedNavBarRenderer))]
 namespace Cringebot.Droid.CustomRenderers
 {
     public class ThemedNavBarRenderer : NavigationPageRenderer
@@ -45,7 +43,7 @@ namespace Cringebot.Droid.CustomRenderers
             }
         }
 
-        private void Toolbar_ChildViewAdded(object sender, ChildViewAddedEventArgs e)
+        private void Toolbar_ChildViewAdded(object sender, ViewGroup.ChildViewAddedEventArgs e)
         {
             if (e.Child is TextView view)
             {
@@ -61,7 +59,7 @@ namespace Cringebot.Droid.CustomRenderers
                 var fontString = (string) Application.Current.Resources["styledFontShort"];
                 var font = Typeface.CreateFromAsset(_context.ApplicationContext.Assets, fontString);
                 _textView.Typeface = font;
-                _toolbar.SetSubtitleTextColor(Color.Red.ToAndroid());
+                _toolbar.SetSubtitleTextColor(Microsoft.Maui.Graphics.Color.FromRgb(float.MaxValue,0,0).ToAndroid());
             }
         }
     }

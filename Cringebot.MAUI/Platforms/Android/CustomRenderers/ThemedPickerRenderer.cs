@@ -1,13 +1,10 @@
 ﻿using Android.Content;
 using Android.Graphics;
-using Cringebot.Droid.CustomRenderers;
 using Cringebot.Services;
 using Cringebot.ViewModel;
-using Xamarin.Forms;
-using Xamarin.Forms.Platform.Android;
-using PickerRenderer = Xamarin.Forms.Platform.Android.AppCompat.PickerRenderer;
+using Microsoft.Maui.Controls.Compatibility.Platform.Android.AppCompat;
+using Microsoft.Maui.Controls.Platform;
 
-[assembly: ExportRenderer(typeof(Picker), typeof(ThemedPickerRenderer))]
 namespace Cringebot.Droid.CustomRenderers
 {
     public class ThemedPickerRenderer : PickerRenderer

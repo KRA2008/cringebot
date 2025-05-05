@@ -1,15 +1,13 @@
-﻿using Xamarin.Forms;
-
-namespace Cringebot.CustomElements
+﻿namespace Cringebot.CustomElements
 {
-    public class DeselectListView : ListView
+    public class DeselectListView : CollectionView
     {
-        public DeselectListView(ListViewCachingStrategy strategy) : base(strategy)
+        public DeselectListView()
         {
-            ItemTapped += (args, sender) =>
-            {
-                SelectedItem = null;
-            };
+            //ItemTapped += (args, sender) =>
+            //{
+            //    SelectedItem = null;
+            //};
         }
     }
 }

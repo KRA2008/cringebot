@@ -1,12 +1,8 @@
-﻿using System.Diagnostics;
-using System.Threading.Tasks;
-using Cringebot.iOS.CustomRenderers;
-using Cringebot.Services;
+﻿using Cringebot.Services;
+using Microsoft.Maui.Controls.Compatibility.Platform.iOS;
+using Microsoft.Maui.Controls.Platform;
 using UIKit;
-using Xamarin.Forms;
-using Xamarin.Forms.Platform.iOS;
 
-[assembly: ExportRenderer(typeof(NavigationPage), typeof(ThemedNavBarRenderer))]
 namespace Cringebot.iOS.CustomRenderers
 {
     public class ThemedNavBarRenderer : NavigationRenderer
@@ -26,13 +22,14 @@ namespace Cringebot.iOS.CustomRenderers
 
         private static void ApplyTheme(object obj)
         {
-            var font = Xamarin.Forms.Application.Current.Resources["styledFontShort"];
-            var att = new UITextAttributes
-            {
-                Font = UIFont.FromName((string)font, 24)
-            };
+            //TODO
+            //var font = Xamarin.Forms.Application.Current.Resources["styledFontShort"];
+            //var att = new UITextAttributes
+            //{
+            //    Font = UIFont.FromName((string)font, 24)
+            //};
 
-            UINavigationBar.Appearance.SetTitleTextAttributes(att);
+            //UINavigationBar.Appearance.SetTitleTextAttributes(att);
         }
     }
 }
