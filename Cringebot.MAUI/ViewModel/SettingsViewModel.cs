@@ -34,7 +34,7 @@ namespace Cringebot.ViewModel
         private readonly INotificationManager _notificationManager;
         private readonly IThemeService _themeService;
 
-        public SettingsViewModel(INotificationManager notificationManager, IThemeService themeService)
+        public SettingsViewModel(IThemeService themeService, INotificationManager notificationManager)
         {
             _notificationManager = notificationManager;
             _themeService = themeService;

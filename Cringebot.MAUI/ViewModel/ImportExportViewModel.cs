@@ -20,7 +20,7 @@ namespace Cringebot.ViewModel
 
             ExportCommand = new Command(() =>
             {
-                ImportExportText = parserService.StringifyMemories(_existingMemories);
+                ImportExportText = _parserService.StringifyMemories(_existingMemories);
             });
 
             ImportCommand = new Command(async () =>

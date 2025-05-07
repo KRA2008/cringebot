@@ -13,10 +13,6 @@ namespace Cringebot.Droid
             //ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(bundle);
-
-            //Xamarin.Forms.Forms.Init(this, bundle);
-            //var bootstrapper = new Bootstrapper();
-            //LoadApplication(bootstrapper.ResolveApp());
         }
     }
 }

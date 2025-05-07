@@ -4,8 +4,11 @@ using Cringebot.Droid.PlatformSpecific;
 using Cringebot.iOS;
 using Cringebot.iOS.PlatformSpecific;
 #endif
+using Cringebot.Page;
 using Cringebot.Services;
+using Cringebot.ViewModel;
 using Cringebot.Wrappers;
+using FreshMvvm.Maui.Extensions;
 using Microsoft.Extensions.Logging;
 
 namespace Cringebot
@@ -15,13 +18,7 @@ namespace Cringebot
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
-            builder
-                .UseMauiApp<App>()
-                .ConfigureFonts(fonts =>
-                {
-                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                });
+            builder.UseMauiApp<App>();
 
             builder.ConfigureMauiHandlers(handlers =>
             {
@@ -31,22 +28,40 @@ namespace Cringebot
             });
 
             var services = builder.Services;
-            services.Add(ServiceDescriptor.Singleton<IPersistentStorage, PersistentStorage>());
-            services.Add(ServiceDescriptor.Transient<ICsvParserService, CsvParserService>());
-            services.Add(ServiceDescriptor.Singleton<IDeviceWrapper, DeviceWrapper>());
-            services.Add(ServiceDescriptor.Singleton<IThemeService, ThemeService>());
+
+            services.AddSingleton<MainViewModel>();
+            services.AddTransient<ChartViewModel>();
+            services.AddTransient<DetailsViewModel>();
+            services.AddTransient<HelpViewModel>();
+            services.AddTransient<ImportExportViewModel>();
+            services.AddTransient<SettingsViewModel>();
+            services.AddTransient<StatsViewModel>();
+
+            services.AddSingleton<MainPage>();
+            services.AddTransient<ChartPage>();
+            services.AddTransient<DetailsPage>();
+            services.AddTransient<HelpPage>();
+            services.AddTransient<ImportExportPage>();
+            services.AddTransient<SettingsPage>();
+            services.AddTransient<StatsPage>();
+
+            services.AddTransient<IPersistentStorage, PersistentStorage>();
+            services.AddTransient<ICsvParserService, CsvParserService>();
+            services.AddTransient<IDeviceWrapper, DeviceWrapper>();
+            services.AddTransient<IThemeService, ThemeService>();
 #if __IOS__
-            services.Add(ServiceDescriptor.Singleton<INotificationManager, AppDelegate>());
-            services.Add(ServiceDescriptor.Singleton<IKeyboardHelper, KeyboardHelper>());
+            services.AddTransient<INotificationManager, AppDelegate>();
+            services.AddTransient<IKeyboardHelper, KeyboardHelper>();
 #elif __ANDROID__
-            services.Add(ServiceDescriptor.Singleton<INotificationManager, MyNotificationManager>());
-            services.Add(ServiceDescriptor.Singleton<IKeyboardHelper, KeyboardHelper>());
+            services.AddTransient<INotificationManager, MyNotificationManager>();
+            services.AddTransient<IKeyboardHelper, KeyboardHelper>();
 #endif
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
-
-            return builder.Build();
+            var app = builder.Build();
+            app.UseFreshMvvm();
+            return app;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Cringebot.Wrappers;
+﻿using System.Diagnostics;
+using Cringebot.Wrappers;
 using FreshMvvm.Maui;
 
 namespace Cringebot.ViewModel
@@ -26,9 +27,16 @@ namespace Cringebot.ViewModel
 
         protected override async void ViewIsAppearing(object sender, EventArgs e)
         {
-            base.ViewIsAppearing(sender, e);
-            await Task.Delay(100);
-            await ViewIsAppearing();
+            try
+            {
+                base.ViewIsAppearing(sender, e);
+                await Task.Delay(100);
+                await ViewIsAppearing();
+            }
+            catch (Exception ex)
+            {
+                Debugger.Break();
+            }
         }
 
         public async Task ViewIsAppearing()

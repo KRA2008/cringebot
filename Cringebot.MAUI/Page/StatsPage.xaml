@@ -4,7 +4,6 @@
                             xmlns:fresh="clr-namespace:FreshMvvm.Maui;assembly=FreshMvvm.Maui"
                             xmlns:viewModel="clr-namespace:Cringebot.ViewModel;assembly=Cringebot.MAUI"
                             xmlns:vc="clr-namespace:Cringebot.Page.ValueConverters;assembly=Cringebot.MAUI"
-                            xmlns:customElements="clr-namespace:Cringebot.CustomElements;assembly=Cringebot.MAUI"
                             x:DataType="viewModel:StatsViewModel"
                             x:Class="Cringebot.Page.StatsPage"
                             Title="{Binding Title}">
@@ -17,17 +16,13 @@
             <CollectionView ItemsSource="{Binding Statistics}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell>
-                            <ViewCell.View>
-                                <StackLayout Orientation="Horizontal"
-                                             Padding="15">
-                                    <Label Text="{Binding Description, StringFormat='{0}:'}"
-                                           VerticalTextAlignment="Center"/>
-                                    <Label Text="{Binding Value}"
-                                           VerticalTextAlignment="Center"/>
-                                </StackLayout>
-                            </ViewCell.View>
-                        </ViewCell>
+                        <StackLayout Orientation="Horizontal"
+                                     Padding="15">
+                            <Label Text="{Binding Description, StringFormat='{0}:'}"
+                                   VerticalTextAlignment="Center"/>
+                            <Label Text="{Binding Value}"
+                                   VerticalTextAlignment="Center"/>
+                        </StackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>

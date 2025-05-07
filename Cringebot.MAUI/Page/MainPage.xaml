@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:fresh="clr-namespace:FreshMvvm.Maui;assembly=FreshMvvm.Maui"
              xmlns:viewModel="clr-namespace:Cringebot.ViewModel;assembly=Cringebot.MAUI"
-                            xmlns:ce="clr-namespace:Cringebot.CustomElements;assembly=Cringebot.MAUI"
+             xmlns:ce="clr-namespace:Cringebot.CustomElements;assembly=Cringebot.MAUI"
              x:DataType="viewModel:MainViewModel"
              x:Class="Cringebot.Page.MainPage"
              Title="Cringebot">
@@ -32,41 +32,37 @@
                                 x:Name="MemoryList">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <ViewCell>
-                                <ViewCell.View>
-                                    <Grid HorizontalOptions="FillAndExpand"
-                                          VerticalOptions="FillAndExpand"
-                                          Margin="15,0,0,0"
-                                          ColumnSpacing="10">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Label Text="{Binding Description}"
-                                               VerticalOptions="CenterAndExpand"
-                                               Grid.Row="0"
-                                               Grid.Column="0"/>
-                                        <StackLayout Orientation="Horizontal"
-                                                     Grid.Row="0"
-                                                     Grid.Column="1"
-                                                     VerticalOptions="Fill"
-                                                     Padding="0,0,15,0">
-                                            <StackLayout.GestureRecognizers>
-                                                <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
-                                                <TapGestureRecognizer Command="{Binding Source={x:Reference MemoryList}, Path=BindingContext.AddOccurrenceCommand}"
-                                                                      CommandParameter="{Binding}"/>
-                                            </StackLayout.GestureRecognizers>
-                                            <Label Text="{Binding Occurrences.Count}"
-                                                   VerticalOptions="CenterAndExpand"/>
-                                            <Image Source="{DynamicResource addImageName}"
-                                                   VerticalOptions="CenterAndExpand"/>
-                                        </StackLayout>
-                                    </Grid>
-                                </ViewCell.View>
-                            </ViewCell>
+                            <Grid HorizontalOptions="FillAndExpand"
+                                  VerticalOptions="FillAndExpand"
+                                  Margin="15,0,0,0"
+                                  ColumnSpacing="10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="{Binding Description}"
+                                       VerticalOptions="CenterAndExpand"
+                                       Grid.Row="0"
+                                       Grid.Column="0"/>
+                                <StackLayout Orientation="Horizontal"
+                                             Grid.Row="0"
+                                             Grid.Column="1"
+                                             VerticalOptions="Fill"
+                                             Padding="0,0,15,0">
+                                    <StackLayout.GestureRecognizers>
+                                        <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                                        <TapGestureRecognizer Command="{Binding Source={x:Reference MemoryList}, Path=BindingContext.AddOccurrenceCommand}"
+                                                              CommandParameter="{Binding}"/>
+                                    </StackLayout.GestureRecognizers>
+                                    <Label Text="{Binding Occurrences.Count}"
+                                           VerticalOptions="CenterAndExpand"/>
+                                    <Image Source="{DynamicResource addImageName}"
+                                           VerticalOptions="CenterAndExpand"/>
+                                </StackLayout>
+                            </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>

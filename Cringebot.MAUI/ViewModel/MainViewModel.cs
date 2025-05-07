@@ -2,6 +2,7 @@
 using Cringebot.Wrappers;
 using PropertyChanged;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Net;
 using Cringebot.Services;
 using FreshMvvm.Maui;
@@ -61,10 +62,10 @@ namespace Cringebot.ViewModel
         private readonly IPersistentStorage _properties;
         private readonly INotificationManager _notificationManager;
 
-        public MainViewModel(IPersistentStorage properties, INotificationManager notificationManager,
+        public MainViewModel(IPersistentStorage persistentStorage, INotificationManager notificationManager,
             IKeyboardHelper keyboardHelper)
         {
-            _properties = properties;
+            _properties = persistentStorage;
             _notificationManager = notificationManager;
             _memories = new List<Memory>();
 
@@ -84,7 +85,7 @@ namespace Cringebot.ViewModel
 
                 MemoryInput = null;
 
-                notificationManager.SetMemories(_memories);
+                _notificationManager.SetMemories(_memories);
 
                 CringeFlashTrigger = !CringeFlashTrigger;
             });
@@ -125,12 +126,12 @@ namespace Cringebot.ViewModel
 
                 if(Simulate)
                 {
-                    notificationManager.StartNotifications(_memories, _settings);
+                    _notificationManager.StartNotifications(_memories, _settings);
                     ShowSimulationExplanation();
                 }
                 else
                 {
-                    notificationManager.StopNotifications();
+                    _notificationManager.StopNotifications();
                 }
             };
         }
@@ -258,15 +259,22 @@ namespace Cringebot.ViewModel
 
         protected override async void ViewIsAppearing(object sender, EventArgs e)
         {
-            base.ViewIsAppearing(sender, e);
-            await Task.Delay(100);
-            await ViewIsAppearing();
+            try
+            {
+                base.ViewIsAppearing(sender, e);
+                await Task.Delay(100);
+                await ViewIsAppearing();
+            }
+            catch (Exception ex)
+            {
+                Debugger.Break();
+            }
         }
 
         public async Task ViewIsAppearing() // for testing
         {
             var openedBefore = _properties.LoadOrDefault(PersistentStorage.HAS_OPENED_BEFORE, false);
-            if (!openedBefore)
+            if (false/*!openedBefore*/)
             {
                 await CoreMethods.PushPageModel<HelpViewModel>(true,false);
                 _properties.Save(PersistentStorage.HAS_OPENED_BEFORE, true);
