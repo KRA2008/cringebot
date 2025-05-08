@@ -15,12 +15,12 @@ namespace Cringebot.Services
         public const string TOOLS_SHOULD_BE_BLACK_CHANGED = "toolsBlackChanged";
         public const string THEME_SET_MESSAGE = "themeSet";
         private const double REQUIRED_LUMINANCE_DIFFERENCE = 0.2;
-        private const string BLACK_ADD_NAME = "add";
-        private const string WHITE_ADD_NAME = "addwhite";
-        private const string BLACK_DELETE_NAME = "clear";
-        private const string WHITE_DELETE_NAME = "clearwhite";
-        private const string WHITE_LIST_NAME = "list";
-        private const string BLACK_LIST_NAME = "listblack";
+        private const string BLACK_ADD_NAME = "add.png";
+        private const string WHITE_ADD_NAME = "addwhite.png";
+        private const string BLACK_DELETE_NAME = "clear.png";
+        private const string WHITE_DELETE_NAME = "clearwhite.png";
+        private const string WHITE_LIST_NAME = "list.png";
+        private const string BLACK_LIST_NAME = "listblack.png";
 
         private readonly IDeviceWrapper _deviceWrapper;
         private readonly Theme[] _themes;

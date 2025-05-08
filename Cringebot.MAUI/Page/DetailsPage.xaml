@@ -8,7 +8,7 @@
              x:Class="Cringebot.Page.DetailsPage"
              Title="Item/Occurrences">
     <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="chart"
+        <ToolbarItem IconImageSource="chart.png"
                      Command="{Binding ViewGraphCommand}"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>

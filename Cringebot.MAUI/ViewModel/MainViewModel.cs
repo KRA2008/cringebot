@@ -155,17 +155,17 @@ namespace Cringebot.ViewModel
 
             CurrentPage.ToolbarItems.Add(new ToolbarItem
             {
-                IconImageSource = "gear"+colorSuffix,
+                IconImageSource = "gear" + colorSuffix + ".png",
                 Command = ViewSettingsCommand
             });
             CurrentPage.ToolbarItems.Add(new ToolbarItem
             {
-                IconImageSource = "help" + colorSuffix,
+                IconImageSource = "help" + colorSuffix + ".png",
                 Command = ViewHelpCommand
             });
             CurrentPage.ToolbarItems.Add(new ToolbarItem
             {
-                IconImageSource = "chart" + colorSuffix,
+                IconImageSource = "chart" + colorSuffix + ".png",
                 Command = ViewGraphCommand
             });
         }
@@ -274,7 +274,7 @@ namespace Cringebot.ViewModel
         public async Task ViewIsAppearing() // for testing
         {
             var openedBefore = _properties.LoadOrDefault(PersistentStorage.HAS_OPENED_BEFORE, false);
-            if (false/*!openedBefore*/)
+            if (!openedBefore)
             {
                 await CoreMethods.PushPageModel<HelpViewModel>(true,false);
                 _properties.Save(PersistentStorage.HAS_OPENED_BEFORE, true);
