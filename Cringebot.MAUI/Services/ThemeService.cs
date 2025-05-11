@@ -12,7 +12,7 @@ namespace Cringebot.Services
 
     public class ThemeService : IThemeService
     {
-        public const string TOOLS_SHOULD_BE_BLACK_CHANGED = "toolsBlackChanged";
+        public static bool ToolsShouldBeBlack { get; private set; }
         public const string THEME_SET_MESSAGE = "themeSet";
         private const double REQUIRED_LUMINANCE_DIFFERENCE = 0.2;
         private const string BLACK_ADD_NAME = "add.png";
@@ -233,12 +233,12 @@ namespace Cringebot.Services
 
             if (isiOS || Math.Abs(GetLuminance(navBarColor) - GetLuminance(Colors.Black)) < REQUIRED_LUMINANCE_DIFFERENCE)
             {
-                MessagingCenter.Send(this, TOOLS_SHOULD_BE_BLACK_CHANGED, false);
+                ToolsShouldBeBlack = false;
                 Application.Current.Resources["statListIconName"] = WHITE_LIST_NAME;
             }
             else
             {
-                MessagingCenter.Send(this, TOOLS_SHOULD_BE_BLACK_CHANGED, true);
+                ToolsShouldBeBlack = true;
                 Application.Current.Resources["statListIconName"] = BLACK_LIST_NAME;
             }
 

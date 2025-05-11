@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace Cringebot.Model
 {
@@ -20,6 +19,6 @@ namespace Cringebot.Model
             //GenerationMinInterval = new TimeSpan(0, 0, 10);
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
     }
 }

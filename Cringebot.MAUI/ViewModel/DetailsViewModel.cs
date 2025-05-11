@@ -1,4 +1,5 @@
 ﻿using Cringebot.Model;
+using Cringebot.Services;
 using FreshMvvm.Maui;
 
 namespace Cringebot.ViewModel
@@ -47,6 +48,17 @@ namespace Cringebot.ViewModel
         {
             base.Init(initData);
             Memory = (Memory)initData;
+        }
+
+        protected override void ViewIsAppearing(object sender, EventArgs e)
+        {
+            var colorSuffix = Device.RuntimePlatform == Device.Android && ThemeService.ToolsShouldBeBlack ? "black" : "";
+
+            CurrentPage.ToolbarItems.Add(new ToolbarItem
+            {
+                IconImageSource = "chart" + colorSuffix + ".png",
+                Command = ViewGraphCommand
+            });
         }
     }
 }

@@ -3,14 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:fresh="clr-namespace:FreshMvvm.Maui;assembly=FreshMvvm.Maui"
              xmlns:viewModel="clr-namespace:Cringebot.ViewModel;assembly=Cringebot.MAUI"
-             xmlns:customElements="clr-namespace:Cringebot.CustomElements;assembly=Cringebot.MAUI"
              x:DataType="viewModel:DetailsViewModel"
              x:Class="Cringebot.Page.DetailsPage"
              Title="Item/Occurrences">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="chart.png"
-                     Command="{Binding ViewGraphCommand}"/>
-    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout Padding="15"
                      Spacing="15">
@@ -43,7 +38,7 @@
                                 <Image.GestureRecognizers>
                                     <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
                                     <TapGestureRecognizer Command="{Binding Source={x:Reference OccurrenceList}, Path=BindingContext.DeleteOccurrenceCommand}"
-                                                          CommandParameter="{Binding}"/>
+                                                          CommandParameter="{Binding .}"/>
                                 </Image.GestureRecognizers>
                             </Image>
                         </Grid>

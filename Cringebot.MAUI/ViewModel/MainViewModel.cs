@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Net;
 using Cringebot.Services;
 using FreshMvvm.Maui;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Cringebot.ViewModel
 {
@@ -50,6 +51,8 @@ namespace Cringebot.ViewModel
 
         public bool CringeFlashTrigger { get; set; }
 
+        public Memory SelectedMemory { get; set; }
+
         public Command AddMemoryCommand { get; }
         public Command AddOccurrenceCommand { get; }
         public Command ViewDetailsCommand { get; }
@@ -69,7 +72,7 @@ namespace Cringebot.ViewModel
             _notificationManager = notificationManager;
             _memories = new List<Memory>();
 
-            MessagingCenter.Subscribe<ThemeService,bool>(this, ThemeService.TOOLS_SHOULD_BE_BLACK_CHANGED, SetToolbarIcons);
+            MessagingCenter.Subscribe<ThemeService>(this, ThemeService.THEME_SET_MESSAGE, SetToolbarIcons);
 
             AddMemoryCommand = new Command(() =>
             {
@@ -99,10 +102,12 @@ namespace Cringebot.ViewModel
                 CringeFlashTrigger = !CringeFlashTrigger;
             });
 
-            ViewDetailsCommand = new Command(async args => 
+            ViewDetailsCommand = new Command(async () =>
             {
-                var memory = (Memory)((ItemTappedEventArgs)args).Item;
-                await ViewDetails(memory);
+                if (SelectedMemory == null) return;
+                var tapped = SelectedMemory;
+                SelectedMemory = null;
+                await ViewDetails(tapped);
             });
 
             ViewGraphCommand = new Command(async args =>
@@ -144,14 +149,14 @@ namespace Cringebot.ViewModel
                 "OK");
         }
 
-        private void SetToolbarIcons(ThemeService obj, bool blackItems)
+        private void SetToolbarIcons(ThemeService obj)
         {
             while (CurrentPage.ToolbarItems.Count > 0)
             {
                 CurrentPage.ToolbarItems.RemoveAt(0);
             }
 
-            var colorSuffix = Device.RuntimePlatform == Device.Android && blackItems ? "black" : "";
+            var colorSuffix = Device.RuntimePlatform == Device.Android && ThemeService.ToolsShouldBeBlack ? "black" : "";
 
             CurrentPage.ToolbarItems.Add(new ToolbarItem
             {
