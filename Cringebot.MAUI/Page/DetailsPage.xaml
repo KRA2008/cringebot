@@ -8,32 +8,41 @@
              x:Class="Cringebot.Page.DetailsPage"
              Title="Item/Occurrences">
     <ContentPage.Content>
-        <StackLayout Padding="15"
-                     Spacing="15">
-            <StackLayout Orientation="Horizontal">
+        <StackLayout>
+            <StackLayout Orientation="Horizontal"
+                         Padding="10"
+                         Spacing="10">
                 <Entry Text="{Binding Memory.Description}"
                        HorizontalOptions="FillAndExpand"/>
                 <Label Text="{Binding Memory.Occurrences.Count}"
                        VerticalTextAlignment="Center"/>
             </StackLayout>
             <CollectionView ItemsSource="{Binding Memory.Occurrences}"
-                                 x:Name="OccurrenceList"
-                                 VerticalOptions="FillAndExpand">
+                            x:Name="OccurrenceList"
+                            VerticalOptions="FillAndExpand">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="system:DateTime">
                         <Grid VerticalOptions="CenterAndExpand">
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="1"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
+                            <BoxView Color="Black"
+                                     Grid.Column="0"
+                                     Grid.Row="0"
+                                     Grid.ColumnSpan="2"/>
                             <Label Text="{Binding ., StringFormat='{0:ddd, MMM d,} \'{0:yy, h:mm tt}'}"
                                    VerticalOptions="CenterAndExpand"
-                                   Grid.Column="0"/>
+                                   Padding="10"
+                                   Grid.Column="0"
+                                   Grid.Row="1"/>
                             <Image Source="{DynamicResource deleteImageName}"
                                    Grid.Column="1"
+                                   Grid.Row="1"
                                    HorizontalOptions="EndAndExpand"
                                    VerticalOptions="CenterAndExpand">
                                 <Image.GestureRecognizers>

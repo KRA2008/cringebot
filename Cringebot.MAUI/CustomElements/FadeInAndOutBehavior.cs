@@ -1,4 +1,7 @@
-﻿namespace Cringebot.CustomElements
+﻿using Microsoft.Maui;
+using Microsoft.Maui.Controls;
+
+namespace Cringebot.CustomElements
 {
     // ReSharper disable once UnusedMember.Global
     public sealed class FadeInAndOutBehavior : Behavior<VisualElement>

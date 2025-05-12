@@ -11,11 +11,10 @@
     <ContentPage.Content>
         <AbsoluteLayout>
             <StackLayout AbsoluteLayout.LayoutFlags="All"
-                         AbsoluteLayout.LayoutBounds="0,0,1,1"
-                         Padding="0" 
-                         Spacing="15">
+                         AbsoluteLayout.LayoutBounds="0,0,1,1">
                 <StackLayout Orientation="Horizontal"
-                             Padding="15,15,15,0">
+                             Padding="10"
+                             Spacing="10">
                     <Entry Placeholder="Search/Add Item..."
                            Text="{Binding MemoryInput}"
                            HorizontalOptions="FillAndExpand"
@@ -36,24 +35,29 @@
                         <DataTemplate x:DataType="model:Memory">
                             <Grid HorizontalOptions="FillAndExpand"
                                   VerticalOptions="FillAndExpand"
-                                  Margin="15,0,0,0"
                                   ColumnSpacing="10">
                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="1"/>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
+                                <BoxView Color="Black"
+                                         Grid.Row="0"
+                                         Grid.Column="0"
+                                         Grid.ColumnSpan="2"/>
                                 <Label Text="{Binding Description}"
                                        VerticalOptions="CenterAndExpand"
-                                       Grid.Row="0"
-                                       Grid.Column="0"/>
+                                       Grid.Row="1"
+                                       Grid.Column="0"
+                                       Padding="10"/>
                                 <StackLayout Orientation="Horizontal"
-                                             Grid.Row="0"
+                                             Grid.Row="1"
                                              Grid.Column="1"
                                              VerticalOptions="Fill"
-                                             Padding="0,0,15,0">
+                                             Padding="10">
                                     <StackLayout.GestureRecognizers>
                                          <!--ReSharper disable once Xaml.BindingWithContextNotResolved--> 
                                         <TapGestureRecognizer Command="{Binding Source={x:Reference MemoryList}, Path=BindingContext.AddOccurrenceCommand}"
@@ -89,7 +93,7 @@
             </StackLayout>
             <Image AbsoluteLayout.LayoutFlags="All" 
                    AbsoluteLayout.LayoutBounds="0,0,1,1" 
-                   Source="white"
+                   Source="white.png"
                    Margin="50">
                 <Image.Behaviors>
                     <ce:FadeInAndOutBehavior Trigger="{Binding CringeFlashTrigger}"

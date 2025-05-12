@@ -4,6 +4,7 @@
                             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                             xmlns:viewModel="clr-namespace:Cringebot.ViewModel;assembly=Cringebot.MAUI"
                             xmlns:vc="clr-namespace:Cringebot.Page.ValueConverters;assembly=Cringebot.MAUI"
+                            xmlns:charts="http://schemas.syncfusion.com/maui"
                             x:DataType="viewModel:ChartViewModel"
                             x:Class="Cringebot.Page.ChartPage"
                             Title="{Binding Title}">
@@ -20,12 +21,12 @@
                      Command="{Binding ViewStatsCommand}"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout Padding="0"
+        <!--<StackLayout Padding="0"
                      Spacing="5">
             <Label Text="No data. Please add data."
                    IsVisible="{Binding IsDataPresent, Converter={vc:NotConverter}}"
                    Margin="15"/>
-            <!--<SfChart HorizontalOptions="FillAndExpand"
+            < HorizontalOptions="FillAndExpand"
                              VerticalOptions="FillAndExpand"
                              Margin="5,15,15,0"
                              BackgroundColor="{DynamicResource styledPageBackgroundColor}">
@@ -34,20 +35,20 @@
                                              CustomBrushes="{StaticResource styledChartColors}"/>
                 </SfChart.ColorModel>
                 <sfChart:SfChart.PrimaryAxis>
-                    <sfChart:CategoryAxis LabelRotationAngle="45">
-                        <sfChart:CategoryAxis.AxisLineStyle>
-                            <sfChart:ChartLineStyle StrokeColor="{StaticResource styledTextColor}"/>
-                        </sfChart:CategoryAxis.AxisLineStyle>
-                        <sfChart:CategoryAxis.MajorTickStyle>
-                            <sfChart:ChartAxisTickStyle StrokeColor="{StaticResource styledTextColor}"/>
-                        </sfChart:CategoryAxis.MajorTickStyle>
-                        <sfChart:CategoryAxis.LabelStyle>
-                            <sfChart:ChartAxisLabelStyle TextColor="{StaticResource styledTextColor}"/>
-                        </sfChart:CategoryAxis.LabelStyle>
-                        <sfChart:CategoryAxis.ShowMajorGridLines>
+                    <charts:CategoryAxis LabelRotationAngle="45">
+                        <charts:CategoryAxis.AxisLineStyle>
+                            <charts:ChartLineStyle StrokeColor="{StaticResource styledTextColor}"/>
+                        </charts:CategoryAxis.AxisLineStyle>
+                        <charts:CategoryAxis.MajorTickStyle>
+                            <charts:ChartAxisTickStyle StrokeColor="{StaticResource styledTextColor}"/>
+                        </charts:CategoryAxis.MajorTickStyle>
+                        <charts:CategoryAxis.LabelStyle>
+                            <charts:ChartAxisLabelStyle TextColor="{StaticResource styledTextColor}"/>
+                        </charts:CategoryAxis.LabelStyle>
+                        <charts:CategoryAxis.ShowMajorGridLines>
                             false
-                        </sfChart:CategoryAxis.ShowMajorGridLines>
-                    </sfChart:CategoryAxis>
+                        </charts:CategoryAxis.ShowMajorGridLines>
+                    </charts:CategoryAxis>
                 </sfChart:SfChart.PrimaryAxis>
                 <sfChart:SfChart.SecondaryAxis>
                     <sfChart:NumericalAxis>
@@ -72,7 +73,7 @@
                 <sfChart:SfChart.Series>
                     <sfChart:ColumnSeries ItemsSource="{Binding Data}"/>
                 </sfChart:SfChart.Series>
-            </SfChart>-->
+            </SfChart>
             <StackLayout Orientation="Horizontal"
                          Padding="15,0,15,0">
                 <Button Command="{Binding SetLast7DaysCommand}"
@@ -94,6 +95,6 @@
                         Text="Day of Week"
                         HorizontalOptions="CenterAndExpand"/>
             </StackLayout>
-        </StackLayout>
+        </StackLayout>-->
     </ContentPage.Content>
 </fresh:FreshBaseContentPage>
