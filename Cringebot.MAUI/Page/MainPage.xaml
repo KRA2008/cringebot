@@ -4,6 +4,7 @@
              xmlns:fresh="clr-namespace:FreshMvvm.Maui;assembly=FreshMvvm.Maui"
              xmlns:viewModel="clr-namespace:Cringebot.ViewModel;assembly=Cringebot.MAUI"
              xmlns:ce="clr-namespace:Cringebot.CustomElements;assembly=Cringebot.MAUI"
+             xmlns:model="clr-namespace:Cringebot.Model"
              x:DataType="viewModel:MainViewModel"
              x:Class="Cringebot.Page.MainPage"
              Title="Cringebot">
@@ -32,7 +33,7 @@
                                 SelectedItem="{Binding SelectedMemory}"
                                 x:Name="MemoryList">
                     <CollectionView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="model:Memory">
                             <Grid HorizontalOptions="FillAndExpand"
                                   VerticalOptions="FillAndExpand"
                                   Margin="15,0,0,0"

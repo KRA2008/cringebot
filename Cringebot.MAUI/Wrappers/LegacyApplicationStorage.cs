@@ -8,7 +8,9 @@ namespace Cringebot.Wrappers;
 
 public class LegacyApplication
 {
+#if !TESTS
     readonly PropertiesDeserializer deserializer;
+#endif
     Task<IDictionary<string, object>>? propertiesTask;
 
     static LegacyApplication? current;
@@ -23,7 +25,9 @@ public class LegacyApplication
 
     public LegacyApplication()
     {
+#if !TESTS
         deserializer = new PropertiesDeserializer();
+#endif
     }
 
     public IDictionary<string, object> Properties
@@ -37,8 +41,12 @@ public class LegacyApplication
 
     async Task<IDictionary<string, object>> GetPropertiesAsync()
     {
+#if TESTS
+        return null;
+#else
         IDictionary<string, object> properties = await deserializer.DeserializePropertiesAsync().ConfigureAwait(false);
         properties ??= new Dictionary<string, object>(4);
         return properties;
+#endif
     }
 }
