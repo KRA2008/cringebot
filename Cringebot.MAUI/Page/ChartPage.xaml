@@ -4,7 +4,7 @@
                             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                             xmlns:viewModel="clr-namespace:Cringebot.ViewModel;assembly=Cringebot.MAUI"
                             xmlns:vc="clr-namespace:Cringebot.Page.ValueConverters;assembly=Cringebot.MAUI"
-                            xmlns:charts="http://schemas.syncfusion.com/maui"
+                            xmlns:sfChart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
                             x:DataType="viewModel:ChartViewModel"
                             x:Class="Cringebot.Page.ChartPage"
                             Title="{Binding Title}">
@@ -21,45 +21,45 @@
                      Command="{Binding ViewStatsCommand}"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <!--<StackLayout Padding="0"
+        <StackLayout Padding="0"
                      Spacing="5">
             <Label Text="No data. Please add data."
                    IsVisible="{Binding IsDataPresent, Converter={vc:NotConverter}}"
                    Margin="15"/>
-            < HorizontalOptions="FillAndExpand"
-                             VerticalOptions="FillAndExpand"
-                             Margin="5,15,15,0"
-                             BackgroundColor="{DynamicResource styledPageBackgroundColor}">
-                <SfChart.ColorModel>
-                    <ChartColorModel Palette="Custom"
-                                             CustomBrushes="{StaticResource styledChartColors}"/>
-                </SfChart.ColorModel>
-                <sfChart:SfChart.PrimaryAxis>
-                    <charts:CategoryAxis LabelRotationAngle="45">
-                        <charts:CategoryAxis.AxisLineStyle>
-                            <charts:ChartLineStyle StrokeColor="{StaticResource styledTextColor}"/>
-                        </charts:CategoryAxis.AxisLineStyle>
-                        <charts:CategoryAxis.MajorTickStyle>
-                            <charts:ChartAxisTickStyle StrokeColor="{StaticResource styledTextColor}"/>
-                        </charts:CategoryAxis.MajorTickStyle>
-                        <charts:CategoryAxis.LabelStyle>
-                            <charts:ChartAxisLabelStyle TextColor="{StaticResource styledTextColor}"/>
-                        </charts:CategoryAxis.LabelStyle>
-                        <charts:CategoryAxis.ShowMajorGridLines>
+            <sfChart:SfCartesianChart HorizontalOptions="FillAndExpand"
+                                     VerticalOptions="FillAndExpand"
+                                     Margin="5,15,15,0"
+                                     BackgroundColor="{DynamicResource styledPageBackgroundColor}">
+                <!--<sfChart:SfCartesianChart.PaletteBrushes>
+                    <sfChart: Palette="Custom"
+                                            CustomBrushes="{StaticResource styledChartColors}"/>
+                </sfChart:SfCartesianChart.PaletteBrushes>-->
+                <sfChart:SfCartesianChart.XAxes>
+                    <sfChart:CategoryAxis LabelRotation="45">
+                        <sfChart:CategoryAxis.AxisLineStyle>
+                            <sfChart:ChartLineStyle Stroke="{StaticResource styledTextColor}"/>
+                        </sfChart:CategoryAxis.AxisLineStyle>
+                        <sfChart:CategoryAxis.MajorTickStyle>
+                            <sfChart:ChartAxisTickStyle Stroke="{StaticResource styledTextColor}"/>
+                        </sfChart:CategoryAxis.MajorTickStyle>
+                        <sfChart:CategoryAxis.LabelStyle>
+                            <sfChart:ChartAxisLabelStyle TextColor="{StaticResource styledTextColor}"/>
+                        </sfChart:CategoryAxis.LabelStyle>
+                        <sfChart:CategoryAxis.ShowMajorGridLines>
                             false
-                        </charts:CategoryAxis.ShowMajorGridLines>
-                    </charts:CategoryAxis>
-                </sfChart:SfChart.PrimaryAxis>
-                <sfChart:SfChart.SecondaryAxis>
+                        </sfChart:CategoryAxis.ShowMajorGridLines>
+                    </sfChart:CategoryAxis>
+                </sfChart:SfCartesianChart.XAxes>
+                <sfChart:SfCartesianChart.YAxes>
                     <sfChart:NumericalAxis>
                         <sfChart:NumericalAxis.MajorTickStyle>
-                            <sfChart:ChartAxisTickStyle StrokeColor="{StaticResource styledTextColor}"/>
+                            <sfChart:ChartAxisTickStyle Stroke="{StaticResource styledTextColor}"/>
                         </sfChart:NumericalAxis.MajorTickStyle>
                         <sfChart:NumericalAxis.MajorGridLineStyle>
-                            <sfChart:ChartLineStyle StrokeColor="{StaticResource styledTextColor}"/>
+                            <sfChart:ChartLineStyle Stroke="{StaticResource styledTextColor}"/>
                         </sfChart:NumericalAxis.MajorGridLineStyle>
                         <sfChart:NumericalAxis.AxisLineStyle>
-                            <sfChart:ChartLineStyle StrokeColor="{StaticResource styledTextColor}"/>
+                            <sfChart:ChartLineStyle Stroke="{StaticResource styledTextColor}"/>
                         </sfChart:NumericalAxis.AxisLineStyle>
                         <sfChart:NumericalAxis.LabelStyle>
                             <sfChart:ChartAxisLabelStyle TextColor="{StaticResource styledTextColor}"/>
@@ -69,11 +69,11 @@
                                                     TextColor="{StaticResource styledTextColor}"/>
                         </sfChart:NumericalAxis.Title>
                     </sfChart:NumericalAxis>
-                </sfChart:SfChart.SecondaryAxis>
-                <sfChart:SfChart.Series>
+                </sfChart:SfCartesianChart.YAxes>
+                <sfChart:SfCartesianChart.Series>
                     <sfChart:ColumnSeries ItemsSource="{Binding Data}"/>
-                </sfChart:SfChart.Series>
-            </SfChart>
+                </sfChart:SfCartesianChart.Series>
+            </sfChart:SfCartesianChart>
             <StackLayout Orientation="Horizontal"
                          Padding="15,0,15,0">
                 <Button Command="{Binding SetLast7DaysCommand}"
@@ -95,6 +95,6 @@
                         Text="Day of Week"
                         HorizontalOptions="CenterAndExpand"/>
             </StackLayout>
-        </StackLayout>-->
+        </StackLayout>
     </ContentPage.Content>
 </fresh:FreshBaseContentPage>

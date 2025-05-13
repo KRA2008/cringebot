@@ -80,6 +80,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Cringebot.MAUI.net9.0-ios.v3.ncrunchproject" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="FreshMvvm.Maui" Version="0.0.4" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />

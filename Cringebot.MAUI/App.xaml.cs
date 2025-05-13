@@ -14,6 +14,7 @@ namespace Cringebot
         
         public App(IPersistentStorage persistentStorage, IThemeService themeService)
         {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NNaF5cXmBCe0x3THxbf1x1ZFRHalhXTnRdUj0eQnxTdEBjXH5ccndRQGJeUERyXElfag==");
             InitializeComponent();
             _themeService = themeService;
             _dataStore = persistentStorage;

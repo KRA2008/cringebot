@@ -10,6 +10,7 @@ using Cringebot.ViewModel;
 using Cringebot.Wrappers;
 using FreshMvvm.Maui.Extensions;
 using Microsoft.Extensions.Logging;
+using Syncfusion.Maui.Core.Hosting;
 
 namespace Cringebot
 {
@@ -17,10 +18,11 @@ namespace Cringebot
     {
         public static MauiApp CreateMauiApp()
         {
-            var builder = MauiApp.CreateBuilder();
-            builder.UseMauiApp<App>();
-
-            builder.ConfigureMauiHandlers(handlers =>
+            var builder = 
+                MauiApp.CreateBuilder()
+                .UseMauiApp<App>()
+                .ConfigureSyncfusionCore()
+                .ConfigureMauiHandlers(handlers =>
             {
 #if __IOS__
 #elif __ANDROID__
