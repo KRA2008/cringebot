@@ -4,7 +4,8 @@
              x:Class="Cringebot.App" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:model="clr-namespace:Cringebot.Model">
     <Application.Resources>
         <ResourceDictionary>
             <x:String x:Key="addImageName"/>
@@ -112,7 +113,7 @@
                 <Setter Property="BarBackgroundColor"
                         Value="{DynamicResource styledNavBarColor}"/>
             </Style>
-            <!--<ChartColorCollection x:Key="styledChartColors"/>-->
+            <model:ChartColorModel x:Key="styledChartColors"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>    

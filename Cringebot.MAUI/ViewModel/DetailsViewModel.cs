@@ -1,6 +1,7 @@
 ﻿using Cringebot.Model;
 using Cringebot.Services;
 using FreshMvvm.Maui;
+using Microsoft.Maui.Controls;
 
 namespace Cringebot.ViewModel
 {
@@ -53,6 +54,8 @@ namespace Cringebot.ViewModel
         protected override void ViewIsAppearing(object sender, EventArgs e)
         {
             var colorSuffix = Device.RuntimePlatform == Device.Android && ThemeService.ToolsShouldBeBlack ? "black" : "";
+
+            CurrentPage.ToolbarItems.Clear();
 
             CurrentPage.ToolbarItems.Add(new ToolbarItem
             {

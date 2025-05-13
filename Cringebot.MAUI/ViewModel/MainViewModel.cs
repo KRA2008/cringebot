@@ -7,6 +7,7 @@ using System.Net;
 using Cringebot.Services;
 using FreshMvvm.Maui;
 using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Maui.Controls;
 
 namespace Cringebot.ViewModel
 {
@@ -151,10 +152,8 @@ namespace Cringebot.ViewModel
 
         private void SetToolbarIcons(ThemeService obj)
         {
-            while (CurrentPage.ToolbarItems.Count > 0)
-            {
-                CurrentPage.ToolbarItems.RemoveAt(0);
-            }
+
+            CurrentPage.ToolbarItems.Clear();
 
             var colorSuffix = Device.RuntimePlatform == Device.Android && ThemeService.ToolsShouldBeBlack ? "black" : "";
 

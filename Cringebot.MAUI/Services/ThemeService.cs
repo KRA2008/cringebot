@@ -1,5 +1,7 @@
-﻿using Cringebot.Model;
+﻿using System.Collections.ObjectModel;
+using Cringebot.Model;
 using Cringebot.Wrappers;
+using Microsoft.Maui.Controls;
 
 namespace Cringebot.Services
 {
@@ -181,11 +183,10 @@ namespace Cringebot.Services
 
             Application.Current.Resources["styledPageBackgroundColor"] = backgroundColor;
             Application.Current.Resources["styledTextColor"] = textColor;
-            //TODO
-            //Application.Current.Resources["styledChartColors"] = new ChartColorCollection
-            //{
-            //    textColor
-            //};
+            Application.Current.Resources["styledChartColors"] = new ObservableCollection<Brush>
+            {
+                new SolidColorBrush(textColor)
+            };
             Application.Current.Resources["styledPlaceholderColor"] = placeholderColor;
             Application.Current.Resources["styledHighlightTextColor"] = highlightColor;
 

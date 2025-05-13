@@ -4,6 +4,7 @@
                             xmlns:fresh="clr-namespace:FreshMvvm.Maui;assembly=FreshMvvm.Maui"
                             xmlns:viewModel="clr-namespace:Cringebot.ViewModel;assembly=Cringebot.MAUI"
                             xmlns:vc="clr-namespace:Cringebot.Page.ValueConverters;assembly=Cringebot.MAUI"
+                            xmlns:model="clr-namespace:Cringebot.Model"
                             x:DataType="viewModel:StatsViewModel"
                             x:Class="Cringebot.Page.StatsPage"
                             Title="{Binding Title}">
@@ -15,7 +16,7 @@
                    IsVisible="{Binding IsDataPresent, Converter={vc:NotConverter}}"/>
             <CollectionView ItemsSource="{Binding Statistics}">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="model:MemoryStatistic">
                         <StackLayout Orientation="Horizontal"
                                      Padding="15">
                             <Label Text="{Binding Description, StringFormat='{0}:'}"

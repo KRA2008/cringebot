@@ -29,11 +29,8 @@
             <sfChart:SfCartesianChart HorizontalOptions="FillAndExpand"
                                      VerticalOptions="FillAndExpand"
                                      Margin="5,15,15,0"
-                                     BackgroundColor="{DynamicResource styledPageBackgroundColor}">
-                <!--<sfChart:SfCartesianChart.PaletteBrushes>
-                    <sfChart: Palette="Custom"
-                                            CustomBrushes="{StaticResource styledChartColors}"/>
-                </sfChart:SfCartesianChart.PaletteBrushes>-->
+                                     BackgroundColor="{DynamicResource styledPageBackgroundColor}"
+                                     PaletteBrushes="{StaticResource styledChartColors}">
                 <sfChart:SfCartesianChart.XAxes>
                     <sfChart:CategoryAxis LabelRotation="45">
                         <sfChart:CategoryAxis.AxisLineStyle>
@@ -71,7 +68,9 @@
                     </sfChart:NumericalAxis>
                 </sfChart:SfCartesianChart.YAxes>
                 <sfChart:SfCartesianChart.Series>
-                    <sfChart:ColumnSeries ItemsSource="{Binding Data}"/>
+                    <sfChart:ColumnSeries ItemsSource="{Binding Data}"
+                                          XBindingPath="Name"
+                                          YBindingPath="Count"/>
                 </sfChart:SfCartesianChart.Series>
             </sfChart:SfCartesianChart>
             <StackLayout Orientation="Horizontal"
