@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" android:versionCode="3" android:versionName="1.2" package="com.kra2008.Cringebot" android:installLocation="auto">
-	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="35" />
 	<uses-permission android:name="android.permission.VIBRATE" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-	<application android:label="Cringebot" android:icon="@mipmap/appicon" />
+	<uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+	<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+	<application android:label="Cringebot" android:icon="@mipmap/appiconandroid" />
+	<meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@drawable/icon" />
 </manifest>
