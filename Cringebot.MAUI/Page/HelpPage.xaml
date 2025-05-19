@@ -3,6 +3,7 @@
                             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                             xmlns:fresh="clr-namespace:FreshMvvm.Maui;assembly=FreshMvvm.Maui"
                             xmlns:viewModel="clr-namespace:Cringebot.ViewModel;assembly=Cringebot.MAUI"
+                            xmlns:customRenderers="clr-namespace:Cringebot.iOS.CustomRenderers"
                             x:DataType="viewModel:HelpViewModel"
                             x:Class="Cringebot.Page.HelpPage"
                             Title="Help">
@@ -10,6 +11,7 @@
         <ScrollView>
             <StackLayout Padding="15"
                          Spacing="15">
+                <customRenderers:iOS12WorkaroundBackButton/>
                 <Label Text="What is Cringebot?"
                        Style="{StaticResource header}"/>
                 <Label Text="Cringebot explores the tendency many people have to make themselves cringe by remembering embarrassing events in their past and to generate recurrent negative thoughts. I hope that by using Cringebot, users will become more aware of these tendencies and will be more empowered to live happier lives."/>

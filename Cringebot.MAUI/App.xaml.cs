@@ -24,17 +24,14 @@ namespace Cringebot
         {
             var mainPage = FreshPageModelResolver.ResolvePageModel<MainViewModel>();
             _mainViewModel = (MainViewModel)mainPage.BindingContext;
-            return new Window(new FreshNavigationContainer(mainPage));
+            var window = new Window(new FreshNavigationContainer(mainPage));
+            _themeService.ApplyTheme(_dataStore.LoadOrDefault(PersistentStorage.THEME_STORE_KEY, ""));
+            return window;
         }
 
         public void Import(string import)
         {
             _mainViewModel.Import(import);
-        }
-
-        protected override void OnStart()
-        {
-            _themeService.ApplyTheme(_dataStore.LoadOrDefault(PersistentStorage.THEME_STORE_KEY, ""));
         }
 
         protected override void OnSleep()

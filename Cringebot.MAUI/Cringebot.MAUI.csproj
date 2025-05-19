@@ -170,6 +170,9 @@
 	  <MauiXaml Update="Page\StatsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Platforms\iOS\CustomRenderers\iOS12WorkaroundBackButton.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>

@@ -5,6 +5,7 @@
                             xmlns:viewModel="clr-namespace:Cringebot.ViewModel;assembly=Cringebot.MAUI"
                             xmlns:vc="clr-namespace:Cringebot.Page.ValueConverters;assembly=Cringebot.MAUI"
                             xmlns:sfChart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
+                            xmlns:customRenderers="clr-namespace:Cringebot.iOS.CustomRenderers"
                             x:DataType="viewModel:ChartViewModel"
                             x:Class="Cringebot.Page.ChartPage"
                             Title="{Binding Title}">
@@ -23,6 +24,7 @@
     <ContentPage.Content>
         <StackLayout Padding="0"
                      Spacing="5">
+            <customRenderers:iOS12WorkaroundBackButton/>
             <Label Text="No data. Please add data."
                    IsVisible="{Binding IsDataPresent, Converter={vc:NotConverter}}"
                    Margin="15"/>
