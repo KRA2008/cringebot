@@ -67,10 +67,10 @@
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'" Include="Resources\AppIcon\appiconios.svg" Color="#ffffff" />
-		<MauiIcon Include="Resources\AppIcon\appiconandroid.svg" />
+		<MauiIcon Include="Resources\AppIcon\appiconandroid.svg" Color="#ffffff" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" />
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#ffffff" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -170,7 +170,7 @@
 	  <MauiXaml Update="Page\StatsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Platforms\iOS\CustomRenderers\iOS12WorkaroundBackButton.xaml">
+	  <MauiXaml Update="CustomElements\iOS12WorkaroundBackButton.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

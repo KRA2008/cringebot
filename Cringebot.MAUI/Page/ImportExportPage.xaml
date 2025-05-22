@@ -3,7 +3,7 @@
                             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                             xmlns:fresh="clr-namespace:FreshMvvm.Maui;assembly=FreshMvvm.Maui"
                             xmlns:vm="clr-namespace:Cringebot.ViewModel;assembly=Cringebot.MAUI"
-                            xmlns:customRenderers="clr-namespace:Cringebot.iOS.CustomRenderers"
+                            xmlns:customElements="clr-namespace:Cringebot.MAUI.CustomElements"
                             x:DataType="vm:ImportExportViewModel"
                             x:Class="Cringebot.Page.ImportExportPage"
                             Title="Import/Export">
@@ -16,7 +16,7 @@
     <ContentPage.Content>
         <StackLayout Padding="{StaticResource padding}"
                      Spacing="{StaticResource spacing}">
-            <customRenderers:iOS12WorkaroundBackButton/>
+            <customElements:iOS12WorkaroundBackButton/>
             <Editor Text="{Binding ImportExportText}"
                     HeightRequest="75"
                     BackgroundColor="White"/>

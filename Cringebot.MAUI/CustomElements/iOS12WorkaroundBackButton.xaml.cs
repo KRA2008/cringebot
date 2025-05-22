@@ -1,6 +1,6 @@
-namespace Cringebot.iOS.CustomRenderers;
+namespace Cringebot.MAUI.CustomElements;
 
-public partial class iOS12WorkaroundBackButton : ContentView
+public partial class iOS12WorkaroundBackButton
 {
 	public iOS12WorkaroundBackButton()
 	{
@@ -15,7 +15,7 @@ public partial class iOS12WorkaroundBackButton : ContentView
 #endif
     }
 
-    private async void Button_OnClicked(object sender, EventArgs e)
+    private async void Button_OnClicked(object? sender, EventArgs e)
     {
         await MainThread.InvokeOnMainThreadAsync(async () =>
         {

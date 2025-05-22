@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:fresh="clr-namespace:FreshMvvm.Maui;assembly=FreshMvvm.Maui"
              xmlns:vm="clr-namespace:Cringebot.ViewModel;assembly=Cringebot.MAUI"
-             xmlns:customRenderers="clr-namespace:Cringebot.iOS.CustomRenderers"
+             xmlns:customElements="clr-namespace:Cringebot.MAUI.CustomElements"
              x:DataType="vm:SettingsViewModel"
              x:Class="Cringebot.Page.SettingsPage"
              Title="Settings">
@@ -18,7 +18,7 @@
             <StackLayout Spacing="15">
                 <StackLayout Padding="0"
                              Spacing="0">
-                    <customRenderers:iOS12WorkaroundBackButton/>
+                    <customElements:iOS12WorkaroundBackButton/>
                     <Label Text="Notification Generation Frequency"
                            Style="{StaticResource header}"
                            Margin="{StaticResource padding}"/>
