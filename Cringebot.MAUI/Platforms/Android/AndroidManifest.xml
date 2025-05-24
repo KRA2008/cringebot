@@ -4,6 +4,6 @@
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 	<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-	<application android:label="Cringebot" android:icon="@mipmap/appiconandroid" />
+	<application android:label="Cringebot" android:icon="@mipmap/appiconandroid" android:roundIcon="@mipmap/appiconandroid_round" />
 	<meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@drawable/icon" />
 </manifest>

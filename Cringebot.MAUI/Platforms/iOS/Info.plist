@@ -56,10 +56,12 @@
 	<key>XSLaunchImageAssets</key>
 	<string>Resources/Assets.xcassets/LaunchImages.launchimage</string>
 	<key>XSAppIconAssets</key>
-	<string>Resources/Assets.xcassets/AppIcons.appiconset</string>
+	<string>Resources/Assets.xcassets/appiconios.appiconset</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.1</string>
 	<key>UIMainStoryboardFile</key>
 	<string>LaunchScreen</string>
+	<key>UILaunchStoryboardName</key>
+	<string>MauiSplash</string>
 </dict>
 </plist>
