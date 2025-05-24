@@ -1,19 +1,156 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
-- develop
+- 
 
-pool:
-  vmImage: ubuntu-latest
+jobs:
+- job: iOS
+  displayName: 'iOS'
+  pool:
+    vmImage: 'macos-15' ###  explicit is later than 'latest' as of 4/7/2025
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+  steps:
+  - task: UseDotNet@2
+    displayName: '.NET Version'
+    inputs:
+      packageType: 'sdk'
+      version: '$(DotNetVersion)'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+  - task: Bash@3
+    displayName: 'Install MAUI'
+    inputs:
+      targetType: 'inline'
+      script: |
+        dotnet workload restore
+
+  - task: Bash@3
+    displayName: 'NuGet auth and restore'
+    inputs:
+      targetType: 'inline'
+      script: |
+        dotnet restore
+
+  - task: InstallAppleCertificate@2
+    inputs:
+      certSecureFile: 'distro.p12'
+      certPwd: '$(p12pwd)'
+      keychain: 'temp'
+
+  - task: InstallAppleProvisioningProfile@1
+    inputs:
+      provisioningProfileLocation: 'secureFiles'
+      provProfileSecureFile: 'Cringebot_Distribution.mobileprovision'
+
+  - task: Bash@3
+    displayName: 'Set version numbers'
+    inputs:
+      targetType: 'inline'
+      script: |
+        sed -i '' 's/<string>1.0<\/string>/<string>$(myVersionNumber)<\/string>/g' Cringebot/Platforms/iOS/Info.plist
+        echo "MAIN PLIST"
+        cat Cringebot/Platforms/iOS/Info.plist
+
+  - script: |
+      sudo xcode-select -s /Applications/Xcode_16.3.app
+    displayName: Selects a specific version of Xcode
+
+  - task: Bash@3
+    displayName: 'dotnet publish ios'
+    inputs:
+      targetType: 'inline'
+      script: 'dotnet publish -f net9.0-ios -p:ArchiveOnBuild=true'
+
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: '$(Pipeline.Workspace)/s/Cringebot/bin/Release/net9.0-ios/ios-arm64/publish/Cringebot.ipa'
+      publishLocation: 'pipeline'
+
+  - task: AppStoreRelease@1
+    inputs:
+      serviceEndpoint: 'App Store Connect API'
+      releaseTrack: 'TestFlight'
+      appType: 'iOS'
+      shouldSkipWaitingForProcessing: true
+
+- job: Android
+  displayName: 'Android'
+  # Xamarin.Android
+  # Build a Xamarin.Android project.
+  # Add steps that test, sign, and distribute an app, save build artifacts, and more:
+  # https://docs.microsoft.com/azure/devops/pipelines/languages/xamarin
+  pool:
+    vmImage: 'windows-latest'
+
+  variables:
+    buildConfiguration: 'Release'
+    outputDirectory: '$(build.binariesDirectory)/$(buildConfiguration)'
+
+  steps:
+  
+  - task: UseDotNet@2
+    displayName: '.NET Version'
+    inputs:
+      packageType: 'sdk'
+      version: '$(DotNetVersion)'
+
+  - task: Bash@3
+    displayName: 'Install MAUI'
+    inputs:
+      targetType: 'inline'
+      script: |
+        dotnet workload restore
+
+  - task: NuGetToolInstaller@1
+
+  - task: NuGetCommand@2
+    inputs:
+      command: 'restore'
+      restoreSolution: '**/*.sln'
+      feedsToUse: 'config'
+      nugetConfigPath: 'nuget.config'
+      externalFeedCredentials: 'NuGet'
+
+  - task: Bash@3
+    displayName: 'Set version numbers'
+    inputs:
+      targetType: 'inline'
+      script: |
+        sed -i 's/android:versionCode="1"/android:versionCode="$(buildNumber)"/g' Cringebot/Platforms/Android/AndroidManifest.xml
+        sed -i 's/android:versionName="1.0"/android:versionName="$(myVersionNumber)"/g' Cringebot/Platforms/Android/AndroidManifest.xml
+        cat Cringebot/Platforms/Android/AndroidManifest.xml
+
+  - task: JavaToolInstaller@0
+    inputs:
+      versionSpec: '11'
+      jdkArchitectureOption: 'x64'
+      jdkSourceOption: 'PreInstalled'
+
+  - task: Bash@3
+    displayName: 'Set java variables'
+    inputs:
+      targetType: 'inline'
+      script: |
+        echo "##vso[task.setvariable variable=JAVA_HOME]$(JAVA_HOME_11_X64)"
+        echo "##vso[task.setvariable variable=PATH]$(JAVA_HOME_11_X64)\bin;$(PATH)"
+
+  - task: DownloadSecureFile@1
+    name: androidKeystore
+    inputs:
+      secureFile: 'kra2008Android.keystore'
+
+  - task: Bash@3
+    displayName: 'Build Android App'
+    inputs:
+      targetType: 'inline'
+      script: 'dotnet publish -f net9.0-android -c Release -p:AndroidKeyStore=true -p:AndroidSigningKeyStore=D:/a/_temp/kra2008Android.keystore -p:AndroidSigningKeyPass=$(keystorePassword) -p:AndroidSigningStorePass=$(keystorePassword) -p:AndroidSigningKeyAlias=kra2008android'
+
+  - task: CopyFiles@2
+    displayName: 'Copy build output to staging'
+    inputs:
+      SourceFolder: '$(Agent.BuildDirectory)\s\Cringebot\bin\Release\net9.0-android\publish'
+      Contents: |
+        **/*.apk
+        **/*.aab
+      TargetFolder: '$(ArtifactStagingDirectory)'
+      flattenFolders: true
+
+  - publish: $(ArtifactStagingDirectory)
+    artifact: Android
