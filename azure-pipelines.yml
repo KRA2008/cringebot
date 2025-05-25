@@ -59,7 +59,7 @@ jobs:
 
   - task: PublishPipelineArtifact@1
     inputs:
-      targetPath: '$(Pipeline.Workspace)/s/Cringebot/bin/Release/net9.0-ios/ios-arm64/publish/Cringebot.ipa'
+      targetPath: '$(Pipeline.Workspace)/s/Cringebot.MAUI/bin/Release/net9.0-ios/ios-arm64/publish/Cringebot.ipa'
       publishLocation: 'pipeline'
 
   - task: AppStoreRelease@1
@@ -140,7 +140,7 @@ jobs:
   - task: CopyFiles@2
     displayName: 'Copy build output to staging'
     inputs:
-      SourceFolder: '$(Agent.BuildDirectory)\s\Cringebot\bin\Release\net9.0-android\publish'
+      SourceFolder: '$(Agent.BuildDirectory)\s\Cringebot.MAUI\bin\Release\net9.0-android\publish'
       Contents: |
         **/*.apk
         **/*.aab
