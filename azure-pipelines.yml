@@ -25,8 +25,7 @@ jobs:
     displayName: 'NuGet auth and restore'
     inputs:
       targetType: 'inline'
-      script: |
-        dotnet restore
+      script: dotnet restore
 
   - task: InstallAppleCertificate@2
     inputs:
@@ -100,13 +99,11 @@ jobs:
 
   - task: NuGetToolInstaller@1
 
-  - task: NuGetCommand@2
+  - task: Bash@3
+    displayName: 'NuGet auth and restore'
     inputs:
-      command: 'restore'
-      restoreSolution: '**/*.sln'
-      feedsToUse: 'config'
-      nugetConfigPath: 'nuget.config'
-      externalFeedCredentials: 'NuGet'
+      targetType: 'inline'
+      script: dotnet restore
 
   - task: Bash@3
     displayName: 'Set version numbers'
