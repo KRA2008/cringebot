@@ -44,9 +44,9 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
-        sed -i '' 's/<string>1.0<\/string>/<string>$(myVersionNumber)<\/string>/g' Cringebot/Platforms/iOS/Info.plist
+        sed -i '' 's/<string>1.0<\/string>/<string>$(myVersionNumber)<\/string>/g' Cringebot.MAUI/Platforms/iOS/Info.plist
         echo "MAIN PLIST"
-        cat Cringebot/Platforms/iOS/Info.plist
+        cat Cringebot.MAUI/Platforms/iOS/Info.plist
 
   - script: |
       sudo xcode-select -s /Applications/Xcode_16.3.app
@@ -113,9 +113,9 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
-        sed -i 's/android:versionCode="1"/android:versionCode="$(buildNumber)"/g' Cringebot/Platforms/Android/AndroidManifest.xml
-        sed -i 's/android:versionName="1.0"/android:versionName="$(myVersionNumber)"/g' Cringebot/Platforms/Android/AndroidManifest.xml
-        cat Cringebot/Platforms/Android/AndroidManifest.xml
+        sed -i 's/android:versionCode="1"/android:versionCode="$(buildNumber)"/g' Cringebot.MAUI/Platforms/Android/AndroidManifest.xml
+        sed -i 's/android:versionName="1.0"/android:versionName="$(myVersionNumber)"/g' Cringebot.MAUI/Platforms/Android/AndroidManifest.xml
+        cat Cringebot.MAUI/Platforms/Android/AndroidManifest.xml
 
   - task: JavaToolInstaller@0
     inputs:
