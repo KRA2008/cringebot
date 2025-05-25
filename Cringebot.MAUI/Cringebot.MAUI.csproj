@@ -60,8 +60,8 @@
 
 	<PropertyGroup Condition="'$(TargetFramework)'=='net9.0-ios'">
 	  <ProvisioningType>manual</ProvisioningType>
-	  <CodesignProvision>VS: WildCard Development</CodesignProvision>
-	  <CodesignKey>Apple Development: Created via API (R4A4JM399F)</CodesignKey>
+	  <CodesignProvision>Cringebot Distribution</CodesignProvision>
+	  <CodesignKey>Apple Distribution: Kevin Anderson (G656MA2J22)</CodesignKey>
 	</PropertyGroup>
 
 	<ItemGroup>
