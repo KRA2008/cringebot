@@ -97,8 +97,6 @@ jobs:
       script: |
         dotnet workload restore
 
-  - task: NuGetToolInstaller@1
-
   - task: Bash@3
     displayName: 'NuGet auth and restore'
     inputs:
