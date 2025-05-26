@@ -59,7 +59,7 @@ jobs:
 
   - task: PublishPipelineArtifact@1
     inputs:
-      targetPath: '$(Pipeline.Workspace)/'
+      targetPath: '$(Pipeline.Workspace)/s/Cringebot.MAUI/bin/Release/net9.0-ios/ios-arm64/Cringebot.MAUI.app'
       publishLocation: 'pipeline'
 
   - task: AppStoreRelease@1
