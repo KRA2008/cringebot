@@ -28,8 +28,6 @@
 	<string>com.kra2008.cringebot</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
-  <key>UIPrerenderedIcon</key>
-  <false/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Fonts/Comic Sans MS.ttf</string>
@@ -54,9 +52,9 @@
 		</dict>
 	</array>
 	<key>XSLaunchImageAssets</key>
-	<string>Resources/Assets.xcassets/LaunchImages.launchimage</string>
+	<string>Assets.xcassets/LaunchImages.launchimage</string>
 	<key>XSAppIconAssets</key>
-	<string>Resources/Assets.xcassets/appiconios.appiconset</string>
+	<string>Assets.xcassets/appiconios.appiconset</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>UIMainStoryboardFile</key>
