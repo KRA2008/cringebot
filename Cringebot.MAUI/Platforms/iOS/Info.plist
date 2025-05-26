@@ -51,8 +51,6 @@
 			</array>
 		</dict>
 	</array>
-	<key>XSLaunchImageAssets</key>
-	<string>Assets.xcassets/LaunchImages.launchimage</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/appiconios.appiconset</string>
 	<key>CFBundleShortVersionString</key>
