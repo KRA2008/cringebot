@@ -13,17 +13,17 @@
 		<!-- For example: <RuntimeIdentifiers>maccatalyst-x64;maccatalyst-arm64</RuntimeIdentifiers> -->
 
 		<OutputType Condition="'$(TargetFramework)' != 'net9.0'">Exe</OutputType>
-		<RootNamespace>Cringebot.MAUI</RootNamespace>
+		<RootNamespace>Cringebot</RootNamespace>
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 
 		<!-- Display name -->
-		<ApplicationTitle>Cringebot.MAUI</ApplicationTitle>
+		<ApplicationTitle>Cringebot</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.cringebot.maui</ApplicationId>
+		<ApplicationId>com.companyname.Cringebot</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
@@ -59,9 +59,9 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(TargetFramework)'=='net9.0-ios'">
-	  <ProvisioningType>manual</ProvisioningType>
-	  <CodesignProvision>Cringebot Distribution</CodesignProvision>
-	  <CodesignKey>Apple Distribution: Kevin Anderson (G656MA2J22)</CodesignKey>
+	  <ProvisioningType>automatic</ProvisioningType>
+	  <CodesignProvision>VS: com.kra2008.cringebot Development</CodesignProvision>
+	  <CodesignKey>Apple Development: Created via API (R4A4JM399F)</CodesignKey>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -89,7 +89,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Cringebot.MAUI.net9.0-ios.v3.ncrunchproject" />
+	  <None Remove="Cringebot.net9.0-ios.v3.ncrunchproject" />
 	  <None Remove="Platforms\iOS\Resources\LaunchScreen.storyboard" />
 	</ItemGroup>
 
@@ -100,7 +100,7 @@
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.70" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
-		<PackageReference Include="Syncfusion.Maui.Charts" Version="29.2.5" />
+		<PackageReference Include="Syncfusion.Maui.Charts" Version="29.2.8" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -2,11 +2,9 @@
 using Cringebot.Wrappers;
 using Foundation;
 using UIKit;
-using Cringebot.iOS;
 using Cringebot.Services;
 using UserNotifications;
 
-[assembly: Dependency(typeof(AppDelegate))]
 namespace Cringebot.iOS
 {
     // The UIApplicationDelegate for the application. This class is responsible for launching the 
