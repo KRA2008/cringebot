@@ -110,9 +110,8 @@ namespace Cringebot.ViewModel
             ViewDetailsCommand = new Command(async () =>
             {
                 if (SelectedMemory == null) return;
-                var tapped = SelectedMemory;
+                await ViewDetails(SelectedMemory);
                 SelectedMemory = null;
-                await ViewDetails(tapped);
             });
 
             ViewGraphCommand = new Command(async args =>

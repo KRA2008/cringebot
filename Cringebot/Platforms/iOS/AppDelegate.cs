@@ -3,6 +3,7 @@ using Cringebot.Wrappers;
 using Foundation;
 using UIKit;
 using Cringebot.Services;
+using Microsoft.Maui.LifecycleEvents;
 using UserNotifications;
 
 namespace Cringebot.iOS
@@ -29,8 +30,15 @@ namespace Cringebot.iOS
 
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            var success = base.FinishedLaunching(app, options);
             UNUserNotificationCenter.Current.Delegate = new NotificationDelegate();
-            return base.FinishedLaunching(app, options);
+            return success;
+        }
+
+        public override void DidEnterBackground(UIApplication application)
+        {
+            base.DidEnterBackground(application);
+            App.iOSOnSleepWorkaround(); //TODO: WHY IS THIS NEEDED!?!
         }
 
         public override bool OpenUrl(UIApplication application, NSUrl url, NSDictionary dict)

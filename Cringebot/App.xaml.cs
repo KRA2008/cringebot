@@ -3,12 +3,13 @@ using Cringebot.ViewModel;
 using Cringebot.Wrappers;
 using FreshMvvm.Maui;
 
+[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace Cringebot
 {
-    public partial class App : Application
+    public partial class App
     {
-        private readonly IThemeService _themeService;
-        private readonly IPersistentStorage _dataStore;
+        private static IThemeService _themeService;
+        private static IPersistentStorage _dataStore;
         public static MainViewModel? MainViewModel;
         
         public App(IPersistentStorage persistentStorage, IThemeService themeService)
@@ -35,12 +36,19 @@ namespace Cringebot
 
         protected override void OnSleep()
         {
-            MainViewModel.Save();
-            _dataStore.Save(PersistentStorage.THEME_STORE_KEY, _themeService.GetCurrentThemeName());
+            base.OnSleep();
+            Save();
         }
 
-        protected override void OnResume()
+        public static void iOSOnSleepWorkaround()
         {
+            Save();
+        }
+
+        private static void Save()
+        {
+            MainViewModel.Save();
+            _dataStore.Save(PersistentStorage.THEME_STORE_KEY, _themeService.GetCurrentThemeName());
         }
     }
 }
