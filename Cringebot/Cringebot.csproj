@@ -23,7 +23,7 @@
 		<ApplicationTitle>Cringebot</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.Cringebot</ApplicationId>
+		<ApplicationId>com.kra2008.cringebot</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
@@ -48,6 +48,9 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios|AnyCPU'">
 	  <ApplicationId>com.kra2008.cringebot</ApplicationId>
 	  <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+	  <CodesignProvision>VS: com.kra2008.cringebot Development</CodesignProvision>
+	  <CodesignKey>Apple Development: Created via API (R4A4JM399F)</CodesignKey>
+	  <ProvisioningType>manual</ProvisioningType>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
@@ -59,6 +62,9 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-ios|AnyCPU'">
 	  <ApplicationId>com.kra2008.cringebot</ApplicationId>
 	  <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+	  <ProvisioningType>manual</ProvisioningType>
+	  <CodesignProvision>Cringebot Distribution</CodesignProvision>
+	  <CodesignKey>Apple Distribution: Kevin Anderson (G656MA2J22)</CodesignKey>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0|AnyCPU'">
@@ -68,9 +74,6 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(TargetFramework)'=='net9.0-ios'">
-	  <ProvisioningType>automatic</ProvisioningType>
-	  <CodesignProvision>VS: com.kra2008.cringebot Development</CodesignProvision>
-	  <CodesignKey>Apple Development: Created via API (R4A4JM399F)</CodesignKey>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0|AnyCPU'">
