@@ -22,6 +22,7 @@ namespace Cringebot
                 MauiApp.CreateBuilder()
                 .UseMauiApp<App>()
                 .ConfigureSyncfusionCore()
+                .ConfigureEssentials()
                 .ConfigureMauiHandlers(handlers =>
             {
 #if __IOS__

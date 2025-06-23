@@ -25,6 +25,8 @@
                 <Label Text="Once you've collected some data, press the graph button on the top right to see your cringes over time."/>
                 <Label Text="By tracking occurrences, Cringebot helps you to be more aware of how much these occurrences affect your daily life. By simulating, Cringebot helps you to realize the absurdity of the phenomena and perhaps build up a psychological tolerance. Simulation could also be used by people who don't experience such things so they can better understand people who do."/>
                 <Label Text="(I am not a doctor. Cringebot is not therapy.)"/>
+                <Button Text="Email the Developer"
+                        Command="{Binding FeedbackCommand}"/>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

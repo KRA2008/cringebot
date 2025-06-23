@@ -11,7 +11,6 @@ namespace Cringebot.ViewModel
         private IEnumerable<Memory> _memories;
 
         public string Title { get; set; }
-        public bool IsDataPresent { get; set; }
         public Command ViewStatsCommand { get; set; }
         public Command SetLast7DaysCommand { get; set; }
         public Command SetLast30DaysCommand { get; set; }
@@ -45,7 +44,6 @@ namespace Cringebot.ViewModel
 
             if (_memories.Any() && _memories.Any(m => m.Occurrences.Any()))
             {
-                IsDataPresent = true;
                 SetLast7Days();
                 SetLast7DaysCommand = new Command(SetLast7Days);
                 SetLast30DaysCommand = new Command(SetLast30Days);
