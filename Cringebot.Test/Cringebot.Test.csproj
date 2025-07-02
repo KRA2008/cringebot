@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cringebot.MAUI\Cringebot.csproj" />
+    <ProjectReference Include="..\Cringebot\Cringebot.csproj" />
   </ItemGroup>
 
   <ItemGroup>
