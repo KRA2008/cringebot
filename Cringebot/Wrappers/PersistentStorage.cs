@@ -11,9 +11,9 @@ namespace Cringebot.Wrappers
     
     public class PersistentStorage : IPersistentStorage
     {
-        public const string MEMORY_LIST_STORE_KEY = "memoryList";
-        public const string SETTINGS_STORE_KEY = "settings";
-        public const string THEME_STORE_KEY = "theme";
+        public const string MEMORY_LIST_STORE_KEY = "memoryList2";
+        public const string SETTINGS_STORE_KEY = "settings2";
+        public const string THEME_STORE_KEY = "theme2";
 
         public PersistentStorage()
         {
@@ -45,16 +45,25 @@ namespace Cringebot.Wrappers
 
             if (LegacyApplication.Current?.Properties.TryGetValue(MEMORY_LIST_STORE_KEY_OLD, out var memory) == true)
             {
-                Preferences.Set(MEMORY_LIST_STORE_KEY, (string?)memory);
+                if (!Preferences.ContainsKey(MEMORY_LIST_STORE_KEY))
+                {
+                    Preferences.Set(MEMORY_LIST_STORE_KEY, (string?)memory);
+                }
             }
             if (LegacyApplication.Current?.Properties.TryGetValue(SETTINGS_STORE_KEY_OLD, out var settings) == true)
             {
-                existingSettings = (Settings) settings;
-                Preferences.Set(SETTINGS_STORE_KEY, (string?)settings);
+                existingSettings = JsonConvert.DeserializeObject<Settings>((string)settings);
+                if (!Preferences.ContainsKey(SETTINGS_STORE_KEY))
+                {
+                    Preferences.Set(SETTINGS_STORE_KEY, (string?)settings);
+                }
             }
             if (LegacyApplication.Current?.Properties.TryGetValue(THEME_STORE_KEY_OLD, out var theme) == true)
             {
-                Preferences.Set(THEME_STORE_KEY, (string?)theme);
+                if (!Preferences.ContainsKey(THEME_STORE_KEY))
+                {
+                    Preferences.Set(THEME_STORE_KEY, (string?)theme);
+                }
             }
             if (LegacyApplication.Current?.Properties.TryGetValue(HAS_OPENED_BEFORE_OLD, out var opened) == true)
             {
