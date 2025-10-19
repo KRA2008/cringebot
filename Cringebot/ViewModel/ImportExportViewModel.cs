@@ -1,4 +1,5 @@
-﻿using Cringebot.Model;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using Cringebot.Model;
 using Cringebot.Services;
 using FreshMvvm.Maui;
 
@@ -56,6 +57,7 @@ namespace Cringebot.ViewModel
                 }
             }
 
+            WeakReferenceMessenger.Default.Send(new MemoriesChangedMessage(_existingMemories));
             await CoreMethods.PopPageModel(new SettingsPushPackage
             {
                 Memories = _existingMemories

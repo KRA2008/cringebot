@@ -67,18 +67,27 @@ namespace Cringebot.Wrappers
             }
             if (LegacyApplication.Current?.Properties.TryGetValue(HAS_OPENED_BEFORE_OLD, out var opened) == true)
             {
-                existingSettings.HasBeenOpenedBefore = bool.Parse((string)opened);
-                Save(SETTINGS_STORE_KEY, existingSettings);
+                if(!Preferences.ContainsKey(SETTINGS_STORE_KEY))
+                {
+                    existingSettings.HasBeenOpenedBefore = bool.Parse((string)opened);
+                    Save(SETTINGS_STORE_KEY, existingSettings);
+                }
             }
             if (LegacyApplication.Current?.Properties.TryGetValue(SIMULATE_STORE_KEY_OLD, out var simulate) == true)
             {
-                existingSettings.Simulate = bool.Parse((string)simulate);
-                Save(SETTINGS_STORE_KEY, existingSettings);
+                if (!Preferences.ContainsKey(SETTINGS_STORE_KEY))
+                {
+                    existingSettings.Simulate = bool.Parse((string) simulate);
+                    Save(SETTINGS_STORE_KEY, existingSettings);
+                }
             }
             if (LegacyApplication.Current?.Properties.TryGetValue(LIMIT_LIST_STORE_KEY_OLD, out var limit) == true)
             {
-                existingSettings.LimitListVisibility = bool.Parse((string)limit);
-                Save(SETTINGS_STORE_KEY, existingSettings);
+                if (!Preferences.ContainsKey(SETTINGS_STORE_KEY))
+                {
+                    existingSettings.LimitListVisibility = bool.Parse((string) limit);
+                    Save(SETTINGS_STORE_KEY, existingSettings);
+                }
             }
         }
 
