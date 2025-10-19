@@ -125,6 +125,13 @@ namespace Cringebot.ViewModel
             {
                 await ViewSettings();
             });
+
+            WeakReferenceMessenger.Default.Register<SomethingChangedMessage>(this, (recipient, message) =>
+            {
+                WeakReferenceMessenger.Default.Send(new SettingsChangedMessage(Settings));
+                WeakReferenceMessenger.Default.Send(new MemoriesChangedMessage(Memories));
+                WeakReferenceMessenger.Default.Send(new ThemeChangedMessage(_themeService.GetCurrentThemeName()));
+            });
         }
 
         private async void ShowSimulationExplanation()
@@ -209,13 +216,6 @@ namespace Cringebot.ViewModel
 
             _memories = _storage.LoadOrDefault(PersistentStorage.MEMORY_LIST_STORE_KEY, new List<Memory>());
             Settings = _storage.LoadOrDefault(PersistentStorage.SETTINGS_STORE_KEY, new Settings());
-
-            WeakReferenceMessenger.Default.Register<SomethingChangedMessage>(this, (recipient, message) =>
-            {
-                WeakReferenceMessenger.Default.Send(new SettingsChangedMessage(Settings));
-                WeakReferenceMessenger.Default.Send(new MemoriesChangedMessage(Memories));
-                WeakReferenceMessenger.Default.Send(new ThemeChangedMessage(_themeService.GetCurrentThemeName()));
-            });
 
             Settings.PropertyChanged += (sender, args) =>
             {
