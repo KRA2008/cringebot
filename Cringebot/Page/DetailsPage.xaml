@@ -15,7 +15,8 @@
                          Padding="10"
                          Spacing="10">
                 <Entry Text="{Binding Memory.Description}"
-                       HorizontalOptions="FillAndExpand"/>
+                       HorizontalOptions="FillAndExpand"
+                       ReturnType="Done"/>
                 <Label Text="{Binding Memory.Occurrences.Count}"
                        VerticalTextAlignment="Center"/>
             </StackLayout>

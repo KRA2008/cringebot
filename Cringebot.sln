@@ -5,8 +5,6 @@ VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cringebot", "Cringebot\Cringebot.csproj", "{5D3D719D-DD78-491C-B604-32C8D586B482}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cringebot.Test", "Cringebot.Test\Cringebot.Test.csproj", "{AC5892E3-E1E6-4644-A004-D69994E3C3AD}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,24 +48,6 @@ Global
 		{5D3D719D-DD78-491C-B604-32C8D586B482}.Release|x64.Build.0 = Release|Any CPU
 		{5D3D719D-DD78-491C-B604-32C8D586B482}.Release|x86.ActiveCfg = Release|Any CPU
 		{5D3D719D-DD78-491C-B604-32C8D586B482}.Release|x86.Build.0 = Release|Any CPU
-		{AC5892E3-E1E6-4644-A004-D69994E3C3AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AC5892E3-E1E6-4644-A004-D69994E3C3AD}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{AC5892E3-E1E6-4644-A004-D69994E3C3AD}.Debug|ARM.Build.0 = Debug|Any CPU
-		{AC5892E3-E1E6-4644-A004-D69994E3C3AD}.Debug|iPhone.ActiveCfg = Debug|Any CPU
-		{AC5892E3-E1E6-4644-A004-D69994E3C3AD}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{AC5892E3-E1E6-4644-A004-D69994E3C3AD}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{AC5892E3-E1E6-4644-A004-D69994E3C3AD}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{AC5892E3-E1E6-4644-A004-D69994E3C3AD}.Debug|x64.Build.0 = Debug|Any CPU
-		{AC5892E3-E1E6-4644-A004-D69994E3C3AD}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{AC5892E3-E1E6-4644-A004-D69994E3C3AD}.Debug|x86.Build.0 = Debug|Any CPU
-		{AC5892E3-E1E6-4644-A004-D69994E3C3AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AC5892E3-E1E6-4644-A004-D69994E3C3AD}.Release|ARM.ActiveCfg = Release|Any CPU
-		{AC5892E3-E1E6-4644-A004-D69994E3C3AD}.Release|iPhone.ActiveCfg = Release|Any CPU
-		{AC5892E3-E1E6-4644-A004-D69994E3C3AD}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
-		{AC5892E3-E1E6-4644-A004-D69994E3C3AD}.Release|x64.ActiveCfg = Release|Any CPU
-		{AC5892E3-E1E6-4644-A004-D69994E3C3AD}.Release|x64.Build.0 = Release|Any CPU
-		{AC5892E3-E1E6-4644-A004-D69994E3C3AD}.Release|x86.ActiveCfg = Release|Any CPU
-		{AC5892E3-E1E6-4644-A004-D69994E3C3AD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,7 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using Cringebot.Model;
 using Cringebot.Wrappers;
-using Microsoft.Maui.Controls;
 
 namespace Cringebot.Services
 {
@@ -221,7 +220,7 @@ namespace Cringebot.Services
 
             Application.Current.Resources["styledPageBackgroundImageName"] = targetTheme.PageBackgroundImageName;
 
-            if (!isiOS && Math.Abs(GetLuminance(backgroundColor) - GetLuminance(Colors.Black)) < REQUIRED_LUMINANCE_DIFFERENCE)
+            if (Math.Abs(GetLuminance(backgroundColor) - GetLuminance(Colors.Black)) < REQUIRED_LUMINANCE_DIFFERENCE)
             {
                 Application.Current.Resources["addImageName"] = WHITE_ADD_NAME;
                 Application.Current.Resources["deleteImageName"] = WHITE_DELETE_NAME;
@@ -232,7 +231,7 @@ namespace Cringebot.Services
                 Application.Current.Resources["deleteImageName"] = BLACK_DELETE_NAME;
             }
 
-            if (isiOS || Math.Abs(GetLuminance(navBarColor) - GetLuminance(Colors.Black)) < REQUIRED_LUMINANCE_DIFFERENCE)
+            if (Math.Abs(GetLuminance(navBarColor) - GetLuminance(Colors.Black)) < REQUIRED_LUMINANCE_DIFFERENCE)
             {
                 ToolsShouldBeBlack = false;
                 Application.Current.Resources["statListIconName"] = WHITE_LIST_NAME;

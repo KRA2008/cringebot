@@ -15,7 +15,7 @@ namespace Cringebot
         public App(IPersistentStorage persistentStorage, IThemeService themeService)
         {
             InitializeComponent();
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mzg2NjkxNkAzMjM5MmUzMDJlMzAzYjMyMzkzYkQ5UTVMeit4NGxwQnBKR05YdW5zbmROWkl3RHN2NFpPZlA3TTBKaEkrVFE9");
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1JFaF5cXGRCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdmWH9feHZVRWJYU0VwXktWYEg=");
             _themeService = themeService;
             _dataStore = persistentStorage;
         }
@@ -32,23 +32,6 @@ namespace Cringebot
         public void Import(string import)
         {
             MainViewModel.Import(import);
-        }
-
-        protected override void OnSleep()
-        {
-            base.OnSleep();
-            Save();
-        }
-
-        public static void iOSOnSleepWorkaround()
-        {
-            Save();
-        }
-
-        private static void Save()
-        {
-            MainViewModel.Save();
-            _dataStore.Save(PersistentStorage.THEME_STORE_KEY, _themeService.GetCurrentThemeName());
         }
     }
 }

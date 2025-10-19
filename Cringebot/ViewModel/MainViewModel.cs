@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using Cringebot.Model;
+﻿using Cringebot.Model;
 using Cringebot.Wrappers;
 using PropertyChanged;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.Messaging;
 using Cringebot.Services;
 using FreshMvvm.Maui;
-using Microsoft.Extensions.Logging.Abstractions;
-using Microsoft.Maui.Controls;
 
 namespace Cringebot.ViewModel
 {
@@ -29,7 +24,7 @@ namespace Cringebot.ViewModel
                     filterPredicate = a => a.Description.ToLower().Contains(MemoryInput.ToLower());
                 }
                 var filtered = _memories.Where(m => filterPredicate(m)).ToList();
-                if (LimitListVisibility)
+                if (Settings.LimitListVisibility)
                 {
                     if(filtered.Count > 1 || string.IsNullOrWhiteSpace(MemoryInput) || MemoryInput.Length < 3)
                     {
@@ -50,8 +45,6 @@ namespace Cringebot.ViewModel
             }
         }
 
-        public bool Simulate { get; set; }
-        public bool LimitListVisibility { get; set; }
         public string MemoryInput { get; set; }
 
         public bool CringeFlashTrigger { get; set; }
@@ -65,16 +58,18 @@ namespace Cringebot.ViewModel
         public Command ViewHelpCommand { get; }
         public Command ViewSettingsCommand { get; }
 
-        private Settings _settings;
+        public Settings Settings { get; private set; }
 
-        private readonly IPersistentStorage _properties;
+        private readonly IPersistentStorage _storage;
         private readonly INotificationManager _notificationManager;
+        private readonly IThemeService _themeService;
 
         public MainViewModel(IPersistentStorage persistentStorage, INotificationManager notificationManager,
-            IKeyboardHelper keyboardHelper)
+            IKeyboardHelper keyboardHelper, IThemeService themeService)
         {
-            _properties = persistentStorage;
+            _storage = persistentStorage;
             _notificationManager = notificationManager;
+            _themeService = themeService;
             _memories = new List<Memory>();
 
             MessagingCenter.Subscribe<ThemeService>(this, ThemeService.THEME_SET_MESSAGE, SetToolbarIcons);
@@ -96,6 +91,7 @@ namespace Cringebot.ViewModel
                 _notificationManager.SetMemories(_memories);
 
                 CringeFlashTrigger = !CringeFlashTrigger;
+                WeakReferenceMessenger.Default.Send(new MemoriesChangedMessage(Memories));
             });
 
             AddOccurrenceCommand = new Command(arg => 
@@ -105,6 +101,7 @@ namespace Cringebot.ViewModel
                 MemoryInput = "";
                 keyboardHelper.HideKeyboard();
                 CringeFlashTrigger = !CringeFlashTrigger;
+                WeakReferenceMessenger.Default.Send(new MemoriesChangedMessage(Memories));
             });
 
             ViewDetailsCommand = new Command(async () =>
@@ -128,21 +125,6 @@ namespace Cringebot.ViewModel
             {
                 await ViewSettings();
             });
-
-            PropertyChanged += (sender, args) =>
-            {
-                if (args.PropertyName != nameof(Simulate)) return;
-
-                if(Simulate)
-                {
-                    _notificationManager.StartNotifications(_memories, _settings);
-                    ShowSimulationExplanation();
-                }
-                else
-                {
-                    _notificationManager.StopNotifications();
-                }
-            };
         }
 
         private async void ShowSimulationExplanation()
@@ -197,7 +179,7 @@ namespace Cringebot.ViewModel
             await CoreMethods.PushPageModel<SettingsViewModel>(
                 new SettingsPushPackage
                 {
-                    Settings = _settings,
+                    Settings = Settings,
                     Memories = _memories
                 });
         }
@@ -225,18 +207,45 @@ namespace Cringebot.ViewModel
         {
             base.Init(initData);
 
-            Simulate = _properties.LoadOrDefault(PersistentStorage.SIMULATE_STORE_KEY, false);
-            LimitListVisibility = _properties.LoadOrDefault(PersistentStorage.LIMIT_LIST_STORE_KEY, false);
-            _memories = _properties.LoadOrDefault(PersistentStorage.MEMORY_LIST_STORE_KEY, new List<Memory>());
-            _settings = _properties.LoadOrDefault(PersistentStorage.SETTINGS_STORE_KEY, new Settings());
+            _memories = _storage.LoadOrDefault(PersistentStorage.MEMORY_LIST_STORE_KEY, new List<Memory>());
+            Settings = _storage.LoadOrDefault(PersistentStorage.SETTINGS_STORE_KEY, new Settings());
 
-            if (Simulate)
+            WeakReferenceMessenger.Default.Register<SomethingChangedMessage>(this, (recipient, message) =>
             {
-                _notificationManager.StartNotifications(_memories, _settings);
+                WeakReferenceMessenger.Default.Send(new SettingsChangedMessage(Settings));
+                WeakReferenceMessenger.Default.Send(new MemoriesChangedMessage(Memories));
+                WeakReferenceMessenger.Default.Send(new ThemeChangedMessage(_themeService.GetCurrentThemeName()));
+            });
+
+            Settings.PropertyChanged += (sender, args) =>
+            {
+                WeakReferenceMessenger.Default.Send(new SettingsChangedMessage(Settings));
+
+                if (args.PropertyName == nameof(Settings.LimitListVisibility))
+                {
+                    RaisePropertyChanged(nameof(Memories));
+                }
+
+                if (args.PropertyName != nameof(Settings.Simulate)) return;
+
+                if (Settings.Simulate)
+                {
+                    _notificationManager.StartNotifications(_memories, Settings);
+                    ShowSimulationExplanation();
+                }
+                else
+                {
+                    _notificationManager.StopNotifications();
+                }
+            };
+
+            if (Settings.Simulate)
+            {
+                _notificationManager.StartNotifications(_memories, Settings);
             }
             else
             {
-                _notificationManager.SetSettings(_settings);
+                _notificationManager.SetSettings(Settings);
                 _notificationManager.SetMemories(_memories);
             }
         }
@@ -256,14 +265,6 @@ namespace Cringebot.ViewModel
             _notificationManager.SetMemories(_memories);
         }
 
-        public void Save()
-        {
-            _properties.Save(PersistentStorage.LIMIT_LIST_STORE_KEY, LimitListVisibility);
-            _properties.Save(PersistentStorage.SIMULATE_STORE_KEY, Simulate);
-            _properties.Save(PersistentStorage.MEMORY_LIST_STORE_KEY, _memories);
-            _properties.Save(PersistentStorage.SETTINGS_STORE_KEY, _settings);
-        }
-
         protected override async void ViewIsAppearing(object sender, EventArgs e)
         {
             try
@@ -280,11 +281,12 @@ namespace Cringebot.ViewModel
 
         public async Task ViewIsAppearing() // for testing
         {
-            var openedBefore = _properties.LoadOrDefault(PersistentStorage.HAS_OPENED_BEFORE, false);
+            var openedBefore = Settings.HasBeenOpenedBefore;
             if (!openedBefore)
             {
                 await CoreMethods.PushPageModel<HelpViewModel>(true,false);
-                _properties.Save(PersistentStorage.HAS_OPENED_BEFORE, true);
+                Settings.HasBeenOpenedBefore = true;
+                WeakReferenceMessenger.Default.Send(new SettingsChangedMessage(Settings));
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
 using Cringebot.Model;
 using Cringebot.Services;
 using Cringebot.Wrappers;
@@ -55,6 +56,7 @@ namespace Cringebot.ViewModel
         {
             var themeName = (string)obj;
             _themeService.ApplyTheme(themeName);
+            WeakReferenceMessenger.Default.Send(new ThemeChangedMessage(themeName));
         }
 
         public override void Init(object initData)
@@ -152,6 +154,7 @@ namespace Cringebot.ViewModel
             Settings.GenerationMaxInterval = new TimeSpan((int)MaxHours / 24, (int)MaxHours % 24, (int)(MaxHours % 1 * 60), (int)(MaxHours % 1 * 60 % 1 * 60));
             Settings.GenerationMinInterval = new TimeSpan((int)MinHours / 24, (int)MinHours % 24, 0, 0);
             _notificationManager.SetSettings(Settings);
+            WeakReferenceMessenger.Default.Send(new SettingsChangedMessage(Settings));
         }
     }
 }

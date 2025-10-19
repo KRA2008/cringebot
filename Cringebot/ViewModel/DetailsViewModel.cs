@@ -1,7 +1,7 @@
-﻿using Cringebot.Model;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using Cringebot.Model;
 using Cringebot.Services;
 using FreshMvvm.Maui;
-using Microsoft.Maui.Controls;
 
 namespace Cringebot.ViewModel
 {
@@ -18,6 +18,7 @@ namespace Cringebot.ViewModel
             DeleteOccurrenceCommand = new Command(dateTime =>
             {
                 Memory.Occurrences.Remove((DateTime)dateTime);
+                WeakReferenceMessenger.Default.Send(new SomethingChangedMessage(null));
             });
 
             DeleteMemoryCommand = new Command(async () => //argh! get a decent async commmand
@@ -38,6 +39,7 @@ namespace Cringebot.ViewModel
             {
                 await CoreMethods.PopPageModel(memory);
             }
+            WeakReferenceMessenger.Default.Send(new SomethingChangedMessage(null));
         }
 
         public async Task ViewGraph(Memory memory)

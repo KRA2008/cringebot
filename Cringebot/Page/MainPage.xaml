@@ -18,9 +18,8 @@
                     <Entry Placeholder="Search/Add Item..."
                            Text="{Binding MemoryInput}"
                            HorizontalOptions="FillAndExpand"
-                           ReturnCommand="{Binding AddMemoryCommand}">
-
-                    </Entry>
+                           ReturnCommand="{Binding AddMemoryCommand}"
+                           ReturnType="Done"/>
                     <Label Text="{Binding SearchResultCount}"
                            VerticalTextAlignment="Center"/>
                 </StackLayout>
@@ -78,7 +77,7 @@
                     <Label Text="Limit List Visibility"
                            Style="{DynamicResource highlightText}"
                            VerticalTextAlignment="Center"/>
-                    <Switch IsToggled="{Binding LimitListVisibility}"/>
+                    <Switch IsToggled="{Binding Settings.LimitListVisibility}"/>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal"
                              HorizontalOptions="CenterAndExpand"
@@ -88,7 +87,7 @@
                            Style="{DynamicResource highlightText}"
                            FontSize="Small"
                            VerticalTextAlignment="Center"/>
-                    <Switch IsToggled="{Binding Simulate}"/>
+                    <Switch IsToggled="{Binding Settings.Simulate}"/>
                 </StackLayout>
             </StackLayout>
             <Image AbsoluteLayout.LayoutFlags="All" 
@@ -98,8 +97,8 @@
                 <Image.Behaviors>
                     <ce:FadeInAndOutBehavior Trigger="{Binding CringeFlashTrigger}"
                                              InTimeMs="0"
-                                             OutTimeMs="500"
-                                             VisibleTimeMs="0"/>
+                                             OutTimeMs="1000"
+                                             VisibleTimeMs="500"/>
                 </Image.Behaviors>
             </Image>
         </AbsoluteLayout>

@@ -8,6 +8,9 @@ namespace Cringebot.Model
         public TimeSpan DoNotDisturbStopTime { get; set; }
         public TimeSpan GenerationMaxInterval { get; set; }
         public TimeSpan GenerationMinInterval { get; set; }
+        public bool Simulate { get; set; }
+        public bool HasBeenOpenedBefore { get; set; }
+        public bool LimitListVisibility { get; set; }
 
         public Settings()
         {
