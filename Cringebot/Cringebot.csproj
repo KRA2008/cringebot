@@ -76,6 +76,11 @@
 	<PropertyGroup Condition="'$(TargetFramework)'=='net9.0-ios'">
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(TargetFramework)'=='net9.0-android'">
+		<AndroidSupportedAbis>armeabi-v7a;x86;arm64-v8a;x86_64</AndroidSupportedAbis>
+		<RuntimeIdentifiers>android-arm;android-arm64;android-x86;android-x64</RuntimeIdentifiers>
+	</PropertyGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0|AnyCPU'">
 	  <ApplicationId>com.kra2008.cringebot</ApplicationId>
 	  <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
