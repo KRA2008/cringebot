@@ -1,32 +1,32 @@
 ﻿using CoreGraphics;
-using Microsoft.Maui.Controls.Compatibility.Platform.iOS;
 using Microsoft.Maui.Controls.Platform;
+using System.Drawing;
 using UIKit;
 
 namespace Cringebot.iOS.CustomRenderers
 {
-    public class EntryWithDoneButtonRenderer : EntryRenderer
+    public class EntryWithDoneButtonHandler
     {
-        private bool _initialized;
-
-        protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
+        public static void AddDone()
         {
-            base.OnElementChanged(e);
-            if (!_initialized && Control != null && e.NewElement != null)
+            Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("Done", (handler, view) =>
             {
-                var toolbar = new UIToolbar(new CGRect(0.0f, 0.0f, Control.Frame.Size.Width, 44.0f))
+#if IOS
+                var toolbar = new UIToolbar(new RectangleF(0.0f, 0.0f, 50.0f, 44.0f));
+                toolbar.BackgroundColor = UIColor.LightGray; // Set the color you prefer
+                var doneButton = new UIBarButtonItem(UIBarButtonSystemItem.Cancel, delegate
                 {
-                    Items = new[]
-                    {
-                        new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace),
-                        new UIBarButtonItem(UIBarButtonSystemItem.Cancel, delegate { Control.ResignFirstResponder(); })
-                    }
+                    handler.PlatformView.ResignFirstResponder();
+                });
+
+                toolbar.Items = new UIBarButtonItem[] {
+                    new UIBarButtonItem (UIBarButtonSystemItem.FlexibleSpace),
+                    doneButton
                 };
 
-                Control.InputAccessoryView = toolbar;
-                Control.ReturnKeyType = UIReturnKeyType.Done;
-                _initialized = true;
-            }
+                handler.PlatformView.InputAccessoryView = toolbar;
+#endif
+            });
         }
     }
 }

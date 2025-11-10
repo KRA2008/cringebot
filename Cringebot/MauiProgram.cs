@@ -3,6 +3,7 @@ using Cringebot.Droid.PlatformSpecific;
 #elif __IOS__
 using Cringebot.iOS;
 using Cringebot.iOS.PlatformSpecific;
+using Cringebot.iOS.CustomRenderers;
 #endif
 using Cringebot.Page;
 using Cringebot.Services;
@@ -25,7 +26,8 @@ namespace Cringebot
                 .ConfigureEssentials()
                 .ConfigureMauiHandlers(handlers =>
             {
-#if __IOS__
+#if __IOS__            
+                EntryWithDoneButtonHandler.AddDone();
 #elif __ANDROID__
 #endif
             });

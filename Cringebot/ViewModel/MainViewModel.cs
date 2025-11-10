@@ -91,7 +91,7 @@ namespace Cringebot.ViewModel
                 _notificationManager.SetMemories(_memories);
 
                 CringeFlashTrigger = !CringeFlashTrigger;
-                WeakReferenceMessenger.Default.Send(new MemoriesChangedMessage(Memories));
+                WeakReferenceMessenger.Default.Send(new MemoriesChangedMessage(_memories));
             });
 
             AddOccurrenceCommand = new Command(arg => 
@@ -101,7 +101,7 @@ namespace Cringebot.ViewModel
                 MemoryInput = "";
                 keyboardHelper.HideKeyboard();
                 CringeFlashTrigger = !CringeFlashTrigger;
-                WeakReferenceMessenger.Default.Send(new MemoriesChangedMessage(Memories));
+                WeakReferenceMessenger.Default.Send(new MemoriesChangedMessage(_memories));
             });
 
             ViewDetailsCommand = new Command(async () =>
@@ -129,7 +129,7 @@ namespace Cringebot.ViewModel
             WeakReferenceMessenger.Default.Register<SomethingChangedMessage>(this, (recipient, message) =>
             {
                 WeakReferenceMessenger.Default.Send(new SettingsChangedMessage(Settings));
-                WeakReferenceMessenger.Default.Send(new MemoriesChangedMessage(Memories));
+                WeakReferenceMessenger.Default.Send(new MemoriesChangedMessage(_memories));
                 WeakReferenceMessenger.Default.Send(new ThemeChangedMessage(_themeService.GetCurrentThemeName()));
             });
         }
